@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
  */
 public class QiNiuUtil {
 
-    private static final String KEYS = "http://pa8tfa6o3.bkt.clouddn.com/";
+    private static final String KEYS = "http://pb393x693.bkt.clouddn.com/";
 
     //...生成上传凭证，然后准备上传
     private static final String accessKey = "17JLJ7eYt_aojRGHdWJ6TXFOOOK1cLF4fmYAvzkD";
