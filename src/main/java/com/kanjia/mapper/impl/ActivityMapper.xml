@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kanjia.dao.ActivityMapper" >
+  <resultMap id="BaseResultMap" type="com.kanjia.pojo.Activity" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="picture" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="video" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="adress" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="origin_price" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="now_price" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="activity_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="enterprise_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="limit_number" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="sold_number" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="consume_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="cut_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="category_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column=" longitude" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="latitude" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.kanjia.pojo.Activity" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="picture" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="video" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="adress" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="origin_price" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="now_price" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="activity_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="enterprise_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="limit_number" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="sold_number" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="consume_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="cut_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="category_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column=" longitude" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="latitude" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="description" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, title, picture, video, adress, origin_price, now_price, activity_time, enterprise_id, 
+    limit_number, sold_number, consume_time, cut_time, state, create_time, update_time, 
+    category_id, " longitude", latitude
+  </sql>
+  <sql id="Blob_Column_List" >
+    description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from activity
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from activity
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.kanjia.pojo.Activity"  useGeneratedKeys="true" keyProperty="id">
+    insert into activity (id, title, picture, 
+      video, adress, origin_price, 
+      now_price, activity_time, enterprise_id, 
+      limit_number, sold_number, consume_time, 
+      cut_time, state, create_time, 
+      update_time, category_id, " longitude", 
+      latitude, description)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}, 
+      #{video,jdbcType=VARCHAR}, #{adress,jdbcType=VARCHAR}, #{originPrice,jdbcType=VARCHAR}, 
+      #{nowPrice,jdbcType=VARCHAR}, #{activityTime,jdbcType=TIMESTAMP}, #{enterpriseId,jdbcType=INTEGER}, 
+      #{limitNumber,jdbcType=INTEGER}, #{soldNumber,jdbcType=INTEGER}, #{consumeTime,jdbcType=TIMESTAMP}, 
+      #{cutTime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{categoryId,jdbcType=INTEGER}, #{longitude,jdbcType=VARCHAR}, 
+      #{latitude,jdbcType=VARCHAR}, #{description,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kanjia.pojo.Activity" useGeneratedKeys="true" keyProperty="id" >
+    insert into activity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="picture != null" >
+        picture,
+      </if>
+      <if test="video != null" >
+        video,
+      </if>
+      <if test="adress != null" >
+        adress,
+      </if>
+      <if test="originPrice != null" >
+        origin_price,
+      </if>
+      <if test="nowPrice != null" >
+        now_price,
+      </if>
+      <if test="activityTime != null" >
+        activity_time,
+      </if>
+      <if test="enterpriseId != null" >
+        enterprise_id,
+      </if>
+      <if test="limitNumber != null" >
+        limit_number,
+      </if>
+      <if test="soldNumber != null" >
+        sold_number,
+      </if>
+      <if test="consumeTime != null" >
+        consume_time,
+      </if>
+      <if test="cutTime != null" >
+        cut_time,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="longitude != null" >
+        " longitude",
+      </if>
+      <if test="latitude != null" >
+        latitude,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="picture != null" >
+        #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="video != null" >
+        #{video,jdbcType=VARCHAR},
+      </if>
+      <if test="adress != null" >
+        #{adress,jdbcType=VARCHAR},
+      </if>
+      <if test="originPrice != null" >
+        #{originPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="nowPrice != null" >
+        #{nowPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="activityTime != null" >
+        #{activityTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enterpriseId != null" >
+        #{enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="limitNumber != null" >
+        #{limitNumber,jdbcType=INTEGER},
+      </if>
+      <if test="soldNumber != null" >
+        #{soldNumber,jdbcType=INTEGER},
+      </if>
+      <if test="consumeTime != null" >
+        #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cutTime != null" >
+        #{cutTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kanjia.pojo.Activity" >
+    update activity
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="picture != null" >
+        picture = #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="video != null" >
+        video = #{video,jdbcType=VARCHAR},
+      </if>
+      <if test="adress != null" >
+        adress = #{adress,jdbcType=VARCHAR},
+      </if>
+      <if test="originPrice != null" >
+        origin_price = #{originPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="nowPrice != null" >
+        now_price = #{nowPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="activityTime != null" >
+        activity_time = #{activityTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enterpriseId != null" >
+        enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="limitNumber != null" >
+        limit_number = #{limitNumber,jdbcType=INTEGER},
+      </if>
+      <if test="soldNumber != null" >
+        sold_number = #{soldNumber,jdbcType=INTEGER},
+      </if>
+      <if test="consumeTime != null" >
+        consume_time = #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cutTime != null" >
+        cut_time = #{cutTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="longitude != null" >
+        " longitude" = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.kanjia.pojo.Activity" >
+    update activity
+    set title = #{title,jdbcType=VARCHAR},
+      picture = #{picture,jdbcType=VARCHAR},
+      video = #{video,jdbcType=VARCHAR},
+      adress = #{adress,jdbcType=VARCHAR},
+      origin_price = #{originPrice,jdbcType=VARCHAR},
+      now_price = #{nowPrice,jdbcType=VARCHAR},
+      activity_time = #{activityTime,jdbcType=TIMESTAMP},
+      enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+      limit_number = #{limitNumber,jdbcType=INTEGER},
+      sold_number = #{soldNumber,jdbcType=INTEGER},
+      consume_time = #{consumeTime,jdbcType=TIMESTAMP},
+      cut_time = #{cutTime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      category_id = #{categoryId,jdbcType=INTEGER},
+      " longitude" = #{longitude,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=VARCHAR},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kanjia.pojo.Activity" >
+    update activity
+    set title = #{title,jdbcType=VARCHAR},
+      picture = #{picture,jdbcType=VARCHAR},
+      video = #{video,jdbcType=VARCHAR},
+      adress = #{adress,jdbcType=VARCHAR},
+      origin_price = #{originPrice,jdbcType=VARCHAR},
+      now_price = #{nowPrice,jdbcType=VARCHAR},
+      activity_time = #{activityTime,jdbcType=TIMESTAMP},
+      enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+      limit_number = #{limitNumber,jdbcType=INTEGER},
+      sold_number = #{soldNumber,jdbcType=INTEGER},
+      consume_time = #{consumeTime,jdbcType=TIMESTAMP},
+      cut_time = #{cutTime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      category_id = #{categoryId,jdbcType=INTEGER},
+      " longitude" = #{longitude,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
