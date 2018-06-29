@@ -19,8 +19,8 @@
                <!--location="classpath:properties/resource.properties" />-->
     <!-- 配置扫描器，扫basic是为了拿swaggerconfig -->
     <context:component-scan 
-               base-package="com.express.controller" />
-    <context:component-scan base-package="com.express.basic"/>
+               base-package="com.kanjia.controller" />
+    <context:component-scan base-package="com.kanjia.basic"/>
     <!-- 注解驱动：配置处理器映射器和适配器 -->
     <mvc:annotation-driven />
     <!--配置静态资源的访问映射，此配置中的文件，将不被前端控制器拦截 -->

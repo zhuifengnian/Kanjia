@@ -35,7 +35,7 @@
         <!--<property name="dataSource" ref="dataSource"/>-->
         <!--<property name="authenticationQuery" value=""/>-->
     <!--</bean>-->
-    <bean id="myRealm" class="com.express.basic.UserRealm"/>
+    <bean id="myRealm" class="com.kanjia.basic.UserRealm"/>
 
     <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
         <property name="cacheManagerConfigFile" value="classpath:shiro-ehcache.xml"/>

@@ -1,7 +1,7 @@
 package com.hust.party.test.servicetest;
 
-import com.express.model.User;
-import com.express.service.UserService;
+import com.kanjia.pojo.User;
+import com.kanjia.service.UserService;
 import org.junit.Test;
 
 import org.junit.runner.RunWith;

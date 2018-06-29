@@ -13,7 +13,7 @@
   Unless required by applicable law or agreed to in writing,
   software distributed under the License is distributed on an
   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-  KIND, either express or implied.  See the License for the
+  KIND, either kanjia or implied.  See the License for the
   specific language governing permissions and limitations
   under the License.
 -->
@@ -23,9 +23,9 @@
   <modelVersion>4.0.0</modelVersion>
   <packaging>war</packaging>
 
-  <name>Express</name>
+  <name>Kanjia</name>
   <groupId>com.hust</groupId>
-  <artifactId>Express</artifactId>
+  <artifactId>Kanjia</artifactId>
   <version>1.0-SNAPSHOT</version>
 
   <properties>
@@ -261,10 +261,18 @@
       <artifactId>commons-lang3</artifactId>
       <version>${org.apache.commons-commons-lang3.version}</version>
     </dependency>
+
+    <!--jdom解析xml，解析微信返回信息要用到-->
+    <dependency>
+      <groupId>org.jdom</groupId>
+      <artifactId>jdom</artifactId>
+      <version>2.0.2</version>
+    </dependency>
+
   </dependencies>
 
   <build>
-    <finalName>Express</finalName>
+    <finalName>Kanjia</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

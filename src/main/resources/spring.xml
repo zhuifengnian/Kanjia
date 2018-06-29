@@ -46,7 +46,7 @@
 	</bean>
 
 	<!-- 配置扫描@Service注解 -->
-	<context:component-scan base-package="com.express.service"/>
+	<context:component-scan base-package="com.kanjia.service"/>
 
 	<!--配置其他需要扫描的包,扫basic是因为需要找swaggerconfig,扫controller是为了将controller放到swagger中-->
 
@@ -71,7 +71,7 @@
 	<!-- 切面 -->
 	<aop:config>
 		<aop:advisor advice-ref="txAdvice"
-			 pointcut="execution(* com.express.service.*.*(..))" />
+			 pointcut="execution(* com.kanjia.service.*.*(..))" />
 	</aop:config>
 	<!-- 配置 MyBatis的工厂 -->
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -81,11 +81,11 @@
 		<property name="configLocation"
                      value="classpath:mybatis-config.xml" />
 		<!-- 配置Mybatis的文件 ，mapperLocations配置**Mapper.xml文件位置，configLocation配置mybatis-config文件位置-->
-		<property name="mapperLocations" value="classpath*:com/express/mapper/impl/*.xml"/>
+		<property name="mapperLocations" value="classpath*:com/kanjia/mapper/impl/*.xml"/>
 	</bean>
 	<!-- 自动扫描了所有的XxxxMapper.xml对应的mapper接口文件，这样就不用一个一个手动配置Mpper的映射了，只要Mapper接口类和Mapper映射文件对应起来就可以了。 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.express.mapper" />
+		<property name="basePackage" value="com.kanjia.mapper" />
 	</bean>
 
 </beans>
