@@ -6,7 +6,6 @@ import com.kanjia.exception.ApiException;
 import com.kanjia.pojo.User;
 import com.kanjia.service.UserService;
 import com.kanjia.utils.QiNiuUtil;
-import com.kanjia.utils.ReflectUtil;
 import com.kanjia.wxpay.ConstantUtil;
 import com.kanjia.wxpay.TenpayHttpClient;
 import io.swagger.annotations.ApiOperation;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * <br/>
