@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.kanjia.dao.RefundMapper" >
+<mapper namespace="com.kanjia.mapper.RefundMapper" >
   <resultMap id="BaseResultMap" type="com.kanjia.pojo.Refund" >
     <constructor >
       <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="order_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="price" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
       <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="state" jdbcType="INTEGER" javaType="java.lang.Integer" />
@@ -25,12 +25,12 @@
     delete from refund
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.kanjia.pojo.Refund" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insert" parameterType="com.kanjia.pojo.Refund" useGeneratedKeys="true" keyProperty="id" >
     insert into refund (id, user_id, order_id, 
       price, create_time, update_time, 
       state)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, 
-      #{price,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{price,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{state,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.kanjia.pojo.Refund"  useGeneratedKeys="true" keyProperty="id">
@@ -69,7 +69,7 @@
         #{orderId,jdbcType=INTEGER},
       </if>
       <if test="price != null" >
-        #{price,jdbcType=VARCHAR},
+        #{price,jdbcType=DECIMAL},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
@@ -92,7 +92,7 @@
         order_id = #{orderId,jdbcType=INTEGER},
       </if>
       <if test="price != null" >
-        price = #{price,jdbcType=VARCHAR},
+        price = #{price,jdbcType=DECIMAL},
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -110,7 +110,7 @@
     update refund
     set user_id = #{userId,jdbcType=INTEGER},
       order_id = #{orderId,jdbcType=INTEGER},
-      price = #{price,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       state = #{state,jdbcType=INTEGER}

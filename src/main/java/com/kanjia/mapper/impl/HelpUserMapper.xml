@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.kanjia.dao.HelpUserMapper" >
+<mapper namespace="com.kanjia.mapper.HelpUserMapper" >
   <resultMap id="BaseResultMap" type="com.kanjia.pojo.HelpUser" >
     <constructor >
       <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="order_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="cut_price" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="cut_price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
@@ -23,13 +23,13 @@
     delete from help_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.kanjia.pojo.HelpUser" useGeneratedKeys="true" keyProperty="id" >
+  <insert id="insert" parameterType="com.kanjia.pojo.HelpUser" useGeneratedKeys="true" keyProperty="id">
     insert into help_user (id, order_id, user_id, 
       create_time, cut_price)
     values (#{id,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{cutPrice,jdbcType=VARCHAR})
+      #{createTime,jdbcType=TIMESTAMP}, #{cutPrice,jdbcType=DECIMAL})
   </insert>
-  <insert id="insertSelective" parameterType="com.kanjia.pojo.HelpUser" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insertSelective" parameterType="com.kanjia.pojo.HelpUser" useGeneratedKeys="true" keyProperty="id" >
     insert into help_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -62,7 +62,7 @@
         #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="cutPrice != null" >
-        #{cutPrice,jdbcType=VARCHAR},
+        #{cutPrice,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
@@ -79,7 +79,7 @@
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="cutPrice != null" >
-        cut_price = #{cutPrice,jdbcType=VARCHAR},
+        cut_price = #{cutPrice,jdbcType=DECIMAL},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -89,7 +89,7 @@
     set order_id = #{orderId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      cut_price = #{cutPrice,jdbcType=VARCHAR}
+      cut_price = #{cutPrice,jdbcType=DECIMAL}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

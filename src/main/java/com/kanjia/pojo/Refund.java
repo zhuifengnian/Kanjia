@@ -1,5 +1,6 @@
 package com.kanjia.pojo;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Refund {
@@ -9,7 +10,7 @@ public class Refund {
 
     private Integer orderId;
 
-    private String price;
+    private BigDecimal price;
 
     private Date createTime;
 
@@ -17,7 +18,7 @@ public class Refund {
 
     private Integer state;
 
-    public Refund(Integer id, Integer userId, Integer orderId, String price, Date createTime, Date updateTime, Integer state) {
+    public Refund(Integer id, Integer userId, Integer orderId, BigDecimal price, Date createTime, Date updateTime, Integer state) {
         this.id = id;
         this.userId = userId;
         this.orderId = orderId;
@@ -55,12 +56,12 @@ public class Refund {
         this.orderId = orderId;
     }
 
-    public String getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
-        this.price = price == null ? null : price.trim();
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public Date getCreateTime() {

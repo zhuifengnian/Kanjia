@@ -1,5 +1,6 @@
 package com.kanjia.pojo;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class UserOrder {
@@ -7,9 +8,9 @@ public class UserOrder {
 
     private Integer userId;
 
-    private Integer orderId;
+    private Integer activityId;
 
-    private String minuPrice;
+    private BigDecimal minuPrice;
 
     private Integer helpId;
 
@@ -19,15 +20,18 @@ public class UserOrder {
 
     private Integer state;
 
-    public UserOrder(Integer id, Integer userId, Integer orderId, String minuPrice, Integer helpId, Date createTime, Date updateTime, Integer state) {
+    private String qrCode;
+
+    public UserOrder(Integer id, Integer userId, Integer activityId, BigDecimal minuPrice, Integer helpId, Date createTime, Date updateTime, Integer state, String qrCode) {
         this.id = id;
         this.userId = userId;
-        this.orderId = orderId;
+        this.activityId = activityId;
         this.minuPrice = minuPrice;
         this.helpId = helpId;
         this.createTime = createTime;
         this.updateTime = updateTime;
         this.state = state;
+        this.qrCode = qrCode;
     }
 
     public UserOrder() {
@@ -50,20 +54,20 @@ public class UserOrder {
         this.userId = userId;
     }
 
-    public Integer getOrderId() {
-        return orderId;
+    public Integer getActivityId() {
+        return activityId;
     }
 
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
+    public void setActivityId(Integer activityId) {
+        this.activityId = activityId;
     }
 
-    public String getMinuPrice() {
+    public BigDecimal getMinuPrice() {
         return minuPrice;
     }
 
-    public void setMinuPrice(String minuPrice) {
-        this.minuPrice = minuPrice == null ? null : minuPrice.trim();
+    public void setMinuPrice(BigDecimal minuPrice) {
+        this.minuPrice = minuPrice;
     }
 
     public Integer getHelpId() {
@@ -96,5 +100,13 @@ public class UserOrder {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public String getQrCode() {
+        return qrCode;
+    }
+
+    public void setQrCode(String qrCode) {
+        this.qrCode = qrCode == null ? null : qrCode.trim();
     }
 }

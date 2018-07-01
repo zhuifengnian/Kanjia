@@ -1,17 +1,22 @@
-package com.kanjia.mapper;
+package com.kanjia.service;
+
 
 import com.kanjia.basic.Page;
+import com.kanjia.basic.PageInfo;
 import com.kanjia.pojo.UserOrder;
+import com.kanjia.vo.EnterpriseOrderVo;
 import com.kanjia.vo.EnterpriseOrderVo;
 import com.kanjia.vo.EnterprisePaymentVo;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
 import java.util.List;
 
-@Repository
-public interface UserOrderMapper extends BaseMapper<UserOrder>{
+/**
+ * <br/>
+ * liyue 2018/6/29
+ */
+public interface UserOrderService extends BaseService<UserOrder>{
     /**
      * 根据qr_code找寻对象
      * @param qr_code
@@ -57,6 +62,7 @@ public interface UserOrderMapper extends BaseMapper<UserOrder>{
      * @return
      */
     List<EnterpriseOrderVo>  getEnterpriseOverOrder(@Param("id") Integer id,@Param("page") Page page);
+
     Integer getEnterpriseOverOrderCount(Integer id);
     /**
      * 获取商户已消费
@@ -65,4 +71,11 @@ public interface UserOrderMapper extends BaseMapper<UserOrder>{
      */
     List<EnterpriseOrderVo>  getEnterpriseConsumeOrder(@Param("id") Integer id,@Param("page") Page page);
     Integer getEnterpriseConsumeOrderCount(Integer id);
+    /**
+     * 获取企业订单
+     * @param name
+     * @param id
+     * @return
+     */
+    PageInfo<EnterpriseOrderVo> getEnterpriseOrder(String name, Integer id,Timestamp d,Timestamp t,Page page);
 }

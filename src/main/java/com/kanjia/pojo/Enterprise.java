@@ -9,7 +9,7 @@ public class Enterprise {
 
     private String openId;
 
-    private String entepriseName;
+    private String enterpriseName;
 
     private String license;
 
@@ -27,11 +27,11 @@ public class Enterprise {
 
     private Integer state;
 
-    public Enterprise(Integer id, String nickname, String openId, String entepriseName, String license, String corporation, String phone, String card, String avatarurl, Date createTime, Date updateTime, Integer state) {
+    public Enterprise(Integer id, String nickname, String openId, String enterpriseName, String license, String corporation, String phone, String card, String avatarurl, Date createTime, Date updateTime, Integer state) {
         this.id = id;
         this.nickname = nickname;
         this.openId = openId;
-        this.entepriseName = entepriseName;
+        this.enterpriseName = enterpriseName;
         this.license = license;
         this.corporation = corporation;
         this.phone = phone;
@@ -70,12 +70,12 @@ public class Enterprise {
         this.openId = openId == null ? null : openId.trim();
     }
 
-    public String getEntepriseName() {
-        return entepriseName;
+    public String getEnterpriseName() {
+        return enterpriseName;
     }
 
-    public void setEntepriseName(String entepriseName) {
-        this.entepriseName = entepriseName == null ? null : entepriseName.trim();
+    public void setEnterpriseName(String enterpriseName) {
+        this.enterpriseName = enterpriseName == null ? null : enterpriseName.trim();
     }
 
     public String getLicense() {

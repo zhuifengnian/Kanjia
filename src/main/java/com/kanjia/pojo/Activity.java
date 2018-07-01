@@ -1,5 +1,6 @@
 package com.kanjia.pojo;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Activity {
@@ -13,9 +14,9 @@ public class Activity {
 
     private String adress;
 
-    private String originPrice;
+    private BigDecimal originPrice;
 
-    private String nowPrice;
+    private BigDecimal nowPrice;
 
     private Date activityTime;
 
@@ -43,7 +44,7 @@ public class Activity {
 
     private String description;
 
-    public Activity(Integer id, String title, String picture, String video, String adress, String originPrice, String nowPrice, Date activityTime, Integer enterpriseId, Integer limitNumber, Integer soldNumber, Date consumeTime, Date cutTime, Integer state, Date createTime, Date updateTime, Integer categoryId, String longitude, String latitude, String description) {
+    public Activity(Integer id, String title, String picture, String video, String adress, BigDecimal originPrice, BigDecimal nowPrice, Date activityTime, Integer enterpriseId, Integer limitNumber, Integer soldNumber, Date consumeTime, Date cutTime, Integer state, Date createTime, Date updateTime, Integer categoryId, String longitude, String latitude, String description) {
         this.id = id;
         this.title = title;
         this.picture = picture;
@@ -110,20 +111,20 @@ public class Activity {
         this.adress = adress == null ? null : adress.trim();
     }
 
-    public String getOriginPrice() {
+    public BigDecimal getOriginPrice() {
         return originPrice;
     }
 
-    public void setOriginPrice(String originPrice) {
-        this.originPrice = originPrice == null ? null : originPrice.trim();
+    public void setOriginPrice(BigDecimal originPrice) {
+        this.originPrice = originPrice;
     }
 
-    public String getNowPrice() {
+    public BigDecimal getNowPrice() {
         return nowPrice;
     }
 
-    public void setNowPrice(String nowPrice) {
-        this.nowPrice = nowPrice == null ? null : nowPrice.trim();
+    public void setNowPrice(BigDecimal nowPrice) {
+        this.nowPrice = nowPrice;
     }
 
     public Date getActivityTime() {

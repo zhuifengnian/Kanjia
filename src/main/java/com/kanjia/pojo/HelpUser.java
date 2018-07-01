@@ -1,5 +1,6 @@
 package com.kanjia.pojo;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class HelpUser {
@@ -11,9 +12,9 @@ public class HelpUser {
 
     private Date createTime;
 
-    private String cutPrice;
+    private BigDecimal cutPrice;
 
-    public HelpUser(Integer id, Integer orderId, Integer userId, Date createTime, String cutPrice) {
+    public HelpUser(Integer id, Integer orderId, Integer userId, Date createTime, BigDecimal cutPrice) {
         this.id = id;
         this.orderId = orderId;
         this.userId = userId;
@@ -57,11 +58,11 @@ public class HelpUser {
         this.createTime = createTime;
     }
 
-    public String getCutPrice() {
+    public BigDecimal getCutPrice() {
         return cutPrice;
     }
 
-    public void setCutPrice(String cutPrice) {
-        this.cutPrice = cutPrice == null ? null : cutPrice.trim();
+    public void setCutPrice(BigDecimal cutPrice) {
+        this.cutPrice = cutPrice;
     }
 }
