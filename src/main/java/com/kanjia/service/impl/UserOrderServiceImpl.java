@@ -6,6 +6,8 @@ import com.kanjia.mapper.BaseMapper;
 import com.kanjia.mapper.UserOrderMapper;
 import com.kanjia.pojo.UserOrder;
 import com.kanjia.service.UserOrderService;
+import com.kanjia.utils.OverTimeUtil;
+import com.kanjia.utils.PageUtil;
 import com.kanjia.vo.EnterpriseOrderVo;
 import com.kanjia.vo.EnterprisePaymentVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,6 +119,24 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
             pageInfo.setRows(getEnterpriseConsumeOrder(id,page));
             pageInfo.setTotal(getEnterpriseConsumeOrderCount(id));
         }
+        return pageInfo;
+    }
+
+    @Override
+    public List<EnterpriseOrderVo> getEnterpriseMonthOrder(Integer id, Timestamp d,Page page) {
+        return userOrderMapper.getEnterpriseMonthOrder(id,d,page);
+    }
+
+    @Override
+    public Integer getEnterpriseMonthOrderCount(Integer id) {
+        return userOrderMapper.getEnterpriseMonthOrderCount(id);
+    }
+    @Override
+    public PageInfo<EnterpriseOrderVo> EnterpriseMonthOrder(Integer id,Timestamp d, Page page) {
+        PageInfo<EnterpriseOrderVo> pageInfo=new PageInfo<>();
+        List<EnterpriseOrderVo> list=userOrderMapper.getEnterpriseMonthOrder(id,d,page);
+        pageInfo.setRows(list);
+        pageInfo.setTotal(userOrderMapper.getEnterpriseMonthOrderCount(id));
         return pageInfo;
     }
 }

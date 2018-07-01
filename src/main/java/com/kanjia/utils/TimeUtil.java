@@ -1,11 +1,7 @@
 package com.kanjia.utils;
 
-import org.apache.commons.beanutils.PropertyUtils;
 
-import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.TimeZone;
 
 /**

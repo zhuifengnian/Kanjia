@@ -11,12 +11,14 @@ import com.kanjia.service.ActivityService;
 import com.kanjia.service.EnterprisePaymentService;
 import com.kanjia.service.EnterpriseService;
 import com.kanjia.service.UserOrderService;
+import com.kanjia.utils.OverTimeUtil;
 import com.kanjia.utils.PageUtil;
 import com.kanjia.utils.QiNiuUtil;
 import com.kanjia.utils.TimeUtil;
 import com.kanjia.vo.EnterpriseOrderVo;
 import com.kanjia.vo.PageActivityVo;
 import io.swagger.annotations.ApiOperation;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -150,5 +152,14 @@ public class EnterpriseController {
         int insert = enterpriseService.updateByPrimaryKeySelective(enterprise);
         return new ReturnMessage(ResponseCode.OK, insert);
     }
+    @RequestMapping(value = "/checkData", method = RequestMethod.POST)
+    @ApiOperation(value = "企业获取数据", httpMethod = "POST")
+    @ResponseBody
+    public ReturnMessage checkData(@RequestParam("enterpriseId") Integer enterpriseId,@RequestParam("name") String name,@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Integer pageNumber){
 
+          PageInfo<EnterpriseOrderVo> pageInfo=  userOrderService.EnterpriseMonthOrder(enterpriseId,OverTimeUtil.getTime(name),PageUtil.setPage(pageNumber));
+
+
+        return new ReturnMessage(ResponseCode.OK, pageInfo);
+    }
 }

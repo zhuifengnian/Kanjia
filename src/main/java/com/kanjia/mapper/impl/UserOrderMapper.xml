@@ -261,5 +261,24 @@
     and uo.state =3
     and a.enterprise_id=#{id}
   </select>
-
+  <!--提取数据-->
+  <select id="getEnterpriseMonthOrder" resultType="com.kanjia.vo.EnterpriseOrderVo">
+    select uo.id,uo.user_id as userId,uo.minu_price as minuPrice,a.title,a.picture,u.nickname as nickName
+    from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
+    where 1=1
+    and uo.state =3
+    and a.enterprise_id=#{id}
+    and uo.update_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}
+    <if test="page != null and page.start != null and page.pageSize!=null">
+      limit #{page.start},#{page.pageSize}
+    </if>
+  </select>
+  <select id="getEnterpriseMonthOrderCount" resultType="Integer">
+    select  count(1)
+    from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
+    where 1=1
+    and uo.state =3
+    and a.enterprise_id=#{id}
+     and uo.update_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}
+  </select>
 </mapper>

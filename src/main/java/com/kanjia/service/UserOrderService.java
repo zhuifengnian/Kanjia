@@ -78,4 +78,21 @@ public interface UserOrderService extends BaseService<UserOrder>{
      * @return
      */
     PageInfo<EnterpriseOrderVo> getEnterpriseOrder(String name, Integer id,Timestamp d,Timestamp t,Page page);
+    /**
+     * 获取商家7天、1个月、3个月、1年所成功订单
+     * @param id
+     * @return
+     */
+    List<EnterpriseOrderVo> getEnterpriseMonthOrder(@Param("id")Integer id, @Param("d")Timestamp d,@Param("page") Page page);
+    Integer getEnterpriseMonthOrderCount(Integer id);
+
+    /**
+     *
+     * @param id
+     * @param d
+     * @param page
+     * @param name
+     * @return
+     */
+    PageInfo<EnterpriseOrderVo> EnterpriseMonthOrder(Integer id,Timestamp d, Page page);
 }

@@ -6,6 +6,7 @@ import com.kanjia.pojo.EnterprisePayment;
 import com.kanjia.pojo.User;
 import com.kanjia.pojo.UserOrder;
 import com.kanjia.service.*;
+import com.kanjia.utils.OverTimeUtil;
 import com.kanjia.utils.TimeUtil;
 import com.kanjia.vo.EnterpriseOrderVo;
 import com.kanjia.vo.EnterprisePaymentVo;
@@ -21,6 +22,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -66,8 +68,9 @@ public class ServiceTest {
     }
     @Test
     public void insertEnterprises(){
+    System.out.println( userOrderService.EnterpriseMonthOrder(1,OverTimeUtil.getTime("一个月"),null));
 
-    //  EnterprisePayment enterprisePayment=enterprisePaymentService.getEnterprisePayment(1);
+            //  EnterprisePayment enterprisePayment=enterprisePaymentService.getEnterprisePayment(1);
 //        BigDecimal totalMoney=new BigDecimal(12.2);
 //        String t="21";
 //       BigDecimal b= new BigDecimal(t);
