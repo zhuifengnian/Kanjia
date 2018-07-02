@@ -281,4 +281,13 @@
     and a.enterprise_id=#{id}
      and uo.update_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}
   </select>
+  <select id="getOrdersByAid" resultType="userOrder">
+    select * from user_order where activity_id = #{aid}
+    <if test="page != null and page.start != null and page.pageSize!=null">
+      limit #{page.start},#{page.pageSize}
+    </if>
+  </select>
+  <select id="getOrdersByAidCount" resultType="int">
+    select count(id) from user_order where activity_id = #{aid}
+  </select>
 </mapper>

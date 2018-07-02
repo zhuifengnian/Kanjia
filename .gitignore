@@ -2,7 +2,6 @@
 .idea
 kanjia.iml
 /src/main/resources/rebel.xml
-/src/test/
 /classes/
 # IntelliJ out
 /out/

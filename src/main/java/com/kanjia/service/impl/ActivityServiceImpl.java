@@ -4,10 +4,10 @@ import com.kanjia.basic.Page;
 import com.kanjia.basic.PageInfo;
 import com.kanjia.basic.ResponseCode;
 import com.kanjia.basic.ReturnMessage;
-import com.kanjia.mapper.ActivityMapper;
-import com.kanjia.mapper.BaseMapper;
-import com.kanjia.mapper.PictureMapper;
+import com.kanjia.mapper.*;
 import com.kanjia.pojo.Activity;
+import com.kanjia.pojo.User;
+import com.kanjia.pojo.UserOrder;
 import com.kanjia.service.ActivityService;
 import com.kanjia.utils.QiNiuUtil;
 import com.kanjia.vo.DetailActivityVo;
@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,6 +27,10 @@ public class ActivityServiceImpl extends AbstractBaseServiceImpl<Activity> imple
     private ActivityMapper activityMapper;
     @Autowired
     private PictureMapper pictureMapper;
+    @Autowired
+    private UserOrderMapper userOrderMapper;
+    @Autowired
+    private UserMapper userMapper;
     @Override
     public BaseMapper<Activity> getDao() {
         return activityMapper;
@@ -150,6 +155,21 @@ public class ActivityServiceImpl extends AbstractBaseServiceImpl<Activity> imple
 
 
         return list.get(0);
+    }
+
+    @Override
+    public List<String> getOrderUserAvatarByAid(Integer aid, Page page) {
+        List<String> avatars = new ArrayList<>();
+        //先拿到活动下的订单
+        List<UserOrder> ordersByAid = userOrderMapper.getOrdersByAid(aid, page);
+        for(UserOrder uo: ordersByAid){
+            //拿到对应的用户id
+            Integer userId = uo.getUserId();
+            User user = userMapper.selectByPrimaryKey(userId);
+            String avatarurl = user.getAvatarurl();
+            avatars.add(avatarurl);
+        }
+        return avatars;
     }
 
 

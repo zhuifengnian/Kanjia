@@ -69,24 +69,5 @@ public class ServiceTest {
     @Test
     public void insertEnterprises(){
     System.out.println( userOrderService.EnterpriseMonthOrder(1,OverTimeUtil.getTime("一个月"),null));
-
-            //  EnterprisePayment enterprisePayment=enterprisePaymentService.getEnterprisePayment(1);
-//        BigDecimal totalMoney=new BigDecimal(12.2);
-//        String t="21";
-//       BigDecimal b= new BigDecimal(t);
-//       totalMoney=totalMoney.add(b);
-//       System.out.println( totalMoney);
-//        EnterprisePaymentVo enterprisePaymentVo =userOrderService.getQrCode("qwert");
-//        EnterprisePayment enterprisePayment  = enterprisePaymentService.getEnterprisePayment(1);
-//        BigDecimal totalMoney =  enterprisePayment.getTotalMoney();
-//     //   BigDecimal b=new BigDecimal(enterprisePaymentVo.getMinuPrice());
-//        if(totalMoney==null){
-//            totalMoney=b;
-//        }
-//        else{
-//            totalMoney=totalMoney.add(b);
-//        }
-//
-//        System.out.println( totalMoney);
     }
 }

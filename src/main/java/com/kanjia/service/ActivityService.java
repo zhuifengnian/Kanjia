@@ -101,4 +101,9 @@ public interface ActivityService extends BaseService<Activity>{
      */
    DetailActivityVo getDetailsActivity(Integer id);
 
+    /**
+     * 根据活动id获得此活动下的已经生成订单的用户头像列表
+     */
+    List<String> getOrderUserAvatarByAid(Integer aid, Page page);
+
 }

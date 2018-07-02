@@ -65,7 +65,4 @@ public class ActivityController {
         return new ReturnMessage(ResponseCode.OK, detailActivityVo);
     }
 
-
-
-
 }

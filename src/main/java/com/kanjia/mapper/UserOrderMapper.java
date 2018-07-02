@@ -74,4 +74,12 @@ public interface UserOrderMapper extends BaseMapper<UserOrder>{
     List<EnterpriseOrderVo> getEnterpriseMonthOrder(@Param("id")Integer id, @Param("d")Timestamp d,@Param("page") Page page);
     Integer getEnterpriseMonthOrderCount(Integer id);
 
+    List<UserOrder> getOrdersByAid(@Param("aid") Integer aid,@Param("page") Page page);
+
+    /**
+     * 获取活动下的订单总数
+     * @return
+     * @param aid
+     */
+    Integer getOrdersByAidCount(Integer aid);
 }

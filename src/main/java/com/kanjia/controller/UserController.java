@@ -63,7 +63,7 @@ public class UserController {
     public ReturnMessage getopenid(@RequestParam("js_code")String js_code){
 
         TenpayHttpClient httpClient = new TenpayHttpClient();
-        String tmpUrl = GET_OPENID_URL + "?appid="+ConstantUtil.APP_ID2 +"&secret="+ConstantUtil.APP_SECRET2 +"&js_code="+js_code+"&grant_type=authorization_code";
+        String tmpUrl = GET_OPENID_URL + "?appid="+ConstantUtil.APP_ID +"&secret="+ConstantUtil.APP_SECRET +"&js_code="+js_code+"&grant_type=authorization_code";
         try {
             httpClient.httpGetMethod(tmpUrl);
             String resContent = httpClient.getResContent();

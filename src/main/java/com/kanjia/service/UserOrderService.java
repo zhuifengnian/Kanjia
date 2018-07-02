@@ -5,7 +5,6 @@ import com.kanjia.basic.Page;
 import com.kanjia.basic.PageInfo;
 import com.kanjia.pojo.UserOrder;
 import com.kanjia.vo.EnterpriseOrderVo;
-import com.kanjia.vo.EnterpriseOrderVo;
 import com.kanjia.vo.EnterprisePaymentVo;
 import org.apache.ibatis.annotations.Param;
 
@@ -91,8 +90,16 @@ public interface UserOrderService extends BaseService<UserOrder>{
      * @param id
      * @param d
      * @param page
-     * @param name
      * @return
      */
     PageInfo<EnterpriseOrderVo> EnterpriseMonthOrder(Integer id,Timestamp d, Page page);
+
+    /**
+     * 获取活动下的订单
+     *
+     * @param aid
+     * @param page
+     * @return
+     */
+    PageInfo<UserOrder> getOrdersByAid(Integer aid, Page page);
 }
