@@ -11,10 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-
 /**
- *
  * liyue 2018/6/29
  */
 @RestController
@@ -33,16 +30,16 @@ public class EnterprisePaymentController {
     @ResponseBody
     public ReturnMessage scanOders(@RequestParam("qr_code") String qr_code) {
 
-        int [] insert = new int[2];
-        EnterprisePaymentVo enterprisePaymentVo =userOrderService.getQrCode(qr_code);
+        int[] insert = new int[2];
+        EnterprisePaymentVo enterprisePaymentVo = userOrderService.getQrCode(qr_code);
         //修改orders下的状态
         if (null != enterprisePaymentVo) {
             UserOrder userOrder = new UserOrder();
             userOrder.setState(3);
             userOrder.setId(enterprisePaymentVo.getId());
-            insert [0]= userOrderService.updateByPrimaryKeySelective(userOrder);
+            insert[0] = userOrderService.updateByPrimaryKeySelective(userOrder);
 
-            EnterprisePayment enterprisePayment  = enterprisePaymentService.getEnterprisePayment(enterprisePaymentVo.getEnterpriseId());
+            EnterprisePayment enterprisePayment = enterprisePaymentService.getEnterprisePayment(enterprisePaymentVo.getEnterpriseId());
 
             enterprisePayment.setTotalMoney(enterprisePayment.getTotalMoney().add(enterprisePaymentVo.getMinuPrice()));
             insert[1] = enterprisePaymentService.updateByPrimaryKeySelective(enterprisePayment);
@@ -51,12 +48,11 @@ public class EnterprisePaymentController {
 
         return new ReturnMessage(ResponseCode.OK, insert);
     }
+
     @RequestMapping(value = "/withdraw", method = RequestMethod.POST)
     @ApiOperation(value = "企业提现", httpMethod = "POST")
     @ResponseBody
     public ReturnMessage withDraw() {
-
-
 
 
         return new ReturnMessage(ResponseCode.OK, 1);

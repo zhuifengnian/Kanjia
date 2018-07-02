@@ -15,11 +15,11 @@ public class Page {
 
 
     public Integer getStart() {
-        if(pageNumber!=null){
+        if (pageNumber != null) {
             if (pageNumber <= 1) {
-                start=0;
-            }else{
-                start=(pageNumber-1)*pageSize;
+                start = 0;
+            } else {
+                start = (pageNumber - 1) * pageSize;
             }
         }
         return start;
@@ -46,11 +46,12 @@ public class Page {
     }
 
     public Integer getTotalPageCount() {
-        if(total!=null&&pageSize!=null){
-            totalPageCount=total/pageSize+(total%pageSize==0?0:1);
+        if (total != null && pageSize != null) {
+            totalPageCount = total / pageSize + (total % pageSize == 0 ? 0 : 1);
         }
         return totalPageCount;
     }
+
     public void setTotalPageCount(Integer totalPageCount) {
         this.totalPageCount = totalPageCount;
     }
@@ -62,7 +63,6 @@ public class Page {
     public void setTotal(Integer total) {
         this.total = total;
     }
-
 
 
 }

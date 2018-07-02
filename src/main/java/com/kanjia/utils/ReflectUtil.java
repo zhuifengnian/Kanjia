@@ -13,10 +13,11 @@ public class ReflectUtil {
 
     /**
      * 封装复制参数的方法
-     * @param dest  目标赋予对象
-     * @param src   源对象
+     *
+     * @param dest 目标赋予对象
+     * @param src  源对象
      */
-    public static void copyProperties(Object dest, Object src){
+    public static void copyProperties(Object dest, Object src) {
         try {
             PropertyUtils.copyProperties(dest, src);
         } catch (IllegalAccessException e) {
@@ -28,30 +29,31 @@ public class ReflectUtil {
         }
     }
 
-    public static Object getValueByName(Object obj,String name) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        return PropertyUtils.getProperty(obj,name);
+    public static Object getValueByName(Object obj, String name) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        return PropertyUtils.getProperty(obj, name);
 
     }
 
-    public static Object getValueByNames(Object obj,String ...name) {
-        for(String n:name){
-            Object v= null;
+    public static Object getValueByNames(Object obj, String... name) {
+        for (String n : name) {
+            Object v = null;
             try {
-                v = PropertyUtils.getProperty(obj,n);
-            } catch (Exception e) {}
-            if(v!=null)
+                v = PropertyUtils.getProperty(obj, n);
+            } catch (Exception e) {
+            }
+            if (v != null)
                 return v;
         }
         return null;
     }
 
-    public static Map<String,Object> generalMap(Object ...obj){
-        Map<String,Object> map=new HashMap<>();
+    public static Map<String, Object> generalMap(Object... obj) {
+        Map<String, Object> map = new HashMap<>();
         Map temMap;
-        for(Object o:obj) {
+        for (Object o : obj) {
             try {
-                temMap=PropertyUtils.describe(o);
-                if(temMap!=null&&temMap.size()>0){
+                temMap = PropertyUtils.describe(o);
+                if (temMap != null && temMap.size() > 0) {
                     map.putAll(temMap);
                 }
             } catch (Exception e) {

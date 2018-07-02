@@ -1,19 +1,20 @@
 package com.kanjia.utils;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
 /**
- * @description 与文件有关的工具类
  * @author fan
+ * @description 与文件有关的工具类
  * @create 2018/4/22 1:21
  */
 public class FileUtil {
     //用于记录需要被替换的后缀
     //改变文件后缀
-    public static boolean replaceSuffix(String path, Map<String, String> suffixMap){
+    public static boolean replaceSuffix(String path, Map<String, String> suffixMap) {
         File dir = new File(path);
-        if(!dir.isDirectory()){
+        if (!dir.isDirectory()) {
             throw new RuntimeException("该path不是一个目录");
         }
         _replaceSuffix(dir, suffixMap);
@@ -21,9 +22,9 @@ public class FileUtil {
         return true;
     }
 
-    private static void _replaceSuffix(File dir, Map<String, String> suffixMap){
+    private static void _replaceSuffix(File dir, Map<String, String> suffixMap) {
         File[] files = dir.listFiles();
-        for(File file: files){
+        for (File file : files) {
             String filePath = file.getPath();
             for (Map.Entry<String, String> entry : suffixMap.entrySet()) {
                 if (filePath.endsWith(entry.getKey())) {
@@ -48,7 +49,7 @@ public class FileUtil {
                     break;
                 }
             }
-            if(file.isDirectory()){
+            if (file.isDirectory()) {
                 _replaceSuffix(file, suffixMap);
             }
         }

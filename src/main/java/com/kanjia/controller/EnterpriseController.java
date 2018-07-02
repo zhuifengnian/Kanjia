@@ -6,7 +6,6 @@ import com.kanjia.basic.ReturnMessage;
 import com.kanjia.pojo.Activity;
 import com.kanjia.pojo.Enterprise;
 import com.kanjia.pojo.EnterprisePayment;
-import com.kanjia.pojo.UserOrder;
 import com.kanjia.service.ActivityService;
 import com.kanjia.service.EnterprisePaymentService;
 import com.kanjia.service.EnterpriseService;
@@ -18,19 +17,14 @@ import com.kanjia.utils.TimeUtil;
 import com.kanjia.vo.EnterpriseOrderVo;
 import com.kanjia.vo.PageActivityVo;
 import io.swagger.annotations.ApiOperation;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.List;
-
-import static com.kanjia.utils.QiNiuUtil.manageFile;
 
 /**
- *
  * liyue 2018/6/29
  */
 @RestController
@@ -93,7 +87,7 @@ public class EnterpriseController {
     @ResponseBody
     @RequestMapping(value = "/deleteActivity", method = RequestMethod.POST)
     public ReturnMessage deleteActivity(Integer id) {
-        Activity activity=new Activity();
+        Activity activity = new Activity();
         activity.setUpdateTime(Calendar.getInstance().getTime());
         activity.setState(0);
         Integer insert = activityService.updateByPrimaryKeySelective(activity);
@@ -108,28 +102,30 @@ public class EnterpriseController {
         PageInfo<PageActivityVo> pageInfo = activityService.getEnterpriseActivity(name, id, PageUtil.setPage(pageNumber));
         return new ReturnMessage(ResponseCode.OK, pageInfo);
     }
+
     @ApiOperation(value = "查看订单", notes = "查看订单")
     @ResponseBody
     @RequestMapping(value = "/checkOrder", method = RequestMethod.POST)
     public ReturnMessage checkOrder(@RequestParam("id") Integer id, @RequestParam("name") String name, @RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Integer pageNumber) {
-        Timestamp timestamp[]=TimeUtil.getTime();
-        PageInfo<EnterpriseOrderVo> pageInfo =userOrderService.getEnterpriseOrder(name, id,timestamp[0],timestamp[1], PageUtil.setPage(pageNumber));
+        Timestamp timestamp[] = TimeUtil.getTime();
+        PageInfo<EnterpriseOrderVo> pageInfo = userOrderService.getEnterpriseOrder(name, id, timestamp[0], timestamp[1], PageUtil.setPage(pageNumber));
         return new ReturnMessage(ResponseCode.OK, pageInfo);
     }
+
     @RequestMapping(value = "/insertEnterprise", method = RequestMethod.POST)
     @ApiOperation(value = "企业注册接口", httpMethod = "POST")
     @ResponseBody
-    public ReturnMessage insertEnterprise(Enterprise enterprise){
-        Integer id= enterpriseService.getId(enterprise.getOpenId());
+    public ReturnMessage insertEnterprise(Enterprise enterprise) {
+        Integer id = enterpriseService.getId(enterprise.getOpenId());
         Integer insert = null;
-        if(null == id) {
+        if (null == id) {
             enterprise.setState(1);
-            insert =enterpriseService.insert(enterprise);
-            if(insert!=null) {
+            insert = enterpriseService.insert(enterprise);
+            if (insert != null) {
                 EnterprisePayment enterprisePayment = new EnterprisePayment();
                 enterprisePayment.setEnterpriseId(insert);
 
-                insert= enterprisePaymentService.insert(enterprisePayment);
+                insert = enterprisePaymentService.insert(enterprisePayment);
             }
         }
 
@@ -140,24 +136,25 @@ public class EnterpriseController {
     @RequestMapping(value = "/insertEnterpriseLicence", method = RequestMethod.POST)
     @ApiOperation(value = "企业上传营业执照接口", httpMethod = "POST")
     @ResponseBody
-    public ReturnMessage insertEnterpriseLicence(@RequestParam("enterpriseId") Integer enterpriseId, @RequestParam(value = "flyfile", required = false) MultipartFile flfile){
+    public ReturnMessage insertEnterpriseLicence(@RequestParam("enterpriseId") Integer enterpriseId, @RequestParam(value = "flyfile", required = false) MultipartFile flfile) {
         String picture = "";
-        Enterprise enterprise= new Enterprise();
+        Enterprise enterprise = new Enterprise();
         enterprise.setId(enterpriseId);
         if (null != flfile) {
             picture = QiNiuUtil.manageFile(flfile);
         }
-           enterprise.setLicense(picture);
-       enterprise.setUpdateTime(Calendar.getInstance().getTime());
+        enterprise.setLicense(picture);
+        enterprise.setUpdateTime(Calendar.getInstance().getTime());
         int insert = enterpriseService.updateByPrimaryKeySelective(enterprise);
         return new ReturnMessage(ResponseCode.OK, insert);
     }
+
     @RequestMapping(value = "/checkData", method = RequestMethod.POST)
     @ApiOperation(value = "企业获取数据", httpMethod = "POST")
     @ResponseBody
-    public ReturnMessage checkData(@RequestParam("enterpriseId") Integer enterpriseId,@RequestParam("name") String name,@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Integer pageNumber){
+    public ReturnMessage checkData(@RequestParam("enterpriseId") Integer enterpriseId, @RequestParam("name") String name, @RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Integer pageNumber) {
 
-          PageInfo<EnterpriseOrderVo> pageInfo=  userOrderService.EnterpriseMonthOrder(enterpriseId,OverTimeUtil.getTime(name),PageUtil.setPage(pageNumber));
+        PageInfo<EnterpriseOrderVo> pageInfo = userOrderService.EnterpriseMonthOrder(enterpriseId, OverTimeUtil.getTime(name), PageUtil.setPage(pageNumber));
 
 
         return new ReturnMessage(ResponseCode.OK, pageInfo);

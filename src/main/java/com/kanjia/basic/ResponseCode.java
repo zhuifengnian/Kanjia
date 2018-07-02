@@ -12,7 +12,7 @@ public enum ResponseCode {
 
     private int code;
 
-    ResponseCode(int code){
+    ResponseCode(int code) {
         this.code = code;
     }
 

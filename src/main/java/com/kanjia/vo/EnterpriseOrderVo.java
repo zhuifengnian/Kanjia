@@ -1,7 +1,6 @@
 package com.kanjia.vo;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * Created by liyue on 2018/6/29
@@ -20,8 +19,6 @@ public class EnterpriseOrderVo {
     private String nickName;
 
 
-
-
     public Integer getId() {
         return id;
     }
@@ -37,7 +34,6 @@ public class EnterpriseOrderVo {
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
-
 
 
     public String getTitle() {

@@ -16,9 +16,9 @@ public class PageActivityVo {
 
     private String adress;
 
-    private BigDecimal  originPrice;
+    private BigDecimal originPrice;
 
-    private BigDecimal  nowPrice;
+    private BigDecimal nowPrice;
 
     private Date activityTime;
 
@@ -30,8 +30,7 @@ public class PageActivityVo {
 
     private Date cutTime;
 
-
-
+    private List<String> headSculpture;
 
     public Integer getId() {
         return id;
@@ -64,7 +63,6 @@ public class PageActivityVo {
     public void setAdress(String adress) {
         this.adress = adress;
     }
-
 
 
     public Date getActivityTime() {
@@ -122,5 +120,13 @@ public class PageActivityVo {
 
     public void setNowPrice(BigDecimal nowPrice) {
         this.nowPrice = nowPrice;
+    }
+
+    public List<String> getHeadSculpture() {
+        return headSculpture;
+    }
+
+    public void setHeadSculpture(List<String> headSculpture) {
+        this.headSculpture = headSculpture;
     }
 }

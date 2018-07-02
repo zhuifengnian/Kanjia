@@ -18,7 +18,7 @@ public class DetailActivityVo {
 
     private String adress;
 
-    private BigDecimal  originPrice;
+    private BigDecimal originPrice;
 
     private BigDecimal nowPrice;
 
@@ -82,7 +82,6 @@ public class DetailActivityVo {
     public void setAdress(String adress) {
         this.adress = adress;
     }
-
 
 
     public Date getActivityTime() {

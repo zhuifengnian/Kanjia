@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 public interface EnterpriseMapper extends BaseMapper<Enterprise> {
     /**
      * 通过open_id获得eid
+     *
      * @param openId
      * @return
      */

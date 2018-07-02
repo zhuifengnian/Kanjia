@@ -9,7 +9,7 @@ import java.util.Set;
 public class ClientRequestHandler extends PrepayIdRequestHandler {
 
     public ClientRequestHandler(HttpServletRequest request,
-            HttpServletResponse response) {
+                                HttpServletResponse response) {
         super(request, response);
         // TODO Auto-generated constructor stub
     }

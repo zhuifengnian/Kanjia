@@ -11,6 +11,6 @@
     <title>Title</title>
 </head>
 <body>
-    这是点赞王首页
+这是点赞王首页
 </body>
 </html>

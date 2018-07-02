@@ -9,9 +9,10 @@ public class ReturnMessage {
     private ResponseCode mResponseCode;
     private Object result;
 
-    public ReturnMessage(){}
+    public ReturnMessage() {
+    }
 
-    public ReturnMessage(ResponseCode responseCode, Object result){
+    public ReturnMessage(ResponseCode responseCode, Object result) {
         this.mResponseCode = responseCode;
         this.result = result;
     }

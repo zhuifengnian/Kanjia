@@ -19,22 +19,29 @@ public abstract class AbstractBaseServiceImpl<T> implements BaseService<T> {
     public int deleteByPrimaryKey(Integer id) {
         return getDao().deleteByPrimaryKey(id);
     }
+
     public List<T> select(T record, Page page) {
         if (page == null)
             page = new Page();
-        if ((page.getPageNumber() == null&&page.getStart()==null) || page.getPageSize() == null || page.getPageSize() >= 100) {
+        if ((page.getPageNumber() == null && page.getStart() == null) || page.getPageSize() == null || page.getPageSize() >= 100) {
             page.setPageNumber(1);
             page.setPageSize(10);
         }
         return getDao().select(ReflectUtil.generalMap(record, page));
     }
-    public int insertSelective(T record) {return getDao().insertSelective(record);}
-    public int updateByPrimaryKey(T record) {
-      return getDao().updateByPrimaryKey(record);
+
+    public int insertSelective(T record) {
+        return getDao().insertSelective(record);
     }
+
+    public int updateByPrimaryKey(T record) {
+        return getDao().updateByPrimaryKey(record);
+    }
+
     public int updateByPrimaryKeySelective(T record) {
         return getDao().updateByPrimaryKeySelective(record);
     }
+
     @Override
     public int selectCount(T record) {
         return getDao().selectCount(record);
@@ -44,8 +51,8 @@ public abstract class AbstractBaseServiceImpl<T> implements BaseService<T> {
     public int insert(T record) {
         getDao().insertSelective(record);
         try {
-            if(record!=null)
-                return  (Integer) ReflectUtil.getValueByName(record,"id");
+            if (record != null)
+                return (Integer) ReflectUtil.getValueByName(record, "id");
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
@@ -63,7 +70,6 @@ public abstract class AbstractBaseServiceImpl<T> implements BaseService<T> {
     public int update(T record) {
         return getDao().updateByPrimaryKeySelective(record);
     }
-
 
 
 }

@@ -8,9 +8,9 @@ import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 
-@ContextConfiguration(locations = { "classpath:spring.xml","classpath:application-test.xml" })
+@ContextConfiguration(locations = {"classpath:spring.xml", "classpath:application-test.xml"})
 
-@RunWith(SpringJUnit4ClassRunner.class) 
-public abstract class springbaseTest extends AbstractJUnit4SpringContextTests{
-	protected Logger logger = LoggerFactory.getLogger(getClass());
+@RunWith(SpringJUnit4ClassRunner.class)
+public abstract class springbaseTest extends AbstractJUnit4SpringContextTests {
+    protected Logger logger = LoggerFactory.getLogger(getClass());
 }

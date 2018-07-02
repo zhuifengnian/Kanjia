@@ -1,31 +1,17 @@
 package com.kanjia.controller;
 
-import com.kanjia.basic.Page;
 import com.kanjia.basic.PageInfo;
 import com.kanjia.basic.ResponseCode;
 import com.kanjia.basic.ReturnMessage;
-import com.kanjia.exception.ApiException;
-import com.kanjia.pojo.Activity;
-import com.kanjia.pojo.User;
 import com.kanjia.service.ActivityService;
-import com.kanjia.service.UserService;
 import com.kanjia.utils.PageUtil;
-import com.kanjia.utils.QiNiuUtil;
 import com.kanjia.vo.DetailActivityVo;
 import com.kanjia.vo.PageActivityVo;
-import com.kanjia.wxpay.ConstantUtil;
-import com.kanjia.wxpay.TenpayHttpClient;
 import io.swagger.annotations.ApiOperation;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.util.List;
 
 /**
- *
  * liyue 2018/6/29
  */
 @RestController
@@ -37,8 +23,7 @@ public class ActivityController {
     private ActivityService activityService;
 
 
-
-//    @ApiOperation(value = "获取活动列表", notes = "获取活动列表")
+    //    @ApiOperation(value = "获取活动列表", notes = "获取活动列表")
 //    @ResponseBody
 //    @RequestMapping(value = "/getListActivity", method = RequestMethod.POST)
 //    public ReturnMessage getListActivity(@RequestParam("name") String name,@RequestParam(required = false) Integer pageSize,@RequestParam(required = false) Integer pageNumber){
@@ -50,18 +35,18 @@ public class ActivityController {
     @ApiOperation(value = "获取活动列表", notes = "获取活动列表")
     @ResponseBody
     @RequestMapping(value = "/getListActivity", method = RequestMethod.POST)
-    public ReturnMessage getListActivity(@RequestParam(required = false) Integer pageSize,@RequestParam(required = false) Integer pageNumber){
-        PageInfo<PageActivityVo> pageinfo =new PageInfo<>();
-        pageinfo.setTotal(activityService.getAllActivityCount());
-        pageinfo.setRows(activityService.getAllActivity(PageUtil.setPage(pageNumber)));
+    public ReturnMessage getListActivity(@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Integer pageNumber) {
+        PageInfo<PageActivityVo> pageinfo = activityService.getAllActivity(PageUtil.setPage(pageNumber));
+
         return new ReturnMessage(ResponseCode.OK, pageinfo);
     }
+
     @ApiOperation(value = "获取活动详情", notes = "获取活动详情")
     @ResponseBody
     @RequestMapping(value = "/getIdActivity", method = RequestMethod.POST)
-    public ReturnMessage getIdActivity(@RequestParam("id") Integer id){
+    public ReturnMessage getIdActivity(@RequestParam("id") Integer id) {
 
-        DetailActivityVo detailActivityVo= activityService.getDetailsActivity(id);
+        DetailActivityVo detailActivityVo = activityService.getDetailsActivity(id);
         return new ReturnMessage(ResponseCode.OK, detailActivityVo);
     }
 

@@ -1,7 +1,6 @@
 package com.kanjia.vo;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * Created by liyue on 2018/6/29

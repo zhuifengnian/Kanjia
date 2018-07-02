@@ -1,102 +1,102 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.kanjia.mapper.UserMapper" >
-  <resultMap id="BaseResultMap" type="com.kanjia.pojo.User" >
-    <constructor >
-      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="nickname" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="avatarurl" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="gender" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="email" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="phone" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="open_id" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="state" jdbcType="VARCHAR" javaType="java.lang.String" />
-    </constructor>
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.kanjia.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.kanjia.pojo.User">
+        <constructor>
+            <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="nickname" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="avatarurl" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="gender" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="email" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="phone" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="open_id" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="state" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, nickname, avatarurl, gender, email, phone, open_id, create_time, update_time, 
     state
   </sql>
-  <!-- 分页查詢 -->
-  <select id="select" parameterType="Map" resultMap="BaseResultMap">
-    SELECT *
-    FROM user
-    WHERE 1=1
-    <if test="nickname != null" >
-      and nickname = #{nickname,jdbcType=VARCHAR}
-    </if>
-    <if test="avatarurl != null" >
-      and avatarurl = #{avatarurl,jdbcType=VARCHAR}
-    </if>
-    <if test="gender != null" >
-      and gender = #{gender,jdbcType=INTEGER}
-    </if>
-    <if test="email != null" >
-      and email = #{email,jdbcType=VARCHAR}
-    </if>
-    <if test="phone != null" >
-      and phone = #{phone,jdbcType=VARCHAR}
-    </if>
-    <if test="openId != null" >
-      and open_id = #{openId,jdbcType=VARCHAR}
-    </if>
-    <if test="createTime != null" >
-      and create_time = #{createTime,jdbcType=TIMESTAMP}
-    </if>
-    <if test="updateTime != null" >
-      and update_time = #{updateTime,jdbcType=TIMESTAMP}
-    </if>
-    <if test="state != null" >
-      and state = #{state,jdbcType=VARCHAR}
-    </if>
-  </select>
-  <!-- 查詢数量 -->
-  <select id="selectCount" parameterType="com.kanjia.pojo.User"
-          resultType="Integer">
-    SELECT count(*)
-    FROM user
-    WHERE 1=1
-    <if test="nickname != null" >
-      and nickname = #{nickname,jdbcType=VARCHAR}
-    </if>
-    <if test="avatarurl != null" >
-      and avatarurl = #{avatarurl,jdbcType=VARCHAR}
-    </if>
-    <if test="gender != null" >
-      and gender = #{gender,jdbcType=INTEGER}
-    </if>
-    <if test="email != null" >
-      and email = #{email,jdbcType=VARCHAR}
-    </if>
-    <if test="phone != null" >
-      and phone = #{phone,jdbcType=VARCHAR}
-    </if>
-    <if test="openId != null" >
-      and open_id = #{openId,jdbcType=VARCHAR}
-    </if>
-    <if test="createTime != null" >
-      and create_time = #{createTime,jdbcType=TIMESTAMP}
-    </if>
-    <if test="updateTime != null" >
-      and update_time = #{updateTime,jdbcType=TIMESTAMP}
-    </if>
-    <if test="state != null" >
-      and state = #{state,jdbcType=VARCHAR}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from user
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <!-- 分页查詢 -->
+    <select id="select" parameterType="Map" resultMap="BaseResultMap">
+        SELECT *
+        FROM user
+        WHERE 1=1
+        <if test="nickname != null">
+            and nickname = #{nickname,jdbcType=VARCHAR}
+        </if>
+        <if test="avatarurl != null">
+            and avatarurl = #{avatarurl,jdbcType=VARCHAR}
+        </if>
+        <if test="gender != null">
+            and gender = #{gender,jdbcType=INTEGER}
+        </if>
+        <if test="email != null">
+            and email = #{email,jdbcType=VARCHAR}
+        </if>
+        <if test="phone != null">
+            and phone = #{phone,jdbcType=VARCHAR}
+        </if>
+        <if test="openId != null">
+            and open_id = #{openId,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="state != null">
+            and state = #{state,jdbcType=VARCHAR}
+        </if>
+    </select>
+    <!-- 查詢数量 -->
+    <select id="selectCount" parameterType="com.kanjia.pojo.User"
+            resultType="Integer">
+        SELECT count(*)
+        FROM user
+        WHERE 1=1
+        <if test="nickname != null">
+            and nickname = #{nickname,jdbcType=VARCHAR}
+        </if>
+        <if test="avatarurl != null">
+            and avatarurl = #{avatarurl,jdbcType=VARCHAR}
+        </if>
+        <if test="gender != null">
+            and gender = #{gender,jdbcType=INTEGER}
+        </if>
+        <if test="email != null">
+            and email = #{email,jdbcType=VARCHAR}
+        </if>
+        <if test="phone != null">
+            and phone = #{phone,jdbcType=VARCHAR}
+        </if>
+        <if test="openId != null">
+            and open_id = #{openId,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="state != null">
+            and state = #{state,jdbcType=VARCHAR}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.kanjia.pojo.User" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" parameterType="com.kanjia.pojo.User" useGeneratedKeys="true" keyProperty="id">
     insert into user (id, nickname, avatarurl, 
       gender, email, phone, 
       open_id, create_time, update_time, 
@@ -106,107 +106,108 @@
       #{openId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{state,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.kanjia.pojo.User" useGeneratedKeys="true" keyProperty="id">
-    insert into user
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="nickname != null" >
-        nickname,
-      </if>
-      <if test="avatarurl != null" >
-        avatarurl,
-      </if>
-      <if test="gender != null" >
-        gender,
-      </if>
-      <if test="email != null" >
-        email,
-      </if>
-      <if test="phone != null" >
-        phone,
-      </if>
-      <if test="openId != null" >
-        open_id,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
-      <if test="state != null" >
-        state,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="nickname != null" >
-        #{nickname,jdbcType=VARCHAR},
-      </if>
-      <if test="avatarurl != null" >
-        #{avatarurl,jdbcType=VARCHAR},
-      </if>
-      <if test="gender != null" >
-        #{gender,jdbcType=INTEGER},
-      </if>
-      <if test="email != null" >
-        #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null" >
-        #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="openId != null" >
-        #{openId,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="state != null" >
-        #{state,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.kanjia.pojo.User" useGeneratedKeys="true" keyProperty="id">
-    update user
-    <set >
-      <if test="nickname != null" >
-        nickname = #{nickname,jdbcType=VARCHAR},
-      </if>
-      <if test="avatarurl != null" >
-        avatarurl = #{avatarurl,jdbcType=VARCHAR},
-      </if>
-      <if test="gender != null" >
-        gender = #{gender,jdbcType=INTEGER},
-      </if>
-      <if test="email != null" >
-        email = #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null" >
-        phone = #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="openId != null" >
-        open_id = #{openId,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="state != null" >
-        state = #{state,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.kanjia.pojo.User" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSelective" parameterType="com.kanjia.pojo.User" useGeneratedKeys="true" keyProperty="id">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="nickname != null">
+                nickname,
+            </if>
+            <if test="avatarurl != null">
+                avatarurl,
+            </if>
+            <if test="gender != null">
+                gender,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="openId != null">
+                open_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="nickname != null">
+                #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="avatarurl != null">
+                #{avatarurl,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                #{gender,jdbcType=INTEGER},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="openId != null">
+                #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.kanjia.pojo.User" useGeneratedKeys="true"
+            keyProperty="id">
+        update user
+        <set>
+            <if test="nickname != null">
+                nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="avatarurl != null">
+                avatarurl = #{avatarurl,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=INTEGER},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="openId != null">
+                open_id = #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.kanjia.pojo.User" useGeneratedKeys="true" keyProperty="id">
     update user
     set nickname = #{nickname,jdbcType=VARCHAR},
       avatarurl = #{avatarurl,jdbcType=VARCHAR},
@@ -219,10 +220,10 @@
       state = #{state,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectUserByOpenId" parameterType="string" resultType="int">
+    <select id="selectUserByOpenId" parameterType="string" resultType="int">
     select id from user where  open_id = #{openId, jdbcType=VARCHAR}
   </select>
-  <select id="selectUserInfo" parameterType="int" resultMap="BaseResultMap">
+    <select id="selectUserInfo" parameterType="int" resultMap="BaseResultMap">
     select *
     from user u
     where u.id = #{uid}

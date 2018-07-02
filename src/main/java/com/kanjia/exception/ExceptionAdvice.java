@@ -17,6 +17,7 @@ public class ExceptionAdvice {
 
     /**
      * 自定义的异常类处理
+     *
      * @param e
      * @return
      */
@@ -31,14 +32,15 @@ public class ExceptionAdvice {
 //getRequiredType()实际要求客户端传递的数据类型
     @ExceptionHandler({TypeMismatchException.class})
     @ResponseBody
-    public ReturnMessage requestTypeMismatch(TypeMismatchException ex){
+    public ReturnMessage requestTypeMismatch(TypeMismatchException ex) {
         return new ReturnMessage(ResponseCode.PARAM_NOT_COMPAT, "参数类型不匹配,参数" + ex.getPropertyName() + "类型应该为" + ex.getRequiredType());
     }
+
     //缺少参数异常
 //getParameterName() 缺少的参数名称
     @ExceptionHandler({MissingServletRequestParameterException.class})
     @ResponseBody
-    public ReturnMessage requestMissingServletRequest(MissingServletRequestParameterException ex){
+    public ReturnMessage requestMissingServletRequest(MissingServletRequestParameterException ex) {
         String message = "缺少必要参数,参数名称为" + ex.getParameterName();
         return new ReturnMessage(ResponseCode.PARAM_EROOR, message);
     }

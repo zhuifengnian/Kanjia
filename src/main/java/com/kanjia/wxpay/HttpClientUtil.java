@@ -15,15 +15,15 @@ import java.util.Map;
 public class HttpClientUtil {
     /**
      * http客户端工具类
-     *
      */
     public static final String SunX509 = "SunX509";
     public static final String JKS = "JKS";
     public static final String PKCS12 = "PKCS12";
     public static final String TLS = "TLS";
-    
+
     /**
      * get HttpURLConnection
+     *
      * @param strUrl url地址
      * @return HttpURLConnection
      * @throws IOException
@@ -35,9 +35,10 @@ public class HttpClientUtil {
                 .openConnection();
         return httpURLConnection;
     }
-    
+
     /**
      * get HttpsURLConnection
+     *
      * @param strUrl url地址ַ
      * @return HttpsURLConnection
      * @throws IOException
@@ -49,94 +50,100 @@ public class HttpClientUtil {
                 .openConnection();
         return httpsURLConnection;
     }
-    
+
     /**
      * 获取不带查询串的url
+     *
      * @param strUrl
      * @return String
      */
     public static String getURL(String strUrl) {
 
-        if(null != strUrl) {
+        if (null != strUrl) {
             int indexOf = strUrl.indexOf("?");
-            if(-1 != indexOf) {
+            if (-1 != indexOf) {
                 return strUrl.substring(0, indexOf);
-            } 
-            
+            }
+
             return strUrl;
         }
-        
+
         return strUrl;
-        
+
     }
-    
+
     /**
      * 获取查询串
+     *
      * @param strUrl
      * @return String
      */
     public static String getQueryString(String strUrl) {
-        
-        if(null != strUrl) {
+
+        if (null != strUrl) {
             int indexOf = strUrl.indexOf("?");
-            if(-1 != indexOf) {
-                return strUrl.substring(indexOf+1, strUrl.length());
-            } 
-            
+            if (-1 != indexOf) {
+                return strUrl.substring(indexOf + 1, strUrl.length());
+            }
+
             return "";
         }
-        
+
         return strUrl;
     }
-    
+
     /**
      * 查询字符串转化为map
      * name1=key1&name2=key2&...
+     *
      * @param queryString
      * @return
      */
     public static Map queryString2Map(String queryString) {
-        if(null == queryString || "".equals(queryString)) {
+        if (null == queryString || "".equals(queryString)) {
             return null;
         }
-        
+
         Map m = new HashMap();
         String[] strArray = queryString.split("&");
-        for(int index = 0; index < strArray.length; index++) {
+        for (int index = 0; index < strArray.length; index++) {
             String pair = strArray[index];
             HttpClientUtil.putMapByPair(pair, m);
         }
-        
+
         return m;
-        
+
     }
-    
+
     /**
      * 把键值添加到map
      * pair:name=value
+     *
      * @param pair name=value
      * @param m
      */
     public static void putMapByPair(String pair, Map m) {
-        
-        if(null == pair || "".equals(pair)) {
+
+        if (null == pair || "".equals(pair)) {
             return;
         }
-        
+
         int indexOf = pair.indexOf("=");
-        if(-1 != indexOf) {
+        if (-1 != indexOf) {
             String k = pair.substring(0, indexOf);
-            String v = pair.substring(indexOf+1, pair.length());
-            if(null != k && !"".equals(k)) {
+            String v = pair.substring(indexOf + 1, pair.length());
+            if (null != k && !"".equals(k)) {
                 m.put(k, v);
             }
         } else {
             m.put(pair, "");
         }
     }
+
     /**
      * BufferedReader转换成String<br/>
      * 注意:流关闭需要自行处理
+     *
      * @param reader
      * @return
      * @throws IOException
@@ -144,16 +151,18 @@ public class HttpClientUtil {
     public static String bufferedReader2String(BufferedReader reader) throws IOException {
         StringBuffer buf = new StringBuffer();
         String line = null;
-        while( (line = reader.readLine()) != null) {
+        while ((line = reader.readLine()) != null) {
             buf.append(line);
             buf.append("\r\n");
         }
-                
+
         return buf.toString();
     }
+
     /**
      * 处理输出<br/>
      * 注意:流关闭需要自行处理
+     *
      * @param out
      * @param data
      * @param len
@@ -178,17 +187,19 @@ public class HttpClientUtil {
         }
 
     }
+
     /**
      * 获取SSLContext
+     *
      * @param trustPasswd
      * @param keyPasswd
      * @return
-     * @throws NoSuchAlgorithmException 
-     * @throws KeyStoreException 
-     * @throws IOException 
-     * @throws CertificateException 
-     * @throws UnrecoverableKeyException 
-     * @throws KeyManagementException 
+     * @throws NoSuchAlgorithmException
+     * @throws KeyStoreException
+     * @throws IOException
+     * @throws CertificateException
+     * @throws UnrecoverableKeyException
+     * @throws KeyManagementException
      */
     public static SSLContext getSSLContext(
             FileInputStream trustFileInputStream, String trustPasswd,
@@ -216,58 +227,61 @@ public class HttpClientUtil {
 
         return ctx;
     }
-    
+
     /**
      * 字符串转换成char数组
+     *
      * @param str
      * @return char[]
      */
     public static char[] str2CharArray(String str) {
-        if(null == str) return null;
-        
+        if (null == str) return null;
+
         return str.toCharArray();
     }
-    
+
     public static InputStream String2Inputstream(String str) {
         return new ByteArrayInputStream(str.getBytes());
     }
-    
+
     /**
      * InputStream转换成Byte
      * 注意:流关闭需要自行处理
+     *
      * @param in
      * @return byte
      * @throws Exception
      */
-    public static byte[] InputStreamTOByte(InputStream in) throws IOException{  
-        
-        int BUFFER_SIZE = 4096;  
-        ByteArrayOutputStream outStream = new ByteArrayOutputStream(); 
-        byte[] data = new byte[BUFFER_SIZE];  
-        int count = -1;  
-        
-        while((count = in.read(data,0,BUFFER_SIZE)) != -1)  
-            outStream.write(data, 0, count);  
-          
-        data = null;  
+    public static byte[] InputStreamTOByte(InputStream in) throws IOException {
+
+        int BUFFER_SIZE = 4096;
+        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+        byte[] data = new byte[BUFFER_SIZE];
+        int count = -1;
+
+        while ((count = in.read(data, 0, BUFFER_SIZE)) != -1)
+            outStream.write(data, 0, count);
+
+        data = null;
         byte[] outByte = outStream.toByteArray();
         outStream.close();
-        
-        return outByte;  
-    } 
-    
+
+        return outByte;
+    }
+
     /**
      * InputStream转换成String
      * 注意:流关闭需要自行处理
+     *
      * @param in
      * @param encoding 编码
      * @return String
      * @throws Exception
      */
-    public static String InputStreamTOString(InputStream in,String encoding) throws IOException{  
+    public static String InputStreamTOString(InputStream in, String encoding) throws IOException {
 
-        return new String(InputStreamTOByte(in),encoding);
-        
-    }  
+        return new String(InputStreamTOByte(in), encoding);
+
+    }
 
 }

@@ -11,8 +11,9 @@ import java.util.List;
 
 @Service
 public class PictureServiceImpl extends AbstractBaseServiceImpl<Picture> implements PictureService {
-  @Autowired
-  private PictureMapper pictureMapper;
+    @Autowired
+    private PictureMapper pictureMapper;
+
     @Override
     public List<String> getPicture(Integer activityId) {
         return pictureMapper.getPicture(activityId);

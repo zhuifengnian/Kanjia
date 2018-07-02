@@ -29,13 +29,13 @@ public class UserController {
 
     @ApiOperation(value = "插入用户", notes = "插入用户到数据库，当用户已经存在时，不插入，会返回这个用户在数据库中的uid")
     @ResponseBody
-    @RequestMapping(value="/insertAndLogin", method = RequestMethod.POST)
-    public ReturnMessage insertAndLogin(User user){
+    @RequestMapping(value = "/insertAndLogin", method = RequestMethod.POST)
+    public ReturnMessage insertAndLogin(User user) {
 //        KuaidiLoginUserVO kuaidiLoginUserVO = new KuaidiLoginUserVO();
         //当用户不存在时，在数据库中先记录这个用户
         //在数据库中根据open_id查找用户是否存在
         Integer uid = userService.selectUserByOpenId(user.getOpenId());
-        if(uid == null){
+        if (uid == null) {
             //执行插入操作
             uid = userService.insert(user);
         }
@@ -59,11 +59,11 @@ public class UserController {
 
     @ApiOperation(value = "返回当前用户的openid", notes = "获取用户的openid，这里是通过服务器向微信的服务器发送请求获得的，需要传入js_code")
     @ResponseBody
-    @RequestMapping(value="/getopenid", method = RequestMethod.POST)
-    public ReturnMessage getopenid(@RequestParam("js_code")String js_code){
+    @RequestMapping(value = "/getopenid", method = RequestMethod.POST)
+    public ReturnMessage getopenid(@RequestParam("js_code") String js_code) {
 
         TenpayHttpClient httpClient = new TenpayHttpClient();
-        String tmpUrl = GET_OPENID_URL + "?appid="+ConstantUtil.APP_ID +"&secret="+ConstantUtil.APP_SECRET +"&js_code="+js_code+"&grant_type=authorization_code";
+        String tmpUrl = GET_OPENID_URL + "?appid=" + ConstantUtil.APP_ID + "&secret=" + ConstantUtil.APP_SECRET + "&js_code=" + js_code + "&grant_type=authorization_code";
         try {
             httpClient.httpGetMethod(tmpUrl);
             String resContent = httpClient.getResContent();
@@ -76,9 +76,9 @@ public class UserController {
     @ApiOperation(value = "返回用户详细信息", notes = "返回用户详细信息")
     @ResponseBody
     @RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
-    public ReturnMessage getUserInfo(@RequestParam("uid") Integer uid){
+    public ReturnMessage getUserInfo(@RequestParam("uid") Integer uid) {
         User userInfoVO = userService.selectUserInfo(uid);
-        if(userInfoVO == null){
+        if (userInfoVO == null) {
             throw new ApiException(ResponseCode.PARAM_EROOR, "所传uid没有数据");
         }
         return new ReturnMessage(ResponseCode.OK, userInfoVO);
@@ -87,20 +87,20 @@ public class UserController {
     @ApiOperation(value = "用户申请成为管理员", notes = "用户申请成为管理员,将来还需传入学校id")
     @ResponseBody
     @RequestMapping(value = "/applyForAdmin", method = RequestMethod.POST)
-    public ReturnMessage applyForAdmin(@RequestParam Integer uid){
-        return new ReturnMessage(ResponseCode.OK,"we have receive your apply, we will reply you on next few days");
+    public ReturnMessage applyForAdmin(@RequestParam Integer uid) {
+        return new ReturnMessage(ResponseCode.OK, "we have receive your apply, we will reply you on next few days");
     }
 
     @ApiOperation(value = "根据用户id获取用户", httpMethod = "GET", notes = "根据用户id获取用户")
     @GetMapping("/getUser")
-    public ReturnMessage getUser(@RequestParam Integer uid){
+    public ReturnMessage getUser(@RequestParam Integer uid) {
         User user = userService.selectByPrimaryKey(uid);
         return new ReturnMessage(ResponseCode.OK, user);
     }
 
     @ApiOperation(value = "修改用户头像", httpMethod = "POST", notes = "修改用户头像")
     @PostMapping("/updateAvatar")
-    public ReturnMessage updateAvatar(@RequestParam Integer uid, MultipartFile file){
+    public ReturnMessage updateAvatar(@RequestParam Integer uid, MultipartFile file) {
         String avatarUrl = QiNiuUtil.manageFile(file);
         User tmpUser = new User();
         tmpUser.setId(uid);

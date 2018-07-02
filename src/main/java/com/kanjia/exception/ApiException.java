@@ -2,7 +2,7 @@ package com.kanjia.exception;
 
 import com.kanjia.basic.ResponseCode;
 
-public class ApiException extends RuntimeException{
+public class ApiException extends RuntimeException {
     private ResponseCode code;
     private String message;
 

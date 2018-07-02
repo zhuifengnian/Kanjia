@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.kanjia.mapper.UserOrderMapper" >
-  <resultMap id="BaseResultMap" type="com.kanjia.pojo.UserOrder" >
-    <constructor >
-      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="activity_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="minu_price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
-      <arg column="help_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="state" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="qr_code" jdbcType="VARCHAR" javaType="java.lang.String" />
-    </constructor>
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.kanjia.mapper.UserOrderMapper">
+    <resultMap id="BaseResultMap" type="com.kanjia.pojo.UserOrder">
+        <constructor>
+            <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="activity_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="minu_price" jdbcType="DECIMAL" javaType="java.math.BigDecimal"/>
+            <arg column="help_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="state" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="qr_code" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, user_id, activity_id, minu_price, help_id, create_time, update_time, state, qr_code
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from user_order
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from user_order
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user_order
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.kanjia.pojo.UserOrder" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" parameterType="com.kanjia.pojo.UserOrder" useGeneratedKeys="true" keyProperty="id">
     insert into user_order (id, user_id, activity_id, 
       minu_price, help_id, create_time, 
       update_time, state, qr_code
@@ -37,98 +37,98 @@
       #{updateTime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, #{qrCode,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.kanjia.pojo.UserOrder" useGeneratedKeys="true" keyProperty="id" >
-    insert into user_order
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="activityId != null" >
-        activity_id,
-      </if>
-      <if test="minuPrice != null" >
-        minu_price,
-      </if>
-      <if test="helpId != null" >
-        help_id,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
-      <if test="state != null" >
-        state,
-      </if>
-      <if test="qrCode != null" >
-        qr_code,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="activityId != null" >
-        #{activityId,jdbcType=INTEGER},
-      </if>
-      <if test="minuPrice != null" >
-        #{minuPrice,jdbcType=DECIMAL},
-      </if>
-      <if test="helpId != null" >
-        #{helpId,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="state != null" >
-        #{state,jdbcType=INTEGER},
-      </if>
-      <if test="qrCode != null" >
-        #{qrCode,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.kanjia.pojo.UserOrder" >
-    update user_order
-    <set >
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="activityId != null" >
-        activity_id = #{activityId,jdbcType=INTEGER},
-      </if>
-      <if test="minuPrice != null" >
-        minu_price = #{minuPrice,jdbcType=DECIMAL},
-      </if>
-      <if test="helpId != null" >
-        help_id = #{helpId,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="state != null" >
-        state = #{state,jdbcType=INTEGER},
-      </if>
-      <if test="qrCode != null" >
-        qr_code = #{qrCode,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.kanjia.pojo.UserOrder" >
+    <insert id="insertSelective" parameterType="com.kanjia.pojo.UserOrder" useGeneratedKeys="true" keyProperty="id">
+        insert into user_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="activityId != null">
+                activity_id,
+            </if>
+            <if test="minuPrice != null">
+                minu_price,
+            </if>
+            <if test="helpId != null">
+                help_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="qrCode != null">
+                qr_code,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="activityId != null">
+                #{activityId,jdbcType=INTEGER},
+            </if>
+            <if test="minuPrice != null">
+                #{minuPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="helpId != null">
+                #{helpId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=INTEGER},
+            </if>
+            <if test="qrCode != null">
+                #{qrCode,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.kanjia.pojo.UserOrder">
+        update user_order
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="activityId != null">
+                activity_id = #{activityId,jdbcType=INTEGER},
+            </if>
+            <if test="minuPrice != null">
+                minu_price = #{minuPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="helpId != null">
+                help_id = #{helpId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=INTEGER},
+            </if>
+            <if test="qrCode != null">
+                qr_code = #{qrCode,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.kanjia.pojo.UserOrder">
     update user_order
     set user_id = #{userId,jdbcType=INTEGER},
       activity_id = #{activityId,jdbcType=INTEGER},
@@ -140,45 +140,45 @@
       qr_code = #{qrCode,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="getQrCode" resultType="com.kanjia.vo.EnterprisePaymentVo">
+    <select id="getQrCode" resultType="com.kanjia.vo.EnterprisePaymentVo">
     select uo.id,a.enterprise_id as enterpriseId,uo.minu_price as minuPrice
     from user_order uo left join activity a on uo.activity_id = a.id
     where 1=1
     and uo.state=1
     and uo.qr_code=#{qr_code}
   </select>
-  <!--提取全部订单-->
-  <select id="getEnterpriseAllOrder" resultType="com.kanjia.vo.EnterpriseOrderVo">
-    select uo.id,uo.user_id as userId,uo.minu_price as minuPrice,a.title,a.picture,u.nickname as nickName
-    from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
-    where 1=1
-    and uo.state =1
-    and a.enterprise_id=#{id}
-    <if test="page != null and page.start != null and page.pageSize!=null">
-      limit #{page.start},#{page.pageSize}
-    </if>
-  </select>
-  <select id="getEnterpriseAllOrderCount" resultType="Integer">
+    <!--提取全部订单-->
+    <select id="getEnterpriseAllOrder" resultType="com.kanjia.vo.EnterpriseOrderVo">
+        select uo.id,uo.user_id as userId,uo.minu_price as minuPrice,a.title,a.picture,u.nickname as nickName
+        from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
+        where 1=1
+        and uo.state =1
+        and a.enterprise_id=#{id}
+        <if test="page != null and page.start != null and page.pageSize!=null">
+            limit #{page.start},#{page.pageSize}
+        </if>
+    </select>
+    <select id="getEnterpriseAllOrderCount" resultType="Integer">
     select  count(1)
    from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
    where 1=1
    and uo.state =1
     and a.enterprise_id=#{id}
   </select>
-  <!--提取今日订单-->
-  <select id="getEnterpriseNowOrder" resultType="com.kanjia.vo.EnterpriseOrderVo">
-    select uo.id,uo.user_id as userId,uo.minu_price as minuPrice,a.title,a.picture,u.nickname as nickName
-    from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
-    where 1=1
-    and uo.state =1
-    and a.consume_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}
-    and a.consume_time <![CDATA[<=]]> #{t,jdbcType=TIMESTAMP}
-    and a.enterprise_id=#{id}
-    <if test="page != null and page.start != null and page.pageSize!=null">
-      limit #{page.start},#{page.pageSize}
-    </if>
-  </select>
-  <select id="getEnterpriseNowOrderCount" resultType="Integer">
+    <!--提取今日订单-->
+    <select id="getEnterpriseNowOrder" resultType="com.kanjia.vo.EnterpriseOrderVo">
+        select uo.id,uo.user_id as userId,uo.minu_price as minuPrice,a.title,a.picture,u.nickname as nickName
+        from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
+        where 1=1
+        and uo.state =1
+        and a.consume_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}
+        and a.consume_time <![CDATA[<=]]> #{t,jdbcType=TIMESTAMP}
+        and a.enterprise_id=#{id}
+        <if test="page != null and page.start != null and page.pageSize!=null">
+            limit #{page.start},#{page.pageSize}
+        </if>
+    </select>
+    <select id="getEnterpriseNowOrderCount" resultType="Integer">
     select   count(1)
    from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
     where 1=1
@@ -187,19 +187,19 @@
     and a.consume_time <![CDATA[<=]]> #{t,jdbcType=TIMESTAMP}
      and a.enterprise_id=#{id}
   </select>
-  <!--提取未来订单-->
-  <select id="getEnterpriseFeatureOrder" resultType="com.kanjia.vo.EnterpriseOrderVo">
-    select uo.id,uo.user_id as userId,uo.minu_price as minuPrice,a.title,a.picture,u.nickname as nickName
-    from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
-    where 1=1
-    and uo.state =1
-    and a.consume_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}
-    and a.enterprise_id=#{id}
-    <if test="page != null and page.start != null and page.pageSize!=null">
-      limit #{page.start},#{page.pageSize}
-    </if>
-  </select>
-  <select id="getEnterpriseFeatureOrderCount" resultType="Integer">
+    <!--提取未来订单-->
+    <select id="getEnterpriseFeatureOrder" resultType="com.kanjia.vo.EnterpriseOrderVo">
+        select uo.id,uo.user_id as userId,uo.minu_price as minuPrice,a.title,a.picture,u.nickname as nickName
+        from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
+        where 1=1
+        and uo.state =1
+        and a.consume_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}
+        and a.enterprise_id=#{id}
+        <if test="page != null and page.start != null and page.pageSize!=null">
+            limit #{page.start},#{page.pageSize}
+        </if>
+    </select>
+    <select id="getEnterpriseFeatureOrderCount" resultType="Integer">
     select   count(1)
     from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
     where 1=1
@@ -207,73 +207,74 @@
     and a.consume_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}
      and a.enterprise_id=#{id}
   </select>
-  <!--提取已取消订单-->
-  <select id="getEnterpriseDeleteOrder" resultType="com.kanjia.vo.EnterpriseOrderVo">
-    select uo.id,uo.user_id as userId,uo.minu_price as minuPrice,a.title as title,a.picture as picture,u.nickname as nickName
-    from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
-    where 1=1
-    and uo.state =0
-    and a.enterprise_id=#{id}
-    <if test="page != null and page.start != null and page.pageSize!=null">
-      limit #{page.start},#{page.pageSize}
-    </if>
-  </select>
-  <select id="getEnterpriseDeleteOrderCount" resultType="Integer">
+    <!--提取已取消订单-->
+    <select id="getEnterpriseDeleteOrder" resultType="com.kanjia.vo.EnterpriseOrderVo">
+        select uo.id,uo.user_id as userId,uo.minu_price as minuPrice,a.title as title,a.picture as picture,u.nickname as
+        nickName
+        from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
+        where 1=1
+        and uo.state =0
+        and a.enterprise_id=#{id}
+        <if test="page != null and page.start != null and page.pageSize!=null">
+            limit #{page.start},#{page.pageSize}
+        </if>
+    </select>
+    <select id="getEnterpriseDeleteOrderCount" resultType="Integer">
     select  count(1)
     from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
     where 1=1
     and uo.state =0
     and a.enterprise_id=#{id}
   </select>
-  <!--提取已过期订单-->
-  <select id="getEnterpriseOverOrder" resultType="com.kanjia.vo.EnterpriseOrderVo">
-    select uo.id,uo.user_id as userId,uo.minu_price as minuPrice,a.title,a.picture,u.nickname as nickName
-    from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
-    where 1=1
-    and uo.state =4
-    and a.enterprise_id=#{id}
-    <if test="page != null and page.start != null and page.pageSize!=null">
-      limit #{page.start},#{page.pageSize}
-    </if>
-  </select>
-  <select id="getEnterpriseOverOrderCount" resultType="Integer">
+    <!--提取已过期订单-->
+    <select id="getEnterpriseOverOrder" resultType="com.kanjia.vo.EnterpriseOrderVo">
+        select uo.id,uo.user_id as userId,uo.minu_price as minuPrice,a.title,a.picture,u.nickname as nickName
+        from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
+        where 1=1
+        and uo.state =4
+        and a.enterprise_id=#{id}
+        <if test="page != null and page.start != null and page.pageSize!=null">
+            limit #{page.start},#{page.pageSize}
+        </if>
+    </select>
+    <select id="getEnterpriseOverOrderCount" resultType="Integer">
     select   count(1)
     from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
     where 1=1
     and uo.state =4
     and a.enterprise_id=#{id}
   </select>
-  <!--提取已消费订单-->
-  <select id="getEnterpriseConsumeOrder" resultType="com.kanjia.vo.EnterpriseOrderVo">
-    select uo.id,uo.user_id as userId,uo.minu_price as minuPrice,a.title,a.picture,u.nickname as nickName
-    from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
-    where 1=1
-    and uo.state =3
-    and a.enterprise_id=#{id}
-    <if test="page != null and page.start != null and page.pageSize!=null">
-      limit #{page.start},#{page.pageSize}
-    </if>
-  </select>
-  <select id="getEnterpriseConsumeOrderCount" resultType="Integer">
+    <!--提取已消费订单-->
+    <select id="getEnterpriseConsumeOrder" resultType="com.kanjia.vo.EnterpriseOrderVo">
+        select uo.id,uo.user_id as userId,uo.minu_price as minuPrice,a.title,a.picture,u.nickname as nickName
+        from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
+        where 1=1
+        and uo.state =3
+        and a.enterprise_id=#{id}
+        <if test="page != null and page.start != null and page.pageSize!=null">
+            limit #{page.start},#{page.pageSize}
+        </if>
+    </select>
+    <select id="getEnterpriseConsumeOrderCount" resultType="Integer">
     select  count(1)
     from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
     where 1=1
     and uo.state =3
     and a.enterprise_id=#{id}
   </select>
-  <!--提取数据-->
-  <select id="getEnterpriseMonthOrder" resultType="com.kanjia.vo.EnterpriseOrderVo">
-    select uo.id,uo.user_id as userId,uo.minu_price as minuPrice,a.title,a.picture,u.nickname as nickName
-    from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
-    where 1=1
-    and uo.state =3
-    and a.enterprise_id=#{id}
-    and uo.update_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}
-    <if test="page != null and page.start != null and page.pageSize!=null">
-      limit #{page.start},#{page.pageSize}
-    </if>
-  </select>
-  <select id="getEnterpriseMonthOrderCount" resultType="Integer">
+    <!--提取数据-->
+    <select id="getEnterpriseMonthOrder" resultType="com.kanjia.vo.EnterpriseOrderVo">
+        select uo.id,uo.user_id as userId,uo.minu_price as minuPrice,a.title,a.picture,u.nickname as nickName
+        from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
+        where 1=1
+        and uo.state =3
+        and a.enterprise_id=#{id}
+        and uo.update_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}
+        <if test="page != null and page.start != null and page.pageSize!=null">
+            limit #{page.start},#{page.pageSize}
+        </if>
+    </select>
+    <select id="getEnterpriseMonthOrderCount" resultType="Integer">
     select  count(1)
     from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
     where 1=1
@@ -281,13 +282,20 @@
     and a.enterprise_id=#{id}
      and uo.update_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}
   </select>
-  <select id="getOrdersByAid" resultType="userOrder">
-    select * from user_order where activity_id = #{aid}
-    <if test="page != null and page.start != null and page.pageSize!=null">
-      limit #{page.start},#{page.pageSize}
-    </if>
-  </select>
-  <select id="getOrdersByAidCount" resultType="int">
+    <select id="getOrdersByAid" resultType="userOrder">
+        select * from user_order where activity_id = #{aid}
+        <if test="page != null and page.start != null and page.pageSize!=null">
+            limit #{page.start},#{page.pageSize}
+        </if>
+    </select>
+    <select id="getOrdersByAidCount" resultType="int">
     select count(id) from user_order where activity_id = #{aid}
+  </select>
+    <select id="getOrdersPicture" resultType="String">
+    select u.avatarurl
+    from user_order uo left join user u on uo.user_id=u.id
+    where 1=1
+    and uo.activity_id = #{aid}
+   and (uo.state=1 or uo.state =2)
   </select>
 </mapper>

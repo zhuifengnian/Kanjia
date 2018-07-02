@@ -4,9 +4,10 @@ import com.kanjia.pojo.EnterprisePayment;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EnterprisePaymentMapper  extends BaseMapper<EnterprisePayment> {
+public interface EnterprisePaymentMapper extends BaseMapper<EnterprisePayment> {
     /**
      * 通过entepriseId找到对象
+     *
      * @param enterpriseId
      * @return
      */

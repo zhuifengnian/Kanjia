@@ -31,7 +31,7 @@ public class QiNiuUtil {
     public static String manageFile(MultipartFile file) {
         String tmpKeys = "";
         //判断是否大于5M
-        if(file != null && file.getSize()<5*1048576) {
+        if (file != null && file.getSize() < 5 * 1048576) {
             String key = LocalDateTime.now().getNano() + file.getOriginalFilename();
 
             Configuration cfg = new Configuration(Zone.zone2());    //zone2代表华南区

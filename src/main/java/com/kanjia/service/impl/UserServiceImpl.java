@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl extends AbstractBaseServiceImpl<User> implements UserService {
     @Autowired
     private UserMapper userMapper;
+
     @Override
     public BaseMapper<User> getDao() {
         return userMapper;

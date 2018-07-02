@@ -12,12 +12,12 @@ import springfox.documentation.annotations.ApiIgnore;
 @ApiIgnore
 public class TestController {
     @RequestMapping("/index")
-    public String index(){
+    public String index() {
         return "/index.jsp";
     }
 
     @RequestMapping("/login")
-    public String login(){
+    public String login() {
         return "login";
     }
 }

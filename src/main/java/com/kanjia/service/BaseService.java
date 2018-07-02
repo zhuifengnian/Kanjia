@@ -1,7 +1,6 @@
 package com.kanjia.service;
 
 
-
 import com.kanjia.basic.Page;
 
 import java.util.List;
@@ -13,7 +12,9 @@ public interface BaseService<T> {
     //单个字段做主键时,可以直接写主键的值
     //联合主键时,key可以是实体类,也可以是Map
     T selectByPrimaryKey(Integer key);
+
     List<T> select(T record, Page page);
+
     //插入一条数据
     //支持Oracle序列,UUID,类似Mysql的INDENTITY自动增长(自动回写)
     //优先使用传入的参数值,参数值空时,才会使用序列、UUID,自动增长

@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
     <!-- id="shiroFilter"必须要和web.xml中过滤器名称保持一致 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 
-        <property name="securityManager" ref="securityManager" />
+        <property name="securityManager" ref="securityManager"/>
 
         <!-- #####以下为可选配置，请按照实际项目需要进行配置#### -->
         <!-- 登陆的url -->
-        <property name="loginUrl" value="/login" />
+        <property name="loginUrl" value="/login"/>
 
         <!-- 登陆成功跳转的页 -->
-        <property name="successUrl" value="/index.jsp" />
+        <property name="successUrl" value="/index.jsp"/>
 
         <!-- 权限验证失败跳转的url -->
-        <property name="unauthorizedUrl" value="/unauthorize" />
+        <property name="unauthorizedUrl" value="/unauthorize"/>
         <!-- filters属性也是可选的，用来声明一些可以在filterChainDefinitions 里面使用的filter。 如果你声明的filter名称是shiro默认有的，那么将会覆盖默认的filter -->
         <property name="filterChainDefinitions">
             <value>
@@ -27,13 +27,13 @@
     </bean>
 
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <property name="realm" ref="myRealm" />
+        <property name="realm" ref="myRealm"/>
         <property name="cacheManager" ref="cacheManager"/>
     </bean>
 
     <!--<bean id="myRealm" class="org.apache.shiro.realm.jdbc.JdbcRealm">-->
-        <!--<property name="dataSource" ref="dataSource"/>-->
-        <!--<property name="authenticationQuery" value=""/>-->
+    <!--<property name="dataSource" ref="dataSource"/>-->
+    <!--<property name="authenticationQuery" value=""/>-->
     <!--</bean>-->
     <bean id="myRealm" class="com.kanjia.basic.UserRealm"/>
 

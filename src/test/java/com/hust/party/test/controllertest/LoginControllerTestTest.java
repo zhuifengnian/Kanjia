@@ -25,6 +25,7 @@ public class LoginControllerTestTest extends BaseControllerTest {
     public void setUp() throws Exception {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
+
     @Test
     public void testLogin() throws IOException {
 
