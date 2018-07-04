@@ -172,8 +172,8 @@
     from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
     where 1=1
     and uo.state =2
-    and a.consume_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}
-    and a.consume_time <![CDATA[<=]]> #{t,jdbcType=TIMESTAMP}
+    and a.consume_end_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}
+    and a.consume_end_time <![CDATA[<=]]> #{t,jdbcType=TIMESTAMP}
     and a.enterprise_id=#{id}
     <if test="page != null and page.start != null and page.pageSize!=null">
       limit #{page.start},#{page.pageSize}
@@ -184,8 +184,8 @@
     from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
     where 1=1
     and uo.state =2
-    and a.consume_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}
-    and a.consume_time <![CDATA[<=]]> #{t,jdbcType=TIMESTAMP}
+    and a.consume_end_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}
+    and a.consume_end_time <![CDATA[<=]]> #{t,jdbcType=TIMESTAMP}
     and a.enterprise_id=#{id}
   </select>
   <!--提取未来订单-->
@@ -194,7 +194,7 @@
     from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
     where 1=1
     and uo.state =2
-    and a.consume_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}
+    and a.consume_end_time <![CDATA[<=]]> #{t,jdbcType=TIMESTAMP}
     and a.enterprise_id=#{id}
     <if test="page != null and page.start != null and page.pageSize!=null">
       limit #{page.start},#{page.pageSize}
@@ -205,7 +205,7 @@
     from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
     where 1=1
     and uo.state =2
-    and a.consume_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}
+    and a.consume_end_time <![CDATA[<=]]> #{t,jdbcType=TIMESTAMP}
     and a.enterprise_id=#{id}
   </select>
   <!--提取已取消订单-->
