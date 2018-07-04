@@ -4,6 +4,7 @@ import com.kanjia.basic.Page;
 import com.kanjia.pojo.UserOrder;
 import com.kanjia.vo.EnterpriseOrderVo;
 import com.kanjia.vo.EnterprisePaymentVo;
+import com.kanjia.vo.KanjiaOrderVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -108,4 +109,12 @@ public interface UserOrderMapper extends BaseMapper<UserOrder> {
      * @return
      */
     List<String> getOrdersPicture(@Param("aid") Integer aid);
+
+    /**
+     * 列出正在砍价的订单
+     * @param uid 用户id
+     */
+    List<KanjiaOrderVo> listKanjiaOrders(@Param("uid") Integer uid,@Param("page") Page page);
+
+    Integer listKanjiaOrdersCount(Integer uid);
 }

@@ -9,7 +9,6 @@
       <arg column="video" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="adress" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="origin_price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
-      <arg column="now_price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
       <arg column="minu_price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
       <arg column="activity_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="enterprise_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
@@ -33,7 +32,6 @@
       <arg column="video" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="adress" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="origin_price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
-      <arg column="now_price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
       <arg column="minu_price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
       <arg column="activity_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="enterprise_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
@@ -51,7 +49,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    id, title, picture, video, adress, origin_price, now_price, minu_price, activity_time, 
+    id, title, picture, video, adress, origin_price, minu_price, activity_time,
     enterprise_id, limit_number, sold_number, consume_time, cut_time, state, create_time, 
     update_time, category_id, longitude, latitude
   </sql>
@@ -73,7 +71,7 @@
   <insert id="insert" parameterType="com.kanjia.pojo.Activity" useGeneratedKeys="true" keyProperty="id">
     insert into activity (id, title, picture, 
       video, adress, origin_price, 
-      now_price, minu_price, activity_time, 
+      minu_price, activity_time,
       enterprise_id, limit_number, sold_number, 
       consume_time, cut_time, state, 
       create_time, update_time, category_id, 
@@ -81,7 +79,7 @@
       )
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}, 
       #{video,jdbcType=VARCHAR}, #{adress,jdbcType=VARCHAR}, #{originPrice,jdbcType=DECIMAL}, 
-      #{nowPrice,jdbcType=DECIMAL}, #{minuPrice,jdbcType=DECIMAL}, #{activityTime,jdbcType=TIMESTAMP}, 
+      #{minuPrice,jdbcType=DECIMAL}, #{activityTime,jdbcType=TIMESTAMP},
       #{enterpriseId,jdbcType=INTEGER}, #{limitNumber,jdbcType=INTEGER}, #{soldNumber,jdbcType=INTEGER}, 
       #{consumeTime,jdbcType=TIMESTAMP}, #{cutTime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{categoryId,jdbcType=INTEGER}, 
@@ -108,9 +106,6 @@
       </if>
       <if test="originPrice != null" >
         origin_price,
-      </if>
-      <if test="nowPrice != null" >
-        now_price,
       </if>
       <if test="minuPrice != null" >
         minu_price,
@@ -174,9 +169,6 @@
       <if test="originPrice != null" >
         #{originPrice,jdbcType=DECIMAL},
       </if>
-      <if test="nowPrice != null" >
-        #{nowPrice,jdbcType=DECIMAL},
-      </if>
       <if test="minuPrice != null" >
         #{minuPrice,jdbcType=DECIMAL},
       </if>
@@ -239,9 +231,6 @@
       <if test="originPrice != null" >
         origin_price = #{originPrice,jdbcType=DECIMAL},
       </if>
-      <if test="nowPrice != null" >
-        now_price = #{nowPrice,jdbcType=DECIMAL},
-      </if>
       <if test="minuPrice != null" >
         minu_price = #{minuPrice,jdbcType=DECIMAL},
       </if>
@@ -294,7 +283,6 @@
       video = #{video,jdbcType=VARCHAR},
       adress = #{adress,jdbcType=VARCHAR},
       origin_price = #{originPrice,jdbcType=DECIMAL},
-      now_price = #{nowPrice,jdbcType=DECIMAL},
       minu_price = #{minuPrice,jdbcType=DECIMAL},
       activity_time = #{activityTime,jdbcType=TIMESTAMP},
       enterprise_id = #{enterpriseId,jdbcType=INTEGER},
@@ -318,7 +306,6 @@
       video = #{video,jdbcType=VARCHAR},
       adress = #{adress,jdbcType=VARCHAR},
       origin_price = #{originPrice,jdbcType=DECIMAL},
-      now_price = #{nowPrice,jdbcType=DECIMAL},
       minu_price = #{minuPrice,jdbcType=DECIMAL},
       activity_time = #{activityTime,jdbcType=TIMESTAMP},
       enterprise_id = #{enterpriseId,jdbcType=INTEGER},
@@ -336,7 +323,7 @@
   </update>
   <!-- 查詢活动 -->
   <select id="getAllActivity" resultType="com.kanjia.vo.PageActivityVo">
-    select a.id,a.title,a.picture,a.adress,a.origin_price,a.now_price as nowPrice,a.activity_time as
+    select a.id,a.title,a.picture,a.adress,a.origin_price,a.minu_price as minuPrice,a.activity_time as
     activityTime,e.enterprise_name as enterpriseName,
     a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
     from activity a left join enterprise e on a.enterprise_id = e.id
@@ -360,7 +347,7 @@
   </select>
   <!--获取其他活动-->
   <select id="getQitaActivity" resultType="com.kanjia.vo.PageActivityVo">
-    select a.id,a.title,a.picture,a.adress,a.origin_price,a.now_price as nowPrice,a.activity_time as
+    select a.id,a.title,a.picture,a.adress,a.origin_price,a.minu_price as minuPrice,a.activity_time as
     activityTime,e.enterprise_name as enterpriseName,
     a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
     from activity a left join enterprise e on a.enterprise_id = e.id
@@ -387,7 +374,7 @@
 
   <!--根据活动name值进行查找信息-->
   <select id="getNameActivity" resultType="com.kanjia.vo.PageActivityVo">
-    select a.id,a.title,a.picture,a.adress,a.origin_price,a.now_price as nowPrice,a.activity_time as
+    select a.id,a.title,a.picture,a.adress,a.origin_price,a.minu_price as minuPrice,a.activity_time as
     activityTime,e.enterprise_name as enterpriseName,
     a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
     from activity a left join category c on a.category_id=c.id left join enterprise e on a.enterprise_id = e.id
@@ -413,7 +400,7 @@
   </select>
   <!--获得企业所有活动-->
   <select id="getEnterpriseAllActivity" resultType="com.kanjia.vo.PageActivityVo">
-    select a.id,a.title,a.picture,a.adress,a.origin_price,a.now_price as nowPrice,a.activity_time as
+    select a.id,a.title,a.picture,a.adress,a.origin_price,a.minu_price as minuPrice,a.activity_time as
     activityTime,e.enterprise_name as enterpriseName,
     a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
     from activity a left join enterprise e on a.enterprise_id = e.id
@@ -429,7 +416,7 @@
   </select>
   <!--获得企业正上线的活动-->
   <select id="getEnterpriseNowActivity" resultType="com.kanjia.vo.PageActivityVo">
-    select a.id,a.title,a.picture,a.adress,a.origin_price,a.now_price as nowPrice,a.activity_time as
+    select a.id,a.title,a.picture,a.adress,a.origin_price,a.minu_price as minuPrice,a.activity_time as
     activityTime,e.enterprise_name as enterpriseName,
     a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
     from activity a left join enterprise e on a.enterprise_id = e.id
@@ -449,7 +436,7 @@
   </select>
   <!--获得企业删除活动-->
   <select id="getEnterpriseDeleteActivity" resultType="com.kanjia.vo.PageActivityVo">
-    select a.id,a.title,a.picture,a.adress,a.origin_price,a.now_price as nowPrice,a.activity_time as
+    select a.id,a.title,a.picture,a.adress,a.origin_price,a.minu_price as minuPrice,a.activity_time as
     activityTime,e.enterprise_name as enterpriseName,
     a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
     from activity a left join enterprise e on a.enterprise_id = e.id
@@ -469,7 +456,7 @@
   </select>
   <!--获得活动详情-->
   <select id="getDetailActivity" resultType="com.kanjia.vo.DetailActivityVo">
-    select  a.id,a.title,a.video,a.adress,a.origin_price as originPrice,a.now_price as nowPrice,
+    select  a.id,a.title,a.video,a.adress,a.origin_price as originPrice,a.minu_price as minuPrice,
     a.activity_time as activityTime,e.enterprise_name as enterpriseName,e.phone as enterprisePhone,
     a.limit_number as limitNumber,a.sold_number as soldNumber,a.cut_time as cutTime,a.longitude,a.latitude,a.description,e.id as enterpriseId
     from activity a left join enterprise e on a.enterprise_id = e.id

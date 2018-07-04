@@ -6,6 +6,7 @@ import com.kanjia.basic.PageInfo;
 import com.kanjia.pojo.UserOrder;
 import com.kanjia.vo.EnterpriseOrderVo;
 import com.kanjia.vo.EnterprisePaymentVo;
+import com.kanjia.vo.KanjiaOrderVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.sql.Timestamp;
@@ -128,4 +129,10 @@ public interface UserOrderService extends BaseService<UserOrder> {
      * @return
      */
     List<String> getOrdersPicture(@Param("aid") Integer aid);
+
+    /**
+     * 获取用户正在砍价的订单
+     * @param uid 用户id
+     */
+    PageInfo<KanjiaOrderVo> listKanjiaOrders(Integer uid, Page page);
 }

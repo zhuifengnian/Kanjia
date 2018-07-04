@@ -16,8 +16,6 @@ public class Activity {
 
     private BigDecimal originPrice;
 
-    private BigDecimal nowPrice;
-
     private BigDecimal minuPrice;
 
     private Date activityTime;
@@ -30,7 +28,7 @@ public class Activity {
 
     private Date consumeTime;
 
-    private Date cutTime;
+    private Date cutTime;   //活动截止时间
 
     private Integer state;
 
@@ -46,14 +44,13 @@ public class Activity {
 
     private String description;
 
-    public Activity(Integer id, String title, String picture, String video, String adress, BigDecimal originPrice, BigDecimal nowPrice, BigDecimal minuPrice, Date activityTime, Integer enterpriseId, Integer limitNumber, Integer soldNumber, Date consumeTime, Date cutTime, Integer state, Date createTime, Date updateTime, Integer categoryId, String longitude, String latitude, String description) {
+    public Activity(Integer id, String title, String picture, String video, String adress, BigDecimal originPrice, BigDecimal minuPrice, Date activityTime, Integer enterpriseId, Integer limitNumber, Integer soldNumber, Date consumeTime, Date cutTime, Integer state, Date createTime, Date updateTime, Integer categoryId, String longitude, String latitude, String description) {
         this.id = id;
         this.title = title;
         this.picture = picture;
         this.video = video;
         this.adress = adress;
         this.originPrice = originPrice;
-        this.nowPrice = nowPrice;
         this.minuPrice = minuPrice;
         this.activityTime = activityTime;
         this.enterpriseId = enterpriseId;
@@ -120,14 +117,6 @@ public class Activity {
 
     public void setOriginPrice(BigDecimal originPrice) {
         this.originPrice = originPrice;
-    }
-
-    public BigDecimal getNowPrice() {
-        return nowPrice;
-    }
-
-    public void setNowPrice(BigDecimal nowPrice) {
-        this.nowPrice = nowPrice;
     }
 
     public BigDecimal getMinuPrice() {

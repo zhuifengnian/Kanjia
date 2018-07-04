@@ -6,6 +6,7 @@ import com.kanjia.basic.ReturnMessage;
 import com.kanjia.pojo.UserOrder;
 import com.kanjia.service.UserOrderService;
 import com.kanjia.utils.PageUtil;
+import com.kanjia.vo.KanjiaOrderVo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,14 @@ public class OrderController {
     public ReturnMessage getOrdersByAid(@RequestParam("aid") Integer aid, @RequestParam(required = false, defaultValue = "4") Integer pageSize, @RequestParam(required = false) Integer pageNumber) {
         PageInfo<UserOrder> pageInfo = userOrderService.getOrdersByAid(aid, PageUtil.setPage(pageSize, pageNumber));
         return new ReturnMessage(ResponseCode.OK, pageInfo);
+    }
+
+    @ApiOperation(value = "获取用户正在砍价的订单", notes = "获取用户正在砍价的订单，用于我的砍价页面，默认6条")
+    @ResponseBody
+    @RequestMapping(value = "/listKanjiaOrders", method = RequestMethod.GET)
+    public ReturnMessage listKanjiaOrders(@RequestParam("uid") Integer uid, @RequestParam(required = false, defaultValue = "6") Integer pageSize, @RequestParam(required = false) Integer pageNumber) {
+        PageInfo<KanjiaOrderVo> kanjiaOrderVos = userOrderService.listKanjiaOrders(uid, PageUtil.setPage(pageSize, pageNumber));
+        return new ReturnMessage(ResponseCode.OK, kanjiaOrderVos);
     }
 
 

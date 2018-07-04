@@ -142,7 +142,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="getQrCode" resultType="com.kanjia.vo.EnterprisePaymentVo">
-    select uo.id,a.enterprise_id as enterpriseId,uo.minu_price as minuPrice
+    select uo.id,a.enterprise_id as enterpriseId,uo.current_price as currentPrice
     from user_order uo left join activity a on uo.activity_id = a.id
     where 1=1
     and uo.state=1
@@ -150,7 +150,7 @@
   </select>
   <!--提取全部订单-->
   <select id="getEnterpriseAllOrder" resultType="com.kanjia.vo.EnterpriseOrderVo">
-    select uo.id,uo.user_id as userId,uo.minu_price as minuPrice,a.title,a.picture,u.nickname as nickName
+    select uo.id,uo.user_id as userId,uo.current_price as currentPrice,a.title,a.picture,u.nickname as nickName
     from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
     where 1=1
     and uo.state =1
@@ -168,7 +168,7 @@
   </select>
   <!--提取今日订单-->
   <select id="getEnterpriseNowOrder" resultType="com.kanjia.vo.EnterpriseOrderVo">
-    select uo.id,uo.user_id as userId,uo.minu_price as minuPrice,a.title,a.picture,u.nickname as nickName
+    select uo.id,uo.user_id as userId,uo.current_price as currentPrice,a.title,a.picture,u.nickname as nickName
     from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
     where 1=1
     and uo.state =1
@@ -190,7 +190,7 @@
   </select>
   <!--提取未来订单-->
   <select id="getEnterpriseFeatureOrder" resultType="com.kanjia.vo.EnterpriseOrderVo">
-    select uo.id,uo.user_id as userId,uo.minu_price as minuPrice,a.title,a.picture,u.nickname as nickName
+    select uo.id,uo.user_id as userId,uo.current_price as currentPrice,a.title,a.picture,u.nickname as nickName
     from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
     where 1=1
     and uo.state =1
@@ -210,7 +210,7 @@
   </select>
   <!--提取已取消订单-->
   <select id="getEnterpriseDeleteOrder" resultType="com.kanjia.vo.EnterpriseOrderVo">
-    select uo.id,uo.user_id as userId,uo.minu_price as minuPrice,a.title as title,a.picture as picture,u.nickname as
+    select uo.id,uo.user_id as userId,uo.current_price as currentPrice,a.title as title,a.picture as picture,u.nickname as
     nickName
     from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
     where 1=1
@@ -229,7 +229,7 @@
   </select>
   <!--提取已过期订单-->
   <select id="getEnterpriseOverOrder" resultType="com.kanjia.vo.EnterpriseOrderVo">
-    select uo.id,uo.user_id as userId,uo.minu_price as minuPrice,a.title,a.picture,u.nickname as nickName
+    select uo.id,uo.user_id as userId,uo.current_price as currentPrice,a.title,a.picture,u.nickname as nickName
     from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
     where 1=1
     and uo.state =4
@@ -247,7 +247,7 @@
   </select>
   <!--提取已消费订单-->
   <select id="getEnterpriseConsumeOrder" resultType="com.kanjia.vo.EnterpriseOrderVo">
-    select uo.id,uo.user_id as userId,uo.minu_price as minuPrice,a.title,a.picture,u.nickname as nickName
+    select uo.id,uo.user_id as userId,uo.current_price as currentPrice,a.title,a.picture,u.nickname as nickName
     from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
     where 1=1
     and uo.state =3
@@ -265,7 +265,7 @@
   </select>
   <!--提取数据-->
   <select id="getEnterpriseMonthOrder" resultType="com.kanjia.vo.EnterpriseOrderVo">
-    select uo.id,uo.user_id as userId,uo.minu_price as minuPrice,a.title,a.picture,u.nickname as nickName
+    select uo.id,uo.user_id as userId,uo.current_price as currentPrice,a.title,a.picture,u.nickname as nickName
     from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
     where 1=1
     and uo.state =3
@@ -298,5 +298,23 @@
     where 1=1
     and uo.activity_id = #{aid}
     and (uo.state=1 or uo.state =2)
+  </select>
+  <!--列出正在砍价的订单，即状态为1的订单-->
+  <select id="listKanjiaOrders" resultType="kanjiaOrderVo">
+    select uo.id as oid, a.title, a.picture, a.origin_price as originPrice, uo.current_price as currentPrice,
+        a.minu_price as minuPrice, a.cut_time as cutTime, get_helper_num_by_order_id(uo.id) as helperNum
+    from user_order uo left join activity a on uo.activity_id = a.id
+    where 1=1
+    and uo.user_id = #{uid}
+    and uo.state = 1
+    <if test="page != null and page.start != null and page.pageSize!=null">
+      limit #{page.start},#{page.pageSize}
+    </if>
+  </select>
+  <select id="listKanjiaOrdersCount" resultType="int">
+    select count(1) from user_order uo left join activity a on uo.activity_id = a.id
+    where 1=1
+    and uo.user_id = #{uid}
+    and uo.state = 1
   </select>
 </mapper>

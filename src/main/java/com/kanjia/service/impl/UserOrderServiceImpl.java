@@ -8,6 +8,7 @@ import com.kanjia.pojo.UserOrder;
 import com.kanjia.service.UserOrderService;
 import com.kanjia.vo.EnterpriseOrderVo;
 import com.kanjia.vo.EnterprisePaymentVo;
+import com.kanjia.vo.KanjiaOrderVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -153,6 +154,20 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
     @Override
     public List<String> getOrdersPicture(Integer aid) {
         return userOrderMapper.getOrdersPicture(aid);
+    }
+
+    @Override
+    public PageInfo<KanjiaOrderVo> listKanjiaOrders(Integer uid, Page page) {
+        PageInfo<KanjiaOrderVo> kanjiaOrderVoPageInfo = new PageInfo<>();
+        //从订单中找出指定用户，并且状态为正在砍价的订单
+        List<KanjiaOrderVo> kanjiaOrderVos = userOrderMapper.listKanjiaOrders(uid, page);
+        kanjiaOrderVoPageInfo.setRows(kanjiaOrderVos);
+        kanjiaOrderVoPageInfo.setTotal(userOrderMapper.listKanjiaOrdersCount(uid));
+        if(page != null){
+            kanjiaOrderVoPageInfo.setPageNum(page.getPageNumber());
+            kanjiaOrderVoPageInfo.setPageSize(page.getPageSize());
+        }
+        return  kanjiaOrderVoPageInfo;
     }
 
 

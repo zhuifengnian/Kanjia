@@ -5,6 +5,7 @@ import com.kanjia.service.*;
 import com.kanjia.utils.OverTimeUtil;
 import com.kanjia.utils.TimeUtil;
 import com.kanjia.vo.EnterpriseOrderVo;
+import com.kanjia.vo.KanjiaOrderVo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,5 +65,11 @@ public class ServiceTest {
     @Test
     public void insertEnterprises() {
         System.out.println(userOrderService.EnterpriseMonthOrder(1, OverTimeUtil.getTime("一个月"), null));
+    }
+
+    @Test
+    public void listKanjiaOrders(){
+        PageInfo<KanjiaOrderVo> kanjiaOrderVoPageInfo = userOrderService.listKanjiaOrders(1, null);
+        System.out.println(kanjiaOrderVoPageInfo);
     }
 }
