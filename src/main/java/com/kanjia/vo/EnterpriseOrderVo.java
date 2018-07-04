@@ -10,7 +10,7 @@ public class EnterpriseOrderVo {
 
     private Integer userId;
 
-    private BigDecimal minuPrice;
+    private BigDecimal currentPrice;
 
     private String title;
 
@@ -60,11 +60,12 @@ public class EnterpriseOrderVo {
         this.nickName = nickName;
     }
 
-    public BigDecimal getMinuPrice() {
-        return minuPrice;
+
+    public BigDecimal getCurrentPrice() {
+        return currentPrice;
     }
 
-    public void setMinuPrice(BigDecimal minuPrice) {
-        this.minuPrice = minuPrice;
+    public void setCurrentPrice(BigDecimal currentPrice) {
+        this.currentPrice = currentPrice;
     }
 }

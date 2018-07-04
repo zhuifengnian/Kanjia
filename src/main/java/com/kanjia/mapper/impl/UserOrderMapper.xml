@@ -171,7 +171,7 @@
     select uo.id,uo.user_id as userId,uo.current_price as currentPrice,a.title,a.picture,u.nickname as nickName
     from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
     where 1=1
-    and uo.state =1
+    and uo.state =2
     and a.consume_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}
     and a.consume_time <![CDATA[<=]]> #{t,jdbcType=TIMESTAMP}
     and a.enterprise_id=#{id}
@@ -183,7 +183,7 @@
     select   count(1)
     from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
     where 1=1
-    and uo.state =1
+    and uo.state =2
     and a.consume_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}
     and a.consume_time <![CDATA[<=]]> #{t,jdbcType=TIMESTAMP}
     and a.enterprise_id=#{id}
@@ -193,7 +193,7 @@
     select uo.id,uo.user_id as userId,uo.current_price as currentPrice,a.title,a.picture,u.nickname as nickName
     from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
     where 1=1
-    and uo.state =1
+    and uo.state =2
     and a.consume_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}
     and a.enterprise_id=#{id}
     <if test="page != null and page.start != null and page.pageSize!=null">
@@ -204,7 +204,7 @@
     select   count(1)
     from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id
     where 1=1
-    and uo.state =1
+    and uo.state =2
     and a.consume_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}
     and a.enterprise_id=#{id}
   </select>
