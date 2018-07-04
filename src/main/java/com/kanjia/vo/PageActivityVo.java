@@ -18,7 +18,7 @@ public class PageActivityVo {
 
     private BigDecimal originPrice;
 
-    private BigDecimal nowPrice;
+    private BigDecimal minuPrice;
 
     private Date activityTime;
 
@@ -114,13 +114,6 @@ public class PageActivityVo {
         this.originPrice = originPrice;
     }
 
-    public BigDecimal getNowPrice() {
-        return nowPrice;
-    }
-
-    public void setNowPrice(BigDecimal nowPrice) {
-        this.nowPrice = nowPrice;
-    }
 
     public List<String> getHeadSculpture() {
         return headSculpture;
@@ -128,5 +121,13 @@ public class PageActivityVo {
 
     public void setHeadSculpture(List<String> headSculpture) {
         this.headSculpture = headSculpture;
+    }
+
+    public BigDecimal getMinuPrice() {
+        return minuPrice;
+    }
+
+    public void setMinuPrice(BigDecimal minuPrice) {
+        this.minuPrice = minuPrice;
     }
 }
