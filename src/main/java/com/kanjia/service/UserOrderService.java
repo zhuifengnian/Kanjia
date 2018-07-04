@@ -7,6 +7,7 @@ import com.kanjia.pojo.UserOrder;
 import com.kanjia.vo.EnterpriseOrderVo;
 import com.kanjia.vo.EnterprisePaymentVo;
 import com.kanjia.vo.KanjiaOrderVo;
+import com.kanjia.vo.MyOrderVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.sql.Timestamp;
@@ -135,4 +136,10 @@ public interface UserOrderService extends BaseService<UserOrder> {
      * @param uid 用户id
      */
     PageInfo<KanjiaOrderVo> listKanjiaOrders(Integer uid, Page page);
+
+    /**
+     * 列出我的订单
+     * @param uid 用户id
+     */
+    PageInfo<MyOrderVo> listMyOrders(Integer uid, Page page);
 }

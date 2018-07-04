@@ -317,4 +317,13 @@
     and uo.user_id = #{uid}
     and uo.state = 1
   </select>
+
+  <select id="listMyOrders" resultType="myOrderVo">
+    select uo.id as oid, a.title, a.picture, a.activity_time as activityTime, a.cut_time as cutTime,
+        a.origin_price as originPrice, uo.current_price as currentPrice, uo.qr_code as qrCode
+    from user_order uo left join activity a on uo.activity_id = a.id
+    where 1 = 1
+    and uo.user_id = #{uid}
+    and uo.state in (2,4)
+  </select>
 </mapper>

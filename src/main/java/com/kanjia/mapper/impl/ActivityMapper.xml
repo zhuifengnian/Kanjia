@@ -15,6 +15,7 @@
       <arg column="limit_number" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="sold_number" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="consume_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="consume_end_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="cut_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="state" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
@@ -38,6 +39,7 @@
       <arg column="limit_number" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="sold_number" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="consume_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="consume_end_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="cut_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="state" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
@@ -49,8 +51,8 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    id, title, picture, video, adress, origin_price, minu_price, activity_time,
-    enterprise_id, limit_number, sold_number, consume_time, cut_time, state, create_time, 
+    id, title, picture, video, adress, origin_price, minu_price, activity_time, enterprise_id, 
+    limit_number, sold_number, consume_time, consume_end_time, cut_time, state, create_time, 
     update_time, category_id, longitude, latitude
   </sql>
   <sql id="Blob_Column_List" >
@@ -71,17 +73,17 @@
   <insert id="insert" parameterType="com.kanjia.pojo.Activity" useGeneratedKeys="true" keyProperty="id">
     insert into activity (id, title, picture, 
       video, adress, origin_price, 
-      minu_price, activity_time,
-      enterprise_id, limit_number, sold_number, 
-      consume_time, cut_time, state, 
+      minu_price, activity_time, enterprise_id, 
+      limit_number, sold_number, consume_time, 
+      consume_end_time, cut_time, state, 
       create_time, update_time, category_id, 
       longitude, latitude, description
       )
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}, 
       #{video,jdbcType=VARCHAR}, #{adress,jdbcType=VARCHAR}, #{originPrice,jdbcType=DECIMAL}, 
-      #{minuPrice,jdbcType=DECIMAL}, #{activityTime,jdbcType=TIMESTAMP},
-      #{enterpriseId,jdbcType=INTEGER}, #{limitNumber,jdbcType=INTEGER}, #{soldNumber,jdbcType=INTEGER}, 
-      #{consumeTime,jdbcType=TIMESTAMP}, #{cutTime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, 
+      #{minuPrice,jdbcType=DECIMAL}, #{activityTime,jdbcType=TIMESTAMP}, #{enterpriseId,jdbcType=INTEGER}, 
+      #{limitNumber,jdbcType=INTEGER}, #{soldNumber,jdbcType=INTEGER}, #{consumeTime,jdbcType=TIMESTAMP}, 
+      #{consumeEndTime,jdbcType=TIMESTAMP}, #{cutTime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{categoryId,jdbcType=INTEGER}, 
       #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{description,jdbcType=LONGVARCHAR}
       )
@@ -124,6 +126,9 @@
       </if>
       <if test="consumeTime != null" >
         consume_time,
+      </if>
+      <if test="consumeEndTime != null" >
+        consume_end_time,
       </if>
       <if test="cutTime != null" >
         cut_time,
@@ -187,6 +192,9 @@
       <if test="consumeTime != null" >
         #{consumeTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="consumeEndTime != null" >
+        #{consumeEndTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="cutTime != null" >
         #{cutTime,jdbcType=TIMESTAMP},
       </if>
@@ -249,6 +257,9 @@
       <if test="consumeTime != null" >
         consume_time = #{consumeTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="consumeEndTime != null" >
+        consume_end_time = #{consumeEndTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="cutTime != null" >
         cut_time = #{cutTime,jdbcType=TIMESTAMP},
       </if>
@@ -289,6 +300,7 @@
       limit_number = #{limitNumber,jdbcType=INTEGER},
       sold_number = #{soldNumber,jdbcType=INTEGER},
       consume_time = #{consumeTime,jdbcType=TIMESTAMP},
+      consume_end_time = #{consumeEndTime,jdbcType=TIMESTAMP},
       cut_time = #{cutTime,jdbcType=TIMESTAMP},
       state = #{state,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -312,6 +324,7 @@
       limit_number = #{limitNumber,jdbcType=INTEGER},
       sold_number = #{soldNumber,jdbcType=INTEGER},
       consume_time = #{consumeTime,jdbcType=TIMESTAMP},
+      consume_end_time = #{consumeEndTime,jdbcType=TIMESTAMP},
       cut_time = #{cutTime,jdbcType=TIMESTAMP},
       state = #{state,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},

@@ -28,7 +28,9 @@ public class Activity {
 
     private Date consumeTime;
 
-    private Date cutTime;   //活动截止时间
+    private Date consumeEndTime;
+
+    private Date cutTime;
 
     private Integer state;
 
@@ -44,7 +46,7 @@ public class Activity {
 
     private String description;
 
-    public Activity(Integer id, String title, String picture, String video, String adress, BigDecimal originPrice, BigDecimal minuPrice, Date activityTime, Integer enterpriseId, Integer limitNumber, Integer soldNumber, Date consumeTime, Date cutTime, Integer state, Date createTime, Date updateTime, Integer categoryId, String longitude, String latitude, String description) {
+    public Activity(Integer id, String title, String picture, String video, String adress, BigDecimal originPrice, BigDecimal minuPrice, Date activityTime, Integer enterpriseId, Integer limitNumber, Integer soldNumber, Date consumeTime, Date consumeEndTime, Date cutTime, Integer state, Date createTime, Date updateTime, Integer categoryId, String longitude, String latitude, String description) {
         this.id = id;
         this.title = title;
         this.picture = picture;
@@ -57,6 +59,7 @@ public class Activity {
         this.limitNumber = limitNumber;
         this.soldNumber = soldNumber;
         this.consumeTime = consumeTime;
+        this.consumeEndTime = consumeEndTime;
         this.cutTime = cutTime;
         this.state = state;
         this.createTime = createTime;
@@ -165,6 +168,14 @@ public class Activity {
 
     public void setConsumeTime(Date consumeTime) {
         this.consumeTime = consumeTime;
+    }
+
+    public Date getConsumeEndTime() {
+        return consumeEndTime;
+    }
+
+    public void setConsumeEndTime(Date consumeEndTime) {
+        this.consumeEndTime = consumeEndTime;
     }
 
     public Date getCutTime() {

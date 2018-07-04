@@ -9,6 +9,7 @@ import com.kanjia.service.UserOrderService;
 import com.kanjia.vo.EnterpriseOrderVo;
 import com.kanjia.vo.EnterprisePaymentVo;
 import com.kanjia.vo.KanjiaOrderVo;
+import com.kanjia.vo.MyOrderVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -168,6 +169,20 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
             kanjiaOrderVoPageInfo.setPageSize(page.getPageSize());
         }
         return  kanjiaOrderVoPageInfo;
+    }
+
+    @Override
+    public PageInfo<MyOrderVo> listMyOrders(Integer uid, Page page) {
+        PageInfo<MyOrderVo> myOrderVoPageInfo = new PageInfo<>();
+        List<MyOrderVo> myOrderVos = userOrderMapper.listMyOrders(uid, page);
+        myOrderVoPageInfo.setRows(myOrderVos);
+        myOrderVoPageInfo.setTotal(userOrderMapper.listMyOrdersCount(uid));
+
+        if(page != null){
+            myOrderVoPageInfo.setPageNum(page.getPageNumber());
+            myOrderVoPageInfo.setPageSize(page.getPageSize());
+        }
+        return myOrderVoPageInfo;
     }
 
 
