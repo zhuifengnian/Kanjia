@@ -18,6 +18,8 @@ public class Activity {
 
     private BigDecimal nowPrice;
 
+    private BigDecimal minuPrice;
+
     private Date activityTime;
 
     private Integer enterpriseId;
@@ -44,7 +46,7 @@ public class Activity {
 
     private String description;
 
-    public Activity(Integer id, String title, String picture, String video, String adress, BigDecimal originPrice, BigDecimal nowPrice, Date activityTime, Integer enterpriseId, Integer limitNumber, Integer soldNumber, Date consumeTime, Date cutTime, Integer state, Date createTime, Date updateTime, Integer categoryId, String longitude, String latitude, String description) {
+    public Activity(Integer id, String title, String picture, String video, String adress, BigDecimal originPrice, BigDecimal nowPrice, BigDecimal minuPrice, Date activityTime, Integer enterpriseId, Integer limitNumber, Integer soldNumber, Date consumeTime, Date cutTime, Integer state, Date createTime, Date updateTime, Integer categoryId, String longitude, String latitude, String description) {
         this.id = id;
         this.title = title;
         this.picture = picture;
@@ -52,6 +54,7 @@ public class Activity {
         this.adress = adress;
         this.originPrice = originPrice;
         this.nowPrice = nowPrice;
+        this.minuPrice = minuPrice;
         this.activityTime = activityTime;
         this.enterpriseId = enterpriseId;
         this.limitNumber = limitNumber;
@@ -125,6 +128,14 @@ public class Activity {
 
     public void setNowPrice(BigDecimal nowPrice) {
         this.nowPrice = nowPrice;
+    }
+
+    public BigDecimal getMinuPrice() {
+        return minuPrice;
+    }
+
+    public void setMinuPrice(BigDecimal minuPrice) {
+        this.minuPrice = minuPrice;
     }
 
     public Date getActivityTime() {

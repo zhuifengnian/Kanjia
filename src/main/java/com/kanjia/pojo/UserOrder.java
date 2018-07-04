@@ -10,7 +10,7 @@ public class UserOrder {
 
     private Integer activityId;
 
-    private BigDecimal minuPrice;
+    private BigDecimal currentPrice;
 
     private Integer helpId;
 
@@ -22,11 +22,11 @@ public class UserOrder {
 
     private String qrCode;
 
-    public UserOrder(Integer id, Integer userId, Integer activityId, BigDecimal minuPrice, Integer helpId, Date createTime, Date updateTime, Integer state, String qrCode) {
+    public UserOrder(Integer id, Integer userId, Integer activityId, BigDecimal currentPrice, Integer helpId, Date createTime, Date updateTime, Integer state, String qrCode) {
         this.id = id;
         this.userId = userId;
         this.activityId = activityId;
-        this.minuPrice = minuPrice;
+        this.currentPrice = currentPrice;
         this.helpId = helpId;
         this.createTime = createTime;
         this.updateTime = updateTime;
@@ -62,12 +62,12 @@ public class UserOrder {
         this.activityId = activityId;
     }
 
-    public BigDecimal getMinuPrice() {
-        return minuPrice;
+    public BigDecimal getCurrentPrice() {
+        return currentPrice;
     }
 
-    public void setMinuPrice(BigDecimal minuPrice) {
-        this.minuPrice = minuPrice;
+    public void setCurrentPrice(BigDecimal currentPrice) {
+        this.currentPrice = currentPrice;
     }
 
     public Integer getHelpId() {
