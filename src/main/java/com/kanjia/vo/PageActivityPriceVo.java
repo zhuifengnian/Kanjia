@@ -5,28 +5,24 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by liyue on 2018/6/29
+ * Created by luyue on 2018/6/29
  */
-public class DetailActivityVo {
+public class PageActivityPriceVo {
     private Integer id;
 
     private String title;
 
-    private List<String> picture;
-
-    private String video;
+    private String picture;
 
     private String adress;
 
-    private Integer pick;
+    private BigDecimal originPrice;
+
+    private BigDecimal minuPrice;
 
     private Date activityTime;
 
-    private Integer enteprirseId;
-
     private String enterpriseName;
-
-    private String enterprisePhone;
 
     private Integer limitNumber;
 
@@ -34,12 +30,7 @@ public class DetailActivityVo {
 
     private Date cutTime;
 
-    private String longitude;
-
-    private String latitude;
-
-    private String description;
-
+    private List<String> headSculpture;
 
     public Integer getId() {
         return id;
@@ -57,20 +48,12 @@ public class DetailActivityVo {
         this.title = title;
     }
 
-    public List<String> getPicture() {
+    public String getPicture() {
         return picture;
     }
 
-    public void setPicture(List<String> picture) {
+    public void setPicture(String picture) {
         this.picture = picture;
-    }
-
-    public String getVideo() {
-        return video;
-    }
-
-    public void setVideo(String video) {
-        this.video = video;
     }
 
     public String getAdress() {
@@ -98,14 +81,6 @@ public class DetailActivityVo {
         this.enterpriseName = enterpriseName;
     }
 
-    public String getEnterprisePhone() {
-        return enterprisePhone;
-    }
-
-    public void setEnterprisePhone(String enterprisePhone) {
-        this.enterprisePhone = enterprisePhone;
-    }
-
     public Integer getLimitNumber() {
         return limitNumber;
     }
@@ -130,43 +105,29 @@ public class DetailActivityVo {
         this.cutTime = cutTime;
     }
 
-    public String getLongitude() {
-        return longitude;
+
+    public BigDecimal getOriginPrice() {
+        return originPrice;
     }
 
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
+    public void setOriginPrice(BigDecimal originPrice) {
+        this.originPrice = originPrice;
     }
 
-    public String getLatitude() {
-        return latitude;
+
+    public List<String> getHeadSculpture() {
+        return headSculpture;
     }
 
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
+    public void setHeadSculpture(List<String> headSculpture) {
+        this.headSculpture = headSculpture;
     }
 
-    public String getDescription() {
-        return description;
+    public BigDecimal getMinuPrice() {
+        return minuPrice;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Integer getEnteprirseId() {
-        return enteprirseId;
-    }
-
-    public void setEnteprirseId(Integer enteprirseId) {
-        this.enteprirseId = enteprirseId;
-    }
-
-    public Integer getPick() {
-        return pick;
-    }
-
-    public void setPick(Integer pick) {
-        this.pick = pick;
+    public void setMinuPrice(BigDecimal minuPrice) {
+        this.minuPrice = minuPrice;
     }
 }

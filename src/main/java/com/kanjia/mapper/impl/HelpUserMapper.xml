@@ -1,95 +1,108 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.kanjia.mapper.HelpUserMapper">
-    <resultMap id="BaseResultMap" type="com.kanjia.pojo.HelpUser">
-        <constructor>
-            <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-            <arg column="order_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-            <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-            <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
-            <arg column="cut_price" jdbcType="DECIMAL" javaType="java.math.BigDecimal"/>
-        </constructor>
-    </resultMap>
-    <sql id="Base_Column_List">
-    id, order_id, user_id, create_time, cut_price
+<mapper namespace="com.kanjia.mapper.HelpUserMapper" >
+  <resultMap id="BaseResultMap" type="com.kanjia.pojo.HelpUser" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="order_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="cut_price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="pick" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_id, user_id, create_time, cut_price, pick
   </sql>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-        select
-        <include refid="Base_Column_List"/>
-        from help_user
-        where id = #{id,jdbcType=INTEGER}
-    </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from help_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from help_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" parameterType="com.kanjia.pojo.HelpUser" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insert" parameterType="com.kanjia.pojo.HelpUser"  useGeneratedKeys="true" keyProperty="id">
     insert into help_user (id, order_id, user_id, 
-      create_time, cut_price)
+      create_time, cut_price, pick
+      )
     values (#{id,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{cutPrice,jdbcType=DECIMAL})
+      #{createTime,jdbcType=TIMESTAMP}, #{cutPrice,jdbcType=DECIMAL}, #{pick,jdbcType=INTEGER}
+      )
   </insert>
-    <insert id="insertSelective" parameterType="com.kanjia.pojo.HelpUser" useGeneratedKeys="true" keyProperty="id">
-        insert into help_user
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="orderId != null">
-                order_id,
-            </if>
-            <if test="userId != null">
-                user_id,
-            </if>
-            <if test="createTime != null">
-                create_time,
-            </if>
-            <if test="cutPrice != null">
-                cut_price,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=INTEGER},
-            </if>
-            <if test="orderId != null">
-                #{orderId,jdbcType=INTEGER},
-            </if>
-            <if test="userId != null">
-                #{userId,jdbcType=INTEGER},
-            </if>
-            <if test="createTime != null">
-                #{createTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="cutPrice != null">
-                #{cutPrice,jdbcType=DECIMAL},
-            </if>
-        </trim>
-    </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.kanjia.pojo.HelpUser">
-        update help_user
-        <set>
-            <if test="orderId != null">
-                order_id = #{orderId,jdbcType=INTEGER},
-            </if>
-            <if test="userId != null">
-                user_id = #{userId,jdbcType=INTEGER},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="cutPrice != null">
-                cut_price = #{cutPrice,jdbcType=DECIMAL},
-            </if>
-        </set>
-        where id = #{id,jdbcType=INTEGER}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="com.kanjia.pojo.HelpUser">
+  <insert id="insertSelective" parameterType="com.kanjia.pojo.HelpUser"  useGeneratedKeys="true" keyProperty="id">
+    insert into help_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="cutPrice != null" >
+        cut_price,
+      </if>
+      <if test="pick != null" >
+        pick,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cutPrice != null" >
+        #{cutPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="pick != null" >
+        #{pick,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kanjia.pojo.HelpUser" >
+    update help_user
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cutPrice != null" >
+        cut_price = #{cutPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="pick != null" >
+        pick = #{pick,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kanjia.pojo.HelpUser" >
     update help_user
     set order_id = #{orderId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      cut_price = #{cutPrice,jdbcType=DECIMAL}
+      cut_price = #{cutPrice,jdbcType=DECIMAL},
+      pick = #{pick,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

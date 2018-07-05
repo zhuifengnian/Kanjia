@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by liyue on 2018/6/29
  */
-public class DetailActivityVo {
+public class DetailActivityPriceVo {
     private Integer id;
 
     private String title;
@@ -18,7 +18,9 @@ public class DetailActivityVo {
 
     private String adress;
 
-    private Integer pick;
+    private BigDecimal originPrice;
+
+    private BigDecimal nowPrice;
 
     private Date activityTime;
 
@@ -162,11 +164,19 @@ public class DetailActivityVo {
         this.enteprirseId = enteprirseId;
     }
 
-    public Integer getPick() {
-        return pick;
+    public BigDecimal getOriginPrice() {
+        return originPrice;
     }
 
-    public void setPick(Integer pick) {
-        this.pick = pick;
+    public void setOriginPrice(BigDecimal originPrice) {
+        this.originPrice = originPrice;
+    }
+
+    public BigDecimal getNowPrice() {
+        return nowPrice;
+    }
+
+    public void setNowPrice(BigDecimal nowPrice) {
+        this.nowPrice = nowPrice;
     }
 }

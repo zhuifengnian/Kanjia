@@ -16,9 +16,7 @@ public class PageActivityVo {
 
     private String adress;
 
-    private BigDecimal originPrice;
-
-    private BigDecimal minuPrice;
+    private Integer pick;
 
     private Date activityTime;
 
@@ -106,14 +104,6 @@ public class PageActivityVo {
     }
 
 
-    public BigDecimal getOriginPrice() {
-        return originPrice;
-    }
-
-    public void setOriginPrice(BigDecimal originPrice) {
-        this.originPrice = originPrice;
-    }
-
 
     public List<String> getHeadSculpture() {
         return headSculpture;
@@ -123,11 +113,12 @@ public class PageActivityVo {
         this.headSculpture = headSculpture;
     }
 
-    public BigDecimal getMinuPrice() {
-        return minuPrice;
+
+    public Integer getPick() {
+        return pick;
     }
 
-    public void setMinuPrice(BigDecimal minuPrice) {
-        this.minuPrice = minuPrice;
+    public void setPick(Integer pick) {
+        this.pick = pick;
     }
 }

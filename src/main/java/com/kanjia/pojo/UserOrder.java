@@ -22,7 +22,9 @@ public class UserOrder {
 
     private String qrCode;
 
-    public UserOrder(Integer id, Integer userId, Integer activityId, BigDecimal currentPrice, Integer helpId, Date createTime, Date updateTime, Integer state, String qrCode) {
+    private Integer pick;
+
+    public UserOrder(Integer id, Integer userId, Integer activityId, BigDecimal currentPrice, Integer helpId, Date createTime, Date updateTime, Integer state, String qrCode, Integer pick) {
         this.id = id;
         this.userId = userId;
         this.activityId = activityId;
@@ -32,6 +34,7 @@ public class UserOrder {
         this.updateTime = updateTime;
         this.state = state;
         this.qrCode = qrCode;
+        this.pick = pick;
     }
 
     public UserOrder() {
@@ -108,5 +111,13 @@ public class UserOrder {
 
     public void setQrCode(String qrCode) {
         this.qrCode = qrCode == null ? null : qrCode.trim();
+    }
+
+    public Integer getPick() {
+        return pick;
+    }
+
+    public void setPick(Integer pick) {
+        this.pick = pick;
     }
 }

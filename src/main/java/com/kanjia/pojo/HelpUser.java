@@ -14,12 +14,15 @@ public class HelpUser {
 
     private BigDecimal cutPrice;
 
-    public HelpUser(Integer id, Integer orderId, Integer userId, Date createTime, BigDecimal cutPrice) {
+    private Integer pick;
+
+    public HelpUser(Integer id, Integer orderId, Integer userId, Date createTime, BigDecimal cutPrice, Integer pick) {
         this.id = id;
         this.orderId = orderId;
         this.userId = userId;
         this.createTime = createTime;
         this.cutPrice = cutPrice;
+        this.pick = pick;
     }
 
     public HelpUser() {
@@ -64,5 +67,13 @@ public class HelpUser {
 
     public void setCutPrice(BigDecimal cutPrice) {
         this.cutPrice = cutPrice;
+    }
+
+    public Integer getPick() {
+        return pick;
+    }
+
+    public void setPick(Integer pick) {
+        this.pick = pick;
     }
 }

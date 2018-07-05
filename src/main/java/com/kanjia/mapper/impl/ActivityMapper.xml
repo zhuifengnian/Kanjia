@@ -23,6 +23,7 @@
       <arg column="category_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="longitude" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="latitude" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="pick" jdbcType="INTEGER" javaType="java.lang.Integer" />
     </constructor>
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.kanjia.pojo.Activity" >
@@ -47,13 +48,14 @@
       <arg column="category_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="longitude" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="latitude" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="pick" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="description" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
     id, title, picture, video, adress, origin_price, minu_price, activity_time, enterprise_id, 
     limit_number, sold_number, consume_time, consume_end_time, cut_time, state, create_time, 
-    update_time, category_id, longitude, latitude
+    update_time, category_id, longitude, latitude, pick
   </sql>
   <sql id="Blob_Column_List" >
     description
@@ -77,16 +79,16 @@
       limit_number, sold_number, consume_time, 
       consume_end_time, cut_time, state, 
       create_time, update_time, category_id, 
-      longitude, latitude, description
-      )
+      longitude, latitude, pick, 
+      description)
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}, 
       #{video,jdbcType=VARCHAR}, #{adress,jdbcType=VARCHAR}, #{originPrice,jdbcType=DECIMAL}, 
       #{minuPrice,jdbcType=DECIMAL}, #{activityTime,jdbcType=TIMESTAMP}, #{enterpriseId,jdbcType=INTEGER}, 
       #{limitNumber,jdbcType=INTEGER}, #{soldNumber,jdbcType=INTEGER}, #{consumeTime,jdbcType=TIMESTAMP}, 
       #{consumeEndTime,jdbcType=TIMESTAMP}, #{cutTime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{categoryId,jdbcType=INTEGER}, 
-      #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{description,jdbcType=LONGVARCHAR}
-      )
+      #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{pick,jdbcType=INTEGER}, 
+      #{description,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.kanjia.pojo.Activity" useGeneratedKeys="true" keyProperty="id">
     insert into activity
@@ -150,6 +152,9 @@
       </if>
       <if test="latitude != null" >
         latitude,
+      </if>
+      <if test="pick != null" >
+        pick,
       </if>
       <if test="description != null" >
         description,
@@ -216,6 +221,9 @@
       <if test="latitude != null" >
         #{latitude,jdbcType=VARCHAR},
       </if>
+      <if test="pick != null" >
+        #{pick,jdbcType=INTEGER},
+      </if>
       <if test="description != null" >
         #{description,jdbcType=LONGVARCHAR},
       </if>
@@ -281,6 +289,9 @@
       <if test="latitude != null" >
         latitude = #{latitude,jdbcType=VARCHAR},
       </if>
+      <if test="pick != null" >
+        pick = #{pick,jdbcType=INTEGER},
+      </if>
       <if test="description != null" >
         description = #{description,jdbcType=LONGVARCHAR},
       </if>
@@ -308,6 +319,7 @@
       category_id = #{categoryId,jdbcType=INTEGER},
       longitude = #{longitude,jdbcType=VARCHAR},
       latitude = #{latitude,jdbcType=VARCHAR},
+      pick = #{pick,jdbcType=INTEGER},
       description = #{description,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -331,25 +343,51 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       category_id = #{categoryId,jdbcType=INTEGER},
       longitude = #{longitude,jdbcType=VARCHAR},
-      latitude = #{latitude,jdbcType=VARCHAR}
+      latitude = #{latitude,jdbcType=VARCHAR},
+      pick = #{pick,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <!-- 查詢活动 -->
-  <select id="getAllActivity" resultType="com.kanjia.vo.PageActivityVo">
-    select a.id,a.title,a.picture,a.adress,a.origin_price,a.minu_price as minuPrice,a.activity_time as
-    activityTime,e.enterprise_name as enterpriseName,
-    a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
-    from activity a left join enterprise e on a.enterprise_id = e.id
-    where 1=1
-    and a.state=1
-    and a.activity_time >now()
-    and a.limit_number != a.sold_number
-    <if test="start != null and pageSize!=null">
-      limit #{start},#{pageSize}
-    </if>
-  </select>
-  <!--获取活动数量-->
-  <select id="getAllActivityCount" resultType="Integer">
+  <!--&lt;!&ndash; 查詢活动 &ndash;&gt;-->
+  <!--<select id="getAllActivity" resultType="com.kanjia.vo.PageActivityPriceVo">-->
+    <!--select a.id,a.title,a.picture,a.adress,a.origin_price,a.minu_price as minuPrice,a.activity_time as-->
+    <!--activityTime,e.enterprise_name as enterpriseName,-->
+    <!--a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime-->
+    <!--from activity a left join enterprise e on a.enterprise_id = e.id-->
+    <!--where 1=1-->
+    <!--and a.state=1-->
+    <!--and a.activity_time >now()-->
+    <!--and a.limit_number != a.sold_number-->
+    <!--<if test="start != null and pageSize!=null">-->
+      <!--limit #{start},#{pageSize}-->
+    <!--</if>-->
+  <!--</select>-->
+  <!--&lt;!&ndash;获取活动数量&ndash;&gt;-->
+  <!--<select id="getAllActivityCount" resultType="Integer">-->
+    <!--select count(1)-->
+    <!--from activity a left join enterprise e on a.enterprise_id = e.id-->
+    <!--where 1=1-->
+    <!--and a.state=1-->
+    <!--and a.activity_time >now()-->
+    <!--and a.limit_number != a.sold_number-->
+
+  <!--</select>-->
+
+    <!-- 查詢活动 -->
+    <select id="getAllActivity" resultType="com.kanjia.vo.PageActivityVo">
+        select a.id,a.title,a.picture,a.adress,a.origin_price,a.pick,a.activity_time as
+        activityTime,e.enterprise_name as enterpriseName,
+        a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
+        from activity a left join enterprise e on a.enterprise_id = e.id
+        where 1=1
+        and a.state=1
+        and a.activity_time >now()
+        and a.limit_number != a.sold_number
+        <if test="start != null and pageSize!=null">
+            limit #{start},#{pageSize}
+        </if>
+    </select>
+    <!--获取活动数量-->
+    <select id="getAllActivityCount" resultType="Integer">
     select count(1)
     from activity a left join enterprise e on a.enterprise_id = e.id
     where 1=1
@@ -358,23 +396,52 @@
     and a.limit_number != a.sold_number
 
   </select>
-  <!--获取其他活动-->
-  <select id="getQitaActivity" resultType="com.kanjia.vo.PageActivityVo">
-    select a.id,a.title,a.picture,a.adress,a.origin_price,a.minu_price as minuPrice,a.activity_time as
-    activityTime,e.enterprise_name as enterpriseName,
-    a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
-    from activity a left join enterprise e on a.enterprise_id = e.id
-    where 1=1
-    and a.category_id>3
-    and a.state=1
-    and a.activity_time >now()
-    and aa.limit_number != a.sold_number
-    <if test="start != null and pageSize!=null">
-      limit #{start},#{pageSize}
-    </if>
-  </select>
-  <!--获取其他活动数量-->
-  <select id="getQitaActivityCount" resultType="Integer">
+
+
+  <!--&lt;!&ndash;获取其他活动&ndash;&gt;-->
+  <!--<select id="getQitaActivity" resultType="com.kanjia.vo.PageActivityPriceVo">-->
+    <!--select a.id,a.title,a.picture,a.adress,a.origin_price,a.minu_price as minuPrice,a.activity_time as-->
+    <!--activityTime,e.enterprise_name as enterpriseName,-->
+    <!--a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime-->
+    <!--from activity a left join enterprise e on a.enterprise_id = e.id-->
+    <!--where 1=1-->
+    <!--and a.category_id>3-->
+    <!--and a.state=1-->
+    <!--and a.activity_time >now()-->
+    <!--and aa.limit_number != a.sold_number-->
+    <!--<if test="start != null and pageSize!=null">-->
+      <!--limit #{start},#{pageSize}-->
+    <!--</if>-->
+  <!--</select>-->
+  <!--&lt;!&ndash;获取其他活动数量&ndash;&gt;-->
+  <!--<select id="getQitaActivityCount" resultType="Integer">-->
+    <!--select count(1)-->
+    <!--from activity a left join enterprise e on a.enterprise_id = e.id-->
+    <!--where 1=1-->
+    <!--and a.category_id>3-->
+    <!--and a.state=1-->
+    <!--and a.activity_time >now()-->
+    <!--and a.limit_number != a.sold_number-->
+
+  <!--</select>-->
+
+    <!--获取其他活动-->
+    <select id="getQitaActivity" resultType="com.kanjia.vo.PageActivityVo">
+        select a.id,a.title,a.picture,a.adress,a.origin_price,a.pick,a.activity_time as
+        activityTime,e.enterprise_name as enterpriseName,
+        a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
+        from activity a left join enterprise e on a.enterprise_id = e.id
+        where 1=1
+        and a.category_id>3
+        and a.state=1
+        and a.activity_time >now()
+        and aa.limit_number != a.sold_number
+        <if test="start != null and pageSize!=null">
+            limit #{start},#{pageSize}
+        </if>
+    </select>
+    <!--获取其他活动数量-->
+    <select id="getQitaActivityCount" resultType="Integer">
     select count(1)
     from activity a left join enterprise e on a.enterprise_id = e.id
     where 1=1
@@ -385,23 +452,50 @@
 
   </select>
 
-  <!--根据活动name值进行查找信息-->
-  <select id="getNameActivity" resultType="com.kanjia.vo.PageActivityVo">
-    select a.id,a.title,a.picture,a.adress,a.origin_price,a.minu_price as minuPrice,a.activity_time as
-    activityTime,e.enterprise_name as enterpriseName,
-    a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
-    from activity a left join category c on a.category_id=c.id left join enterprise e on a.enterprise_id = e.id
-    where 1=1
-    and c.name=#{name}
-    and a.state=1
-    and a.activity_time >now()
-    and a.limit_number != a.sold_number
-    <if test="page != null and page.start != null and page.pageSize!=null">
-      limit #{page.start},#{page.pageSize}
-    </if>
-  </select>
-  <!--统计name值下的数量-->
-  <select id="getNameActivityCount" resultType="Integer">
+    <!--&lt;!&ndash;根据活动name值进行查找信息&ndash;&gt;-->
+  <!--<select id="getNameActivity" resultType="com.kanjia.vo.PageActivityPriceVo">-->
+    <!--select a.id,a.title,a.picture,a.adress,a.origin_price,a.minu_price as minuPrice,a.activity_time as-->
+    <!--activityTime,e.enterprise_name as enterpriseName,-->
+    <!--a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime-->
+    <!--from activity a left join category c on a.category_id=c.id left join enterprise e on a.enterprise_id = e.id-->
+    <!--where 1=1-->
+    <!--and c.name=#{name}-->
+    <!--and a.state=1-->
+    <!--and a.activity_time >now()-->
+    <!--and a.limit_number != a.sold_number-->
+    <!--<if test="page != null and page.start != null and page.pageSize!=null">-->
+      <!--limit #{page.start},#{page.pageSize}-->
+    <!--</if>-->
+  <!--</select>-->
+  <!--&lt;!&ndash;统计name值下的数量&ndash;&gt;-->
+  <!--<select id="getNameActivityCount" resultType="Integer">-->
+    <!--select count(1)-->
+    <!--from activity a left join category c on a.category_id=c.id left join enterprise e on a.enterprise_id = e.id-->
+    <!--where 1=1-->
+    <!--and  c.name=#{name}-->
+    <!--and a.state=1-->
+    <!--and a.activity_time >now()-->
+    <!--and a.limit_number != a.sold_number-->
+
+  <!--</select>-->
+
+    <!--根据活动name值进行查找信息-->
+    <select id="getNameActivity" resultType="com.kanjia.vo.PageActivityVo">
+        select a.id,a.title,a.picture,a.adress,a.origin_price,a.pick,a.activity_time as
+        activityTime,e.enterprise_name as enterpriseName,
+        a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
+        from activity a left join category c on a.category_id=c.id left join enterprise e on a.enterprise_id = e.id
+        where 1=1
+        and c.name=#{name}
+        and a.state=1
+        and a.activity_time >now()
+        and a.limit_number != a.sold_number
+        <if test="page != null and page.start != null and page.pageSize!=null">
+            limit #{page.start},#{page.pageSize}
+        </if>
+    </select>
+    <!--统计name值下的数量-->
+    <select id="getNameActivityCount" resultType="Integer">
     select count(1)
     from activity a left join category c on a.category_id=c.id left join enterprise e on a.enterprise_id = e.id
     where 1=1
@@ -411,65 +505,138 @@
     and a.limit_number != a.sold_number
 
   </select>
-  <!--获得企业所有活动-->
-  <select id="getEnterpriseAllActivity" resultType="com.kanjia.vo.PageActivityVo">
-    select a.id,a.title,a.picture,a.adress,a.origin_price,a.minu_price as minuPrice,a.activity_time as
-    activityTime,e.enterprise_name as enterpriseName,
-    a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
-    from activity a left join enterprise e on a.enterprise_id = e.id
 
-    <if test="page != null and page.start != null and page.pageSize!=null">
-      limit #{page.start},#{page.pageSize}
-    </if>
-  </select>
-  <select id="getEnterpriseAllActivityCount" resultType="Integer">
+  <!--&lt;!&ndash;获得企业所有活动&ndash;&gt;-->
+  <!--<select id="getEnterpriseAllActivity" resultType="com.kanjia.vo.PageActivityPriceVo">-->
+    <!--select a.id,a.title,a.picture,a.adress,a.origin_price,a.minu_price as minuPrice,a.activity_time as-->
+    <!--activityTime,e.enterprise_name as enterpriseName,-->
+    <!--a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime-->
+    <!--from activity a left join enterprise e on a.enterprise_id = e.id-->
+
+    <!--<if test="page != null and page.start != null and page.pageSize!=null">-->
+      <!--limit #{page.start},#{page.pageSize}-->
+    <!--</if>-->
+  <!--</select>-->
+  <!--<select id="getEnterpriseAllActivityCount" resultType="Integer">-->
+    <!--select count(1)-->
+    <!--from activity a left join enterprise e on a.enterprise_id = e.id-->
+
+  <!--</select>-->
+
+    <!--获得企业所有活动-->
+    <select id="getEnterpriseAllActivity" resultType="com.kanjia.vo.PageActivityVo">
+        select a.id,a.title,a.picture,a.adress,a.origin_price,a.pick,a.activity_time as
+        activityTime,e.enterprise_name as enterpriseName,
+        a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
+        from activity a left join enterprise e on a.enterprise_id = e.id
+
+        <if test="page != null and page.start != null and page.pageSize!=null">
+            limit #{page.start},#{page.pageSize}
+        </if>
+    </select>
+    <select id="getEnterpriseAllActivityCount" resultType="Integer">
     select count(1)
     from activity a left join enterprise e on a.enterprise_id = e.id
 
   </select>
-  <!--获得企业正上线的活动-->
-  <select id="getEnterpriseNowActivity" resultType="com.kanjia.vo.PageActivityVo">
-    select a.id,a.title,a.picture,a.adress,a.origin_price,a.minu_price as minuPrice,a.activity_time as
-    activityTime,e.enterprise_name as enterpriseName,
-    a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
+
+  <!--&lt;!&ndash;获得企业正上线的活动&ndash;&gt;-->
+  <!--<select id="getEnterpriseNowActivity" resultType="com.kanjia.vo.PageActivityPriceVo">-->
+    <!--select a.id,a.title,a.picture,a.adress,a.origin_price,a.minu_price as minuPrice,a.activity_time as-->
+    <!--activityTime,e.enterprise_name as enterpriseName,-->
+    <!--a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime-->
+    <!--from activity a left join enterprise e on a.enterprise_id = e.id-->
+    <!--where 1=1-->
+    <!--and a.cut_time >now()-->
+    <!--and a.state=1-->
+    <!--<if test="page != null and page.start != null and page.pageSize!=null">-->
+      <!--limit #{page.start},#{page.pageSize}-->
+    <!--</if>-->
+  <!--</select>-->
+  <!--<select id="getEnterpriseNowActivityCount" resultType="Integer">-->
+    <!--select count(1)-->
+    <!--from activity a left join enterprise e on a.enterprise_id = e.id-->
+    <!--where 1=1-->
+    <!--and a.cut_time >now()-->
+    <!--and a.state=1-->
+  <!--</select>-->
+
+    <!--获得企业正上线的活动-->
+    <select id="getEnterpriseNowActivity" resultType="com.kanjia.vo.PageActivityVo">
+        select a.id,a.title,a.picture,a.adress,a.origin_price,a.pick,a.activity_time as
+        activityTime,e.enterprise_name as enterpriseName,
+        a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
+        from activity a left join enterprise e on a.enterprise_id = e.id
+        where 1=1
+        and a.cut_time >now()
+        and a.state=1
+        <if test="page != null and page.start != null and page.pageSize!=null">
+            limit #{page.start},#{page.pageSize}
+        </if>
+    </select>
+    <select id="getEnterpriseNowActivityCount" resultType="Integer">
+    select count(1)
     from activity a left join enterprise e on a.enterprise_id = e.id
     where 1=1
     and a.cut_time >now()
     and a.state=1
-    <if test="page != null and page.start != null and page.pageSize!=null">
-      limit #{page.start},#{page.pageSize}
-    </if>
   </select>
-  <select id="getEnterpriseNowActivityCount" resultType="Integer">
+
+
+    <!--&lt;!&ndash;获得企业删除活动&ndash;&gt;-->
+    <!--<select id="getEnterpriseDeleteActivity" resultType="com.kanjia.vo.PageActivityPriceVo">-->
+        <!--select a.id,a.title,a.picture,a.adress,a.origin_price,a.minu_price as minuPrice,a.activity_time as-->
+        <!--activityTime,e.enterprise_name as enterpriseName,-->
+        <!--a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime-->
+        <!--from activity a left join enterprise e on a.enterprise_id = e.id-->
+        <!--where 1=1-->
+        <!--and a.cut_time >now()-->
+        <!--and a.state=0-->
+        <!--<if test="page != null and page.start != null and page.pageSize!=null">-->
+            <!--limit #{page.start},#{page.pageSize}-->
+        <!--</if>-->
+    <!--</select>-->
+    <!--<select id="getEnterpriseDeleteActivityCount" resultType="Integer">-->
+    <!--select count(1)-->
+    <!--from activity a left join enterprise e on a.enterprise_id = e.id-->
+    <!--where 1=1-->
+    <!--and a.cut_time >now()-->
+    <!--and a.state=0-->
+  <!--</select>-->
+
+    <!--获得企业删除活动-->
+    <select id="getEnterpriseDeleteActivity" resultType="com.kanjia.vo.PageActivityVo">
+        select a.id,a.title,a.picture,a.adress,a.origin_price,a.pick,a.activity_time as
+        activityTime,e.enterprise_name as enterpriseName,
+        a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
+        from activity a left join enterprise e on a.enterprise_id = e.id
+        where 1=1
+        and a.cut_time >now()
+        and a.state=0
+        <if test="page != null and page.start != null and page.pageSize!=null">
+            limit #{page.start},#{page.pageSize}
+        </if>
+    </select>
+    <select id="getEnterpriseDeleteActivityCount" resultType="Integer">
     select count(1)
     from activity a left join enterprise e on a.enterprise_id = e.id
     where 1=1
     and a.cut_time >now()
-    and a.state=1
-  </select>
-  <!--获得企业删除活动-->
-  <select id="getEnterpriseDeleteActivity" resultType="com.kanjia.vo.PageActivityVo">
-    select a.id,a.title,a.picture,a.adress,a.origin_price,a.minu_price as minuPrice,a.activity_time as
-    activityTime,e.enterprise_name as enterpriseName,
-    a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
-    from activity a left join enterprise e on a.enterprise_id = e.id
-    where 1=1
-    and a.cut_time >now()
-    and a.state=0
-    <if test="page != null and page.start != null and page.pageSize!=null">
-      limit #{page.start},#{page.pageSize}
-    </if>
-  </select>
-  <select id="getEnterpriseDeleteActivityCount" resultType="Integer">
-    select count(1)
-    from activity a left join enterprise e on a.enterprise_id = e.id
-    where 1=1
-    and a.cut_time >now()
     and a.state=0
   </select>
-  <!--获得活动详情-->
-  <select id="getDetailActivity" resultType="com.kanjia.vo.DetailActivityVo">
-    select  a.id,a.title,a.video,a.adress,a.origin_price as originPrice,a.minu_price as minuPrice,
+
+  <!--&lt;!&ndash;获得活动详情&ndash;&gt;-->
+  <!--<select id="getDetailActivity" resultType="com.kanjia.vo.DetailActivityVo">-->
+    <!--select  a.id,a.title,a.video,a.adress,a.origin_price as originPrice,a.minu_price as minuPrice,-->
+    <!--a.activity_time as activityTime,e.enterprise_name as enterpriseName,e.phone as enterprisePhone,-->
+    <!--a.limit_number as limitNumber,a.sold_number as soldNumber,a.cut_time as cutTime,a.longitude,a.latitude,a.description,e.id as enterpriseId-->
+    <!--from activity a left join enterprise e on a.enterprise_id = e.id-->
+    <!--where 1=1-->
+    <!--and a.id=#{id}-->
+  <!--</select>-->
+    <!--获得活动详情-->
+    <select id="getDetailActivity" resultType="com.kanjia.vo.DetailActivityVo">
+    select  a.id,a.title,a.video,a.adress,a.pick,
     a.activity_time as activityTime,e.enterprise_name as enterpriseName,e.phone as enterprisePhone,
     a.limit_number as limitNumber,a.sold_number as soldNumber,a.cut_time as cutTime,a.longitude,a.latitude,a.description,e.id as enterpriseId
     from activity a left join enterprise e on a.enterprise_id = e.id

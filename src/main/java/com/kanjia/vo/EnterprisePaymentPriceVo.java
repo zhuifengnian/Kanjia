@@ -5,12 +5,12 @@ import java.math.BigDecimal;
 /**
  * Created by liyue on 2018/6/29
  */
-public class EnterprisePaymentVo {
+public class EnterprisePaymentPriceVo {
     private Integer id;
 
     private Integer enterpriseId;
 
-    private Integer pick;
+    private BigDecimal minuPrice;
 
     public Integer getId() {
         return id;
@@ -29,11 +29,11 @@ public class EnterprisePaymentVo {
     }
 
 
-    public Integer getPick() {
-        return pick;
+    public BigDecimal getMinuPrice() {
+        return minuPrice;
     }
 
-    public void setPick(Integer pick) {
-        this.pick = pick;
+    public void setMinuPrice(BigDecimal minuPrice) {
+        this.minuPrice = minuPrice;
     }
 }

@@ -3,6 +3,7 @@ package com.kanjia.service;
 import com.kanjia.basic.Page;
 import com.kanjia.basic.PageInfo;
 import com.kanjia.pojo.Activity;
+import com.kanjia.vo.DetailActivityPriceVo;
 import com.kanjia.vo.DetailActivityVo;
 import com.kanjia.vo.PageActivityVo;
 import org.apache.ibatis.annotations.Param;

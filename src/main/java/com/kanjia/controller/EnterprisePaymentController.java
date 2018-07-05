@@ -25,24 +25,43 @@ public class EnterprisePaymentController {
     private UserOrderService userOrderService;
 
 
+    //    @RequestMapping(value = "/scanOrders", method = RequestMethod.POST)
+//    @ApiOperation(value = "企业扫描二维码", httpMethod = "POST")
+//    @ResponseBody
+//    public ReturnMessage scanOders(@RequestParam("qr_code") String qr_code) {
+//
+//        int[] insert = new int[2];
+//        EnterprisePaymentVo enterprisePaymentVo = userOrderService.getQrCode(qr_code);
+//        //修改orders下的状态
+//        if (null != enterprisePaymentVo) {
+//            UserOrder userOrder = new UserOrder();
+//            userOrder.setState(3);
+//            userOrder.setId(enterprisePaymentVo.getId());
+//            insert[0] = userOrderService.updateByPrimaryKeySelective(userOrder);
+//
+//            EnterprisePayment enterprisePayment = enterprisePaymentService.getEnterprisePayment(enterprisePaymentVo.getEnterpriseId());
+//
+//            enterprisePayment.setTotalMoney(enterprisePayment.getTotalMoney().add(enterprisePaymentVo.getMinuPrice()));
+//            insert[1] = enterprisePaymentService.updateByPrimaryKeySelective(enterprisePayment);
+//
+//        }
+//
+//        return new ReturnMessage(ResponseCode.OK, insert);
+//    }
     @RequestMapping(value = "/scanOrders", method = RequestMethod.POST)
     @ApiOperation(value = "企业扫描二维码", httpMethod = "POST")
     @ResponseBody
     public ReturnMessage scanOders(@RequestParam("qr_code") String qr_code) {
 
-        int[] insert = new int[2];
+        int insert = 0;
         EnterprisePaymentVo enterprisePaymentVo = userOrderService.getQrCode(qr_code);
         //修改orders下的状态
         if (null != enterprisePaymentVo) {
             UserOrder userOrder = new UserOrder();
             userOrder.setState(3);
             userOrder.setId(enterprisePaymentVo.getId());
-            insert[0] = userOrderService.updateByPrimaryKeySelective(userOrder);
+            insert = userOrderService.updateByPrimaryKeySelective(userOrder);
 
-            EnterprisePayment enterprisePayment = enterprisePaymentService.getEnterprisePayment(enterprisePaymentVo.getEnterpriseId());
-
-            enterprisePayment.setTotalMoney(enterprisePayment.getTotalMoney().add(enterprisePaymentVo.getMinuPrice()));
-            insert[1] = enterprisePaymentService.updateByPrimaryKeySelective(enterprisePayment);
 
         }
 

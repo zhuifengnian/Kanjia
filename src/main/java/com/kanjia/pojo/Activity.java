@@ -44,9 +44,11 @@ public class Activity {
 
     private String latitude;
 
+    private Integer pick;
+
     private String description;
 
-    public Activity(Integer id, String title, String picture, String video, String adress, BigDecimal originPrice, BigDecimal minuPrice, Date activityTime, Integer enterpriseId, Integer limitNumber, Integer soldNumber, Date consumeTime, Date consumeEndTime, Date cutTime, Integer state, Date createTime, Date updateTime, Integer categoryId, String longitude, String latitude, String description) {
+    public Activity(Integer id, String title, String picture, String video, String adress, BigDecimal originPrice, BigDecimal minuPrice, Date activityTime, Integer enterpriseId, Integer limitNumber, Integer soldNumber, Date consumeTime, Date consumeEndTime, Date cutTime, Integer state, Date createTime, Date updateTime, Integer categoryId, String longitude, String latitude, Integer pick, String description) {
         this.id = id;
         this.title = title;
         this.picture = picture;
@@ -67,6 +69,7 @@ public class Activity {
         this.categoryId = categoryId;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.pick = pick;
         this.description = description;
     }
 
@@ -232,6 +235,14 @@ public class Activity {
 
     public void setLatitude(String latitude) {
         this.latitude = latitude == null ? null : latitude.trim();
+    }
+
+    public Integer getPick() {
+        return pick;
+    }
+
+    public void setPick(Integer pick) {
+        this.pick = pick;
     }
 
     public String getDescription() {
