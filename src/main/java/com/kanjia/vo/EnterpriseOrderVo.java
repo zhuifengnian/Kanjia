@@ -1,10 +1,15 @@
 package com.kanjia.vo;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.math.BigDecimal;
 
 /**
  * Created by liyue on 2018/6/29
  */
+
 public class EnterpriseOrderVo {
     private Integer id;
 
@@ -35,6 +40,13 @@ public class EnterpriseOrderVo {
         this.userId = userId;
     }
 
+    public Integer getPick() {
+        return pick;
+    }
+
+    public void setPick(Integer pick) {
+        this.pick = pick;
+    }
 
     public String getTitle() {
         return title;
@@ -58,13 +70,5 @@ public class EnterpriseOrderVo {
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
-    }
-
-    public Integer getPick() {
-        return pick;
-    }
-
-    public void setPick(Integer pick) {
-        this.pick = pick;
     }
 }

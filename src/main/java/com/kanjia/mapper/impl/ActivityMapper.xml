@@ -529,7 +529,8 @@
         activityTime,e.enterprise_name as enterpriseName,
         a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
         from activity a left join enterprise e on a.enterprise_id = e.id
-
+        where 1=1
+        and a.enterprise_id=#{id}
         <if test="page != null and page.start != null and page.pageSize!=null">
             limit #{page.start},#{page.pageSize}
         </if>
@@ -537,7 +538,8 @@
     <select id="getEnterpriseAllActivityCount" resultType="Integer">
     select count(1)
     from activity a left join enterprise e on a.enterprise_id = e.id
-
+    where 1=1
+    and a.enterprise_id=#{id}
   </select>
 
   <!--&lt;!&ndash;获得企业正上线的活动&ndash;&gt;-->
@@ -570,6 +572,7 @@
         where 1=1
         and a.cut_time >now()
         and a.state=1
+
         <if test="page != null and page.start != null and page.pageSize!=null">
             limit #{page.start},#{page.pageSize}
         </if>
@@ -611,7 +614,6 @@
         a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
         from activity a left join enterprise e on a.enterprise_id = e.id
         where 1=1
-        and a.cut_time >now()
         and a.state=0
         <if test="page != null and page.start != null and page.pageSize!=null">
             limit #{page.start},#{page.pageSize}
@@ -621,7 +623,6 @@
     select count(1)
     from activity a left join enterprise e on a.enterprise_id = e.id
     where 1=1
-    and a.cut_time >now()
     and a.state=0
   </select>
 

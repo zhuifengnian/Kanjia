@@ -1,5 +1,9 @@
 package com.kanjia.vo;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -7,6 +11,7 @@ import java.util.Date;
  * 用户正在砍价的订单数据<br/>
  * fan 2018/7/4 16:42
  */
+
 public class KanjiaOrderVo {
     private Integer oid;
 
@@ -23,6 +28,7 @@ public class KanjiaOrderVo {
     private Date cutTime;       //活动截止时间
 
     private Integer helperNum;      //帮砍人数
+
 
     public Integer getOid() {
         return oid;

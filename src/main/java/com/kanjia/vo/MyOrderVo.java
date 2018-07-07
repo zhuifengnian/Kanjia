@@ -1,5 +1,9 @@
 package com.kanjia.vo;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -8,6 +12,7 @@ import java.util.List;
  * 我的订单页面的vo<br/>
  * fan 2018/7/4 20:14
  */
+
 public class MyOrderVo {
     private Integer oid;
 
@@ -28,6 +33,7 @@ public class MyOrderVo {
     private String qrCode;
 
     private List<String> helperAvatars;
+
 
     public Integer getOid() {
         return oid;

@@ -1,5 +1,9 @@
 package com.kanjia.vo;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -7,6 +11,7 @@ import java.util.List;
 /**
  * Created by luyue on 2018/6/29
  */
+
 public class PageActivityVo {
     private Integer id;
 
@@ -29,6 +34,7 @@ public class PageActivityVo {
     private Date cutTime;
 
     private List<String> headSculpture;
+
 
     public Integer getId() {
         return id;
@@ -62,6 +68,13 @@ public class PageActivityVo {
         this.adress = adress;
     }
 
+    public Integer getPick() {
+        return pick;
+    }
+
+    public void setPick(Integer pick) {
+        this.pick = pick;
+    }
 
     public Date getActivityTime() {
         return activityTime;
@@ -103,22 +116,11 @@ public class PageActivityVo {
         this.cutTime = cutTime;
     }
 
-
-
     public List<String> getHeadSculpture() {
         return headSculpture;
     }
 
     public void setHeadSculpture(List<String> headSculpture) {
         this.headSculpture = headSculpture;
-    }
-
-
-    public Integer getPick() {
-        return pick;
-    }
-
-    public void setPick(Integer pick) {
-        this.pick = pick;
     }
 }

@@ -1,5 +1,9 @@
 package com.kanjia.vo;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -7,6 +11,7 @@ import java.util.List;
 /**
  * Created by liyue on 2018/6/29
  */
+
 public class DetailActivityVo {
     private Integer id;
 
@@ -81,6 +86,13 @@ public class DetailActivityVo {
         this.adress = adress;
     }
 
+    public Integer getPick() {
+        return pick;
+    }
+
+    public void setPick(Integer pick) {
+        this.pick = pick;
+    }
 
     public Date getActivityTime() {
         return activityTime;
@@ -88,6 +100,14 @@ public class DetailActivityVo {
 
     public void setActivityTime(Date activityTime) {
         this.activityTime = activityTime;
+    }
+
+    public Integer getEnteprirseId() {
+        return enteprirseId;
+    }
+
+    public void setEnteprirseId(Integer enteprirseId) {
+        this.enteprirseId = enteprirseId;
     }
 
     public String getEnterpriseName() {
@@ -152,21 +172,5 @@ public class DetailActivityVo {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Integer getEnteprirseId() {
-        return enteprirseId;
-    }
-
-    public void setEnteprirseId(Integer enteprirseId) {
-        this.enteprirseId = enteprirseId;
-    }
-
-    public Integer getPick() {
-        return pick;
-    }
-
-    public void setPick(Integer pick) {
-        this.pick = pick;
     }
 }

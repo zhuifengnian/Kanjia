@@ -1,10 +1,17 @@
 package com.kanjia.vo;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.math.BigDecimal;
 
 /**
  * Created by liyue on 2018/6/29
  */
+@Getter
+@Setter
+@ToString
 public class EnterprisePaymentPriceVo {
     private Integer id;
 
@@ -12,28 +19,5 @@ public class EnterprisePaymentPriceVo {
 
     private BigDecimal minuPrice;
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getEnterpriseId() {
-        return enterpriseId;
-    }
-
-    public void setEnterpriseId(Integer enterpriseId) {
-        this.enterpriseId = enterpriseId;
-    }
-
-
-    public BigDecimal getMinuPrice() {
-        return minuPrice;
-    }
-
-    public void setMinuPrice(BigDecimal minuPrice) {
-        this.minuPrice = minuPrice;
-    }
 }
