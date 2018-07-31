@@ -7,7 +7,6 @@
       <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="activity_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="current_price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
-      <arg column="help_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="state" jdbcType="INTEGER" javaType="java.lang.Integer" />
@@ -16,8 +15,8 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    id, user_id, activity_id, current_price, help_id, create_time, update_time, state, 
-    qr_code, pick
+    id, user_id, activity_id, current_price, create_time, update_time, state, qr_code, 
+    pick
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -31,13 +30,13 @@
   </delete>
   <insert id="insert" parameterType="com.kanjia.pojo.UserOrder" useGeneratedKeys="true" keyProperty="id">
     insert into user_order (id, user_id, activity_id, 
-      current_price, help_id, create_time, 
-      update_time, state, qr_code, 
-      pick)
+      current_price, create_time, update_time, 
+      state, qr_code, pick
+      )
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, 
-      #{currentPrice,jdbcType=DECIMAL}, #{helpId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, #{qrCode,jdbcType=VARCHAR}, 
-      #{pick,jdbcType=INTEGER})
+      #{currentPrice,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{state,jdbcType=INTEGER}, #{qrCode,jdbcType=VARCHAR}, #{pick,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.kanjia.pojo.UserOrder" useGeneratedKeys="true" keyProperty="id">
     insert into user_order
@@ -53,9 +52,6 @@
       </if>
       <if test="currentPrice != null" >
         current_price,
-      </if>
-      <if test="helpId != null" >
-        help_id,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -86,9 +82,6 @@
       <if test="currentPrice != null" >
         #{currentPrice,jdbcType=DECIMAL},
       </if>
-      <if test="helpId != null" >
-        #{helpId,jdbcType=INTEGER},
-      </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -118,9 +111,6 @@
       <if test="currentPrice != null" >
         current_price = #{currentPrice,jdbcType=DECIMAL},
       </if>
-      <if test="helpId != null" >
-        help_id = #{helpId,jdbcType=INTEGER},
-      </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -144,7 +134,6 @@
     set user_id = #{userId,jdbcType=INTEGER},
       activity_id = #{activityId,jdbcType=INTEGER},
       current_price = #{currentPrice,jdbcType=DECIMAL},
-      help_id = #{helpId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       state = #{state,jdbcType=INTEGER},
@@ -153,11 +142,11 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <!--<select id="getQrCode" resultType="com.kanjia.vo.EnterprisePaymentPriceVo">-->
-    <!--select uo.id,a.enterprise_id as enterpriseId,uo.current_price as currentPrice-->
-    <!--from user_order uo left join activity a on uo.activity_id = a.id-->
-    <!--where 1=1-->
-    <!--and uo.state=1-->
-    <!--and uo.qr_code=#{qr_code}-->
+  <!--select uo.id,a.enterprise_id as enterpriseId,uo.current_price as currentPrice-->
+  <!--from user_order uo left join activity a on uo.activity_id = a.id-->
+  <!--where 1=1-->
+  <!--and uo.state=1-->
+  <!--and uo.qr_code=#{qr_code}-->
   <!--</select>-->
   <select id="getQrCode" resultType="com.kanjia.vo.EnterprisePaymentVo">
     select uo.id,a.enterprise_id as enterpriseId,uo.pick
@@ -168,21 +157,21 @@
   </select>
   <!--&lt;!&ndash;提取全部订单&ndash;&gt;-->
   <!--<select id="getEnterpriseAllOrder" resultType="com.kanjia.vo.EnterpriseOrderVo">-->
-    <!--select uo.id,uo.user_id as userId,uo.current_price as currentPrice,a.title,a.picture,u.nickname as nickName-->
-    <!--from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id-->
-    <!--where 1=1-->
-    <!--and uo.state =1-->
-    <!--and a.enterprise_id=#{id}-->
-    <!--<if test="page != null and page.start != null and page.pageSize!=null">-->
-      <!--limit #{page.start},#{page.pageSize}-->
-    <!--</if>-->
+  <!--select uo.id,uo.user_id as userId,uo.current_price as currentPrice,a.title,a.picture,u.nickname as nickName-->
+  <!--from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id-->
+  <!--where 1=1-->
+  <!--and uo.state =1-->
+  <!--and a.enterprise_id=#{id}-->
+  <!--<if test="page != null and page.start != null and page.pageSize!=null">-->
+  <!--limit #{page.start},#{page.pageSize}-->
+  <!--</if>-->
   <!--</select>-->
   <!--<select id="getEnterpriseAllOrderCount" resultType="Integer">-->
-    <!--select  count(1)-->
-    <!--from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id-->
-    <!--where 1=1-->
-    <!--and uo.state =1-->
-    <!--and a.enterprise_id=#{id}-->
+  <!--select  count(1)-->
+  <!--from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id-->
+  <!--where 1=1-->
+  <!--and uo.state =1-->
+  <!--and a.enterprise_id=#{id}-->
   <!--</select>-->
 
   <!--提取全部订单-->
@@ -206,25 +195,25 @@
 
   <!--&lt;!&ndash;提取今日订单&ndash;&gt;-->
   <!--<select id="getEnterpriseNowOrder" resultType="com.kanjia.vo.EnterpriseOrderPriceVo">-->
-    <!--select uo.id,uo.user_id as userId,uo.current_price as currentPrice,a.title,a.picture,u.nickname as nickName-->
-    <!--from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id-->
-    <!--where 1=1-->
-    <!--and uo.state =2-->
-    <!--and a.consume_end_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}-->
-    <!--and a.consume_end_time <![CDATA[<=]]> #{t,jdbcType=TIMESTAMP}-->
-    <!--and a.enterprise_id=#{id}-->
-    <!--<if test="page != null and page.start != null and page.pageSize!=null">-->
-      <!--limit #{page.start},#{page.pageSize}-->
-    <!--</if>-->
+  <!--select uo.id,uo.user_id as userId,uo.current_price as currentPrice,a.title,a.picture,u.nickname as nickName-->
+  <!--from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id-->
+  <!--where 1=1-->
+  <!--and uo.state =2-->
+  <!--and a.consume_end_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}-->
+  <!--and a.consume_end_time <![CDATA[<=]]> #{t,jdbcType=TIMESTAMP}-->
+  <!--and a.enterprise_id=#{id}-->
+  <!--<if test="page != null and page.start != null and page.pageSize!=null">-->
+  <!--limit #{page.start},#{page.pageSize}-->
+  <!--</if>-->
   <!--</select>-->
   <!--<select id="getEnterpriseNowOrderCount" resultType="Integer">-->
-    <!--select   count(1)-->
-    <!--from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id-->
-    <!--where 1=1-->
-    <!--and uo.state =2-->
-    <!--and a.consume_end_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}-->
-    <!--and a.consume_end_time <![CDATA[<=]]> #{t,jdbcType=TIMESTAMP}-->
-    <!--and a.enterprise_id=#{id}-->
+  <!--select   count(1)-->
+  <!--from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id-->
+  <!--where 1=1-->
+  <!--and uo.state =2-->
+  <!--and a.consume_end_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}-->
+  <!--and a.consume_end_time <![CDATA[<=]]> #{t,jdbcType=TIMESTAMP}-->
+  <!--and a.enterprise_id=#{id}-->
   <!--</select>-->
 
   <!--提取今日订单-->
@@ -252,23 +241,23 @@
 
   <!--&lt;!&ndash;提取未来订单&ndash;&gt;-->
   <!--<select id="getEnterpriseFeatureOrder" resultType="com.kanjia.vo.EnterpriseOrderPriceVo">-->
-    <!--select uo.id,uo.user_id as userId,uo.current_price as currentPrice,a.title,a.picture,u.nickname as nickName-->
-    <!--from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id-->
-    <!--where 1=1-->
-    <!--and uo.state =2-->
-    <!--and a.consume_end_time <![CDATA[<=]]> #{t,jdbcType=TIMESTAMP}-->
-    <!--and a.enterprise_id=#{id}-->
-    <!--<if test="page != null and page.start != null and page.pageSize!=null">-->
-      <!--limit #{page.start},#{page.pageSize}-->
-    <!--</if>-->
+  <!--select uo.id,uo.user_id as userId,uo.current_price as currentPrice,a.title,a.picture,u.nickname as nickName-->
+  <!--from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id-->
+  <!--where 1=1-->
+  <!--and uo.state =2-->
+  <!--and a.consume_end_time <![CDATA[<=]]> #{t,jdbcType=TIMESTAMP}-->
+  <!--and a.enterprise_id=#{id}-->
+  <!--<if test="page != null and page.start != null and page.pageSize!=null">-->
+  <!--limit #{page.start},#{page.pageSize}-->
+  <!--</if>-->
   <!--</select>-->
   <!--<select id="getEnterpriseFeatureOrderCount" resultType="Integer">-->
-    <!--select   count(1)-->
-    <!--from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id-->
-    <!--where 1=1-->
-    <!--and uo.state =2-->
-    <!--and a.consume_end_time <![CDATA[<=]]> #{t,jdbcType=TIMESTAMP}-->
-    <!--and a.enterprise_id=#{id}-->
+  <!--select   count(1)-->
+  <!--from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id-->
+  <!--where 1=1-->
+  <!--and uo.state =2-->
+  <!--and a.consume_end_time <![CDATA[<=]]> #{t,jdbcType=TIMESTAMP}-->
+  <!--and a.enterprise_id=#{id}-->
   <!--</select>-->
 
   <!--提取未来订单-->
@@ -293,22 +282,22 @@
   </select>
   <!--&lt;!&ndash;提取已取消订单&ndash;&gt;-->
   <!--<select id="getEnterpriseDeleteOrder" resultType="com.kanjia.vo.EnterpriseOrderPriceVo">-->
-    <!--select uo.id,uo.user_id as userId,uo.current_price as currentPrice,a.title as title,a.picture as picture,u.nickname as-->
-    <!--nickName-->
-    <!--from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id-->
-    <!--where 1=1-->
-    <!--and uo.state =0-->
-    <!--and a.enterprise_id=#{id}-->
-    <!--<if test="page != null and page.start != null and page.pageSize!=null">-->
-      <!--limit #{page.start},#{page.pageSize}-->
-    <!--</if>-->
+  <!--select uo.id,uo.user_id as userId,uo.current_price as currentPrice,a.title as title,a.picture as picture,u.nickname as-->
+  <!--nickName-->
+  <!--from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id-->
+  <!--where 1=1-->
+  <!--and uo.state =0-->
+  <!--and a.enterprise_id=#{id}-->
+  <!--<if test="page != null and page.start != null and page.pageSize!=null">-->
+  <!--limit #{page.start},#{page.pageSize}-->
+  <!--</if>-->
   <!--</select>-->
   <!--<select id="getEnterpriseDeleteOrderCount" resultType="Integer">-->
-    <!--select  count(1)-->
-    <!--from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id-->
-    <!--where 1=1-->
-    <!--and uo.state =0-->
-    <!--and a.enterprise_id=#{id}-->
+  <!--select  count(1)-->
+  <!--from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id-->
+  <!--where 1=1-->
+  <!--and uo.state =0-->
+  <!--and a.enterprise_id=#{id}-->
   <!--</select>-->
 
   <!--提取已取消订单-->
@@ -332,21 +321,21 @@
   </select>
   <!--&lt;!&ndash;提取已过期订单&ndash;&gt;-->
   <!--<select id="getEnterpriseOverOrder" resultType="com.kanjia.vo.EnterpriseOrderPriceVo">-->
-    <!--select uo.id,uo.user_id as userId,uo.current_price as currentPrice,a.title,a.picture,u.nickname as nickName-->
-    <!--from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id-->
-    <!--where 1=1-->
-    <!--and uo.state =4-->
-    <!--and a.enterprise_id=#{id}-->
-    <!--<if test="page != null and page.start != null and page.pageSize!=null">-->
-      <!--limit #{page.start},#{page.pageSize}-->
-    <!--</if>-->
+  <!--select uo.id,uo.user_id as userId,uo.current_price as currentPrice,a.title,a.picture,u.nickname as nickName-->
+  <!--from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id-->
+  <!--where 1=1-->
+  <!--and uo.state =4-->
+  <!--and a.enterprise_id=#{id}-->
+  <!--<if test="page != null and page.start != null and page.pageSize!=null">-->
+  <!--limit #{page.start},#{page.pageSize}-->
+  <!--</if>-->
   <!--</select>-->
   <!--<select id="getEnterpriseOverOrderCount" resultType="Integer">-->
-    <!--select   count(1)-->
-    <!--from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id-->
-    <!--where 1=1-->
-    <!--and uo.state =4-->
-    <!--and a.enterprise_id=#{id}-->
+  <!--select   count(1)-->
+  <!--from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id-->
+  <!--where 1=1-->
+  <!--and uo.state =4-->
+  <!--and a.enterprise_id=#{id}-->
   <!--</select>-->
 
   <!--提取已过期订单-->
@@ -369,21 +358,21 @@
   </select>
   <!--&lt;!&ndash;提取已消费订单&ndash;&gt;-->
   <!--<select id="getEnterpriseConsumeOrder" resultType="com.kanjia.vo.EnterpriseOrderPriceVo">-->
-    <!--select uo.id,uo.user_id as userId,uo.current_price as currentPrice,a.title,a.picture,u.nickname as nickName-->
-    <!--from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id-->
-    <!--where 1=1-->
-    <!--and uo.state =3-->
-    <!--and a.enterprise_id=#{id}-->
-    <!--<if test="page != null and page.start != null and page.pageSize!=null">-->
-      <!--limit #{page.start},#{page.pageSize}-->
-    <!--</if>-->
+  <!--select uo.id,uo.user_id as userId,uo.current_price as currentPrice,a.title,a.picture,u.nickname as nickName-->
+  <!--from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id-->
+  <!--where 1=1-->
+  <!--and uo.state =3-->
+  <!--and a.enterprise_id=#{id}-->
+  <!--<if test="page != null and page.start != null and page.pageSize!=null">-->
+  <!--limit #{page.start},#{page.pageSize}-->
+  <!--</if>-->
   <!--</select>-->
   <!--<select id="getEnterpriseConsumeOrderCount" resultType="Integer">-->
-    <!--select  count(1)-->
-    <!--from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id-->
-    <!--where 1=1-->
-    <!--and uo.state =3-->
-    <!--and a.enterprise_id=#{id}-->
+  <!--select  count(1)-->
+  <!--from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id-->
+  <!--where 1=1-->
+  <!--and uo.state =3-->
+  <!--and a.enterprise_id=#{id}-->
   <!--</select>-->
   <!--提取已消费订单-->
   <select id="getEnterpriseConsumeOrder" resultType="com.kanjia.vo.EnterpriseOrderVo">
@@ -405,23 +394,23 @@
   </select>
   <!--&lt;!&ndash;提取数据&ndash;&gt;-->
   <!--<select id="getEnterpriseMonthOrder" resultType="com.kanjia.vo.EnterpriseOrderPriceVo">-->
-    <!--select uo.id,uo.user_id as userId,uo.current_price as currentPrice,a.title,a.picture,u.nickname as nickName-->
-    <!--from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id-->
-    <!--where 1=1-->
-    <!--and uo.state =3-->
-    <!--and a.enterprise_id=#{id}-->
-    <!--and uo.update_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}-->
-    <!--<if test="page != null and page.start != null and page.pageSize!=null">-->
-      <!--limit #{page.start},#{page.pageSize}-->
-    <!--</if>-->
+  <!--select uo.id,uo.user_id as userId,uo.current_price as currentPrice,a.title,a.picture,u.nickname as nickName-->
+  <!--from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id-->
+  <!--where 1=1-->
+  <!--and uo.state =3-->
+  <!--and a.enterprise_id=#{id}-->
+  <!--and uo.update_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}-->
+  <!--<if test="page != null and page.start != null and page.pageSize!=null">-->
+  <!--limit #{page.start},#{page.pageSize}-->
+  <!--</if>-->
   <!--</select>-->
   <!--<select id="getEnterpriseMonthOrderCount" resultType="Integer">-->
-    <!--select  count(1)-->
-    <!--from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id-->
-    <!--where 1=1-->
-    <!--and uo.state =3-->
-    <!--and a.enterprise_id=#{id}-->
-    <!--and uo.update_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}-->
+  <!--select  count(1)-->
+  <!--from user_order uo left join activity a on uo.activity_id=a.id left join user u on uo.user_id = u.id-->
+  <!--where 1=1-->
+  <!--and uo.state =3-->
+  <!--and a.enterprise_id=#{id}-->
+  <!--and uo.update_time <![CDATA[>=]]> #{d,jdbcType=TIMESTAMP}-->
   <!--</select>-->
 
   <!--提取数据-->

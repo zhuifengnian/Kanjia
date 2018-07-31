@@ -12,8 +12,6 @@ public class UserOrder {
 
     private BigDecimal currentPrice;
 
-    private Integer helpId;
-
     private Date createTime;
 
     private Date updateTime;
@@ -24,12 +22,11 @@ public class UserOrder {
 
     private Integer pick;
 
-    public UserOrder(Integer id, Integer userId, Integer activityId, BigDecimal currentPrice, Integer helpId, Date createTime, Date updateTime, Integer state, String qrCode, Integer pick) {
+    public UserOrder(Integer id, Integer userId, Integer activityId, BigDecimal currentPrice, Date createTime, Date updateTime, Integer state, String qrCode, Integer pick) {
         this.id = id;
         this.userId = userId;
         this.activityId = activityId;
         this.currentPrice = currentPrice;
-        this.helpId = helpId;
         this.createTime = createTime;
         this.updateTime = updateTime;
         this.state = state;
@@ -71,14 +68,6 @@ public class UserOrder {
 
     public void setCurrentPrice(BigDecimal currentPrice) {
         this.currentPrice = currentPrice;
-    }
-
-    public Integer getHelpId() {
-        return helpId;
-    }
-
-    public void setHelpId(Integer helpId) {
-        this.helpId = helpId;
     }
 
     public Date getCreateTime() {
