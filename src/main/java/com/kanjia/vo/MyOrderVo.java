@@ -7,6 +7,7 @@ import lombok.ToString;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.TreeSet;
 
 /**
  * 我的订单页面的vo<br/>
@@ -34,6 +35,7 @@ public class MyOrderVo {
 
     private List<String> helperAvatars;
 
+    private Integer helperNum;
 
     public Integer getOid() {
         return oid;
@@ -113,5 +115,13 @@ public class MyOrderVo {
 
     public void setHelperAvatars(List<String> helperAvatars) {
         this.helperAvatars = helperAvatars;
+    }
+
+    public Integer getHelperNum() {
+        return helperNum;
+    }
+
+    public void setHelperNum(Integer helperNum) {
+        this.helperNum = helperNum;
     }
 }

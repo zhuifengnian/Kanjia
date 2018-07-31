@@ -13,7 +13,7 @@ public class ConstantUtil {
     /**
      * 快递小程序appid
      */
-    public static final String APP_ID2 = "wx446dd0aedf7c2f55";
+    public static final String APP_ID2="wx446dd0aedf7c2f55";
     /**
      * 快递小程序凭证
      */

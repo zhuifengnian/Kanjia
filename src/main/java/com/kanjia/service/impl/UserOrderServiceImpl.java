@@ -3,6 +3,7 @@ package com.kanjia.service.impl;
 import com.kanjia.basic.Page;
 import com.kanjia.basic.PageInfo;
 import com.kanjia.mapper.BaseMapper;
+import com.kanjia.mapper.HelpUserMapper;
 import com.kanjia.mapper.UserOrderMapper;
 import com.kanjia.pojo.UserOrder;
 import com.kanjia.service.UserOrderService;
@@ -15,11 +16,14 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.TreeSet;
 
 @Service
 public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> implements UserOrderService {
     @Autowired
     private UserOrderMapper userOrderMapper;
+    @Autowired
+    private HelpUserMapper helpUserMapper;
 
     @Override
     public BaseMapper<UserOrder> getDao() {
@@ -162,6 +166,12 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
         PageInfo<KanjiaOrderVo> kanjiaOrderVoPageInfo = new PageInfo<>();
         //从订单中找出指定用户，并且状态为正在砍价的订单
         List<KanjiaOrderVo> kanjiaOrderVos = userOrderMapper.listKanjiaOrders(uid, page);
+        //将帮砍者头像加入
+        for(KanjiaOrderVo kanjiaOrderVo: kanjiaOrderVos){
+            Integer helperNum = kanjiaOrderVo.getHelperNum() > 3 ? 3 : kanjiaOrderVo.getHelperNum();
+            List<String> helperAvatars = helpUserMapper.getHelperAvatars(kanjiaOrderVo.getOid(), helperNum);
+            kanjiaOrderVo.setHelperAvatars(helperAvatars);
+        }
         kanjiaOrderVoPageInfo.setRows(kanjiaOrderVos);
         kanjiaOrderVoPageInfo.setTotal(userOrderMapper.listKanjiaOrdersCount(uid));
         if(page != null){
@@ -175,6 +185,13 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
     public PageInfo<MyOrderVo> listMyOrders(Integer uid, Page page) {
         PageInfo<MyOrderVo> myOrderVoPageInfo = new PageInfo<>();
         List<MyOrderVo> myOrderVos = userOrderMapper.listMyOrders(uid, page);
+
+        //将帮砍者头像加入
+        for(MyOrderVo myOrderVo: myOrderVos){
+            Integer helperNum = myOrderVo.getHelperNum() > 3 ? 3 : myOrderVo.getHelperNum();
+            List<String> helperAvatars = helpUserMapper.getHelperAvatars(myOrderVo.getOid(), helperNum);
+            myOrderVo.setHelperAvatars(helperAvatars);
+        }
         myOrderVoPageInfo.setRows(myOrderVos);
         myOrderVoPageInfo.setTotal(userOrderMapper.listMyOrdersCount(uid));
 

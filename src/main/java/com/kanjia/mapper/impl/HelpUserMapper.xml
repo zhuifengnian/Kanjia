@@ -105,4 +105,13 @@
       pick = #{pick,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getHelperAvatars" parameterType="int" resultType="string">
+      select u.avatarurl
+      from help_user hu left join user_order uo on hu.order_id = uo.id
+        left join user u on hu.user_id = u.id
+      where uo.id = #{oid}
+      order by hu.cut_price desc
+      limit 0, #{avatarNum}
+  </select>
 </mapper>

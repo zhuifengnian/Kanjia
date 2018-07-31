@@ -1,6 +1,7 @@
 package com.hust.party.test.servicetest;
 
 import com.kanjia.basic.PageInfo;
+import com.kanjia.mapper.HelpUserMapper;
 import com.kanjia.service.*;
 import com.kanjia.utils.OverTimeUtil;
 import com.kanjia.utils.TimeUtil;
@@ -15,6 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * 专门用来做单元测试<br/>
@@ -36,6 +38,8 @@ public class ServiceTest {
     private UserOrderService userOrderService;
     @Autowired
     private EnterprisePaymentService enterprisePaymentService;
+    @Autowired
+    private HelpUserMapper helpUserMapper;
 
     @Test
     public void testUserService() {
@@ -72,5 +76,11 @@ public class ServiceTest {
     public void listKanjiaOrders(){
         PageInfo<KanjiaOrderVo> kanjiaOrderVoPageInfo = userOrderService.listKanjiaOrders(1, null);
         System.out.println(kanjiaOrderVoPageInfo);
+    }
+
+    @Test
+    public void testGetHelperAvatar(){
+        List<String> helperAvatars = helpUserMapper.getHelperAvatars(1, 3);
+        System.out.println(helperAvatars);
     }
 }

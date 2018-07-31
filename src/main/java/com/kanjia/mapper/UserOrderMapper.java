@@ -125,7 +125,7 @@ public interface UserOrderMapper extends BaseMapper<UserOrder> {
      * @param page
      * @return
      */
-    List<MyOrderVo> listMyOrders(Integer uid, Page page);
+    List<MyOrderVo> listMyOrders(@Param("uid") Integer uid,@Param("page") Page page);
 
-    Integer listMyOrdersCount(Integer uid);
+    Integer listMyOrdersCount(@Param("uid")Integer uid);
 }

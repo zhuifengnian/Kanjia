@@ -6,6 +6,7 @@ import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 用户正在砍价的订单数据<br/>
@@ -26,6 +27,8 @@ public class KanjiaOrderVo {
     private BigDecimal minuPrice;
 
     private Date cutTime;       //活动截止时间
+
+    private List<String> helperAvatars;
 
     private Integer helperNum;      //帮砍人数
 
@@ -84,6 +87,14 @@ public class KanjiaOrderVo {
 
     public void setCutTime(Date cutTime) {
         this.cutTime = cutTime;
+    }
+
+    public List<String> getHelperAvatars() {
+        return helperAvatars;
+    }
+
+    public void setHelperAvatars(List<String> helperAvatars) {
+        this.helperAvatars = helperAvatars;
     }
 
     public Integer getHelperNum() {
