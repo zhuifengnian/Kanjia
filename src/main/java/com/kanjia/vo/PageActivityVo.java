@@ -35,7 +35,7 @@ public class PageActivityVo {
 
     private List<String> headSculpture;
 
-
+    private Integer headSculptureCount;
     public Integer getId() {
         return id;
     }
@@ -139,5 +139,13 @@ public class PageActivityVo {
 
     public void setMinPrice(BigDecimal minPrice) {
         this.minPrice = minPrice;
+    }
+
+    public Integer getHeadSculptureCount() {
+        return headSculptureCount;
+    }
+
+    public void setHeadSculptureCount(Integer headSculptureCount) {
+        this.headSculptureCount = headSculptureCount;
     }
 }

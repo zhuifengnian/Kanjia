@@ -43,6 +43,7 @@ public class ActivityServiceImpl extends AbstractBaseServiceImpl<Activity> imple
         int i = 0;
         for (PageActivityVo pageActivityVo : list) {
             list.get(i).setHeadSculpture(userOrderMapper.getOrdersPicture(pageActivityVo.getId()));
+            list.get(i).setHeadSculptureCount(list.get(i).getHeadSculpture().size());
             ++i;
         }
         pageInfo.setTotal(activityMapper.getAllActivityCount());
