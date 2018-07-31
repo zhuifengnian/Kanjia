@@ -38,7 +38,7 @@ public class ActivityController {
     @ResponseBody
     @RequestMapping(value = "/getListActivity", method = RequestMethod.POST)
     public ReturnMessage getListActivity(@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Integer pageNumber) {
-        PageInfo<PageActivityVo> pageinfo = activityService.getAllActivity(PageUtil.setPage(pageNumber));
+        PageInfo<PageActivityVo> pageinfo = activityService.getAllActivity(PageUtil.setPage(pageSize, pageNumber));
 
         return new ReturnMessage(ResponseCode.OK, pageinfo);
     }

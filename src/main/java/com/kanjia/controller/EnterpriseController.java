@@ -51,8 +51,7 @@ public class EnterpriseController {
         Integer insert = activityService.insert(activity);
         return new ReturnMessage(ResponseCode.OK, insert);
     }
-
-    @RequestMapping(value = "/insertActivityPicture", method = RequestMethod.POST)
+    @RequestMapping(value = "/enterprise/insertActivityPicture", method = RequestMethod.POST)
     @ApiOperation(value = "存储图片信息")
     @ResponseBody
     public ReturnMessage insertActivityPicture(@RequestParam("activityId") Integer activityId, @RequestParam(value = "flyfile", required = false) MultipartFile flfile, Integer num) {
@@ -66,11 +65,12 @@ public class EnterpriseController {
         } else if (num == 2) {
             activity.setVideo(picture);
         }
-        activity.setUpdateTime(Calendar.getInstance().getTime());
+
         int insert = activityService.updateByPrimaryKeySelective(activity);
 
         return new ReturnMessage(ResponseCode.OK, insert);
     }
+
 
     @ApiOperation(value = "修改活动", notes = "修改活动")
     @ResponseBody

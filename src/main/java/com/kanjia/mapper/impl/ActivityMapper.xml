@@ -374,7 +374,7 @@
 
     <!-- 查詢活动 -->
     <select id="getAllActivity" resultType="com.kanjia.vo.PageActivityVo">
-        select a.id,a.title,a.picture,a.adress,a.origin_price,a.pick,a.activity_time as
+        select a.id,a.title,a.picture,a.adress,a.origin_price as originPrice,a.minu_price as minPrice,a.pick,a.activity_time as
         activityTime,e.enterprise_name as enterpriseName,
         a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
         from activity a left join enterprise e on a.enterprise_id = e.id
@@ -525,9 +525,9 @@
 
     <!--获得企业所有活动-->
     <select id="getEnterpriseAllActivity" resultType="com.kanjia.vo.PageActivityVo">
-        select a.id,a.title,a.picture,a.adress,a.origin_price,a.pick,a.activity_time as
+        select a.id,a.title,a.picture,a.adress,a.origin_price,a.pick,a.minu_price as minPrice,a.activity_time as
         activityTime,e.enterprise_name as enterpriseName,
-        a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
+        a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime,a.origin_price as originPrice
         from activity a left join enterprise e on a.enterprise_id = e.id
         where 1=1
         and a.enterprise_id=#{id}
@@ -638,8 +638,7 @@
     <!--获得活动详情-->
     <select id="getDetailActivity" resultType="com.kanjia.vo.DetailActivityVo">
     select  a.id,a.title,a.video,a.adress,a.pick,
-    a.activity_time as activityTime,e.enterprise_name as enterpriseName,e.phone as enterprisePhone,
-    a.limit_number as limitNumber,a.sold_number as soldNumber,a.cut_time as cutTime,a.longitude,a.latitude,a.description,e.id as enterpriseId
+    a.activity_time as activityTime,a.limit_number as limitNumber,a.sold_number as soldNumber,a.cut_time as cutTime,a.description
     from activity a left join enterprise e on a.enterprise_id = e.id
     where 1=1
     and a.id=#{id}

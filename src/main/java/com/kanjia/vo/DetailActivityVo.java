@@ -1,5 +1,6 @@
 package com.kanjia.vo;
 
+import com.kanjia.pojo.Enterprise;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -27,23 +28,16 @@ public class DetailActivityVo {
 
     private Date activityTime;
 
-    private Integer enteprirseId;
-
-    private String enterpriseName;
-
-    private String enterprisePhone;
-
     private Integer limitNumber;
 
     private Integer soldNumber;
 
     private Date cutTime;
 
-    private String longitude;
-
-    private String latitude;
-
     private String description;
+
+    private EnterpriseVo enterprise;
+
 
 
     public Integer getId() {
@@ -102,29 +96,6 @@ public class DetailActivityVo {
         this.activityTime = activityTime;
     }
 
-    public Integer getEnteprirseId() {
-        return enteprirseId;
-    }
-
-    public void setEnteprirseId(Integer enteprirseId) {
-        this.enteprirseId = enteprirseId;
-    }
-
-    public String getEnterpriseName() {
-        return enterpriseName;
-    }
-
-    public void setEnterpriseName(String enterpriseName) {
-        this.enterpriseName = enterpriseName;
-    }
-
-    public String getEnterprisePhone() {
-        return enterprisePhone;
-    }
-
-    public void setEnterprisePhone(String enterprisePhone) {
-        this.enterprisePhone = enterprisePhone;
-    }
 
     public Integer getLimitNumber() {
         return limitNumber;
@@ -150,21 +121,6 @@ public class DetailActivityVo {
         this.cutTime = cutTime;
     }
 
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
-
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
 
     public String getDescription() {
         return description;
@@ -172,5 +128,14 @@ public class DetailActivityVo {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+
+    public EnterpriseVo getEnterprise() {
+        return enterprise;
+    }
+
+    public void setEnterprise(EnterpriseVo enterprise) {
+        this.enterprise = enterprise;
     }
 }

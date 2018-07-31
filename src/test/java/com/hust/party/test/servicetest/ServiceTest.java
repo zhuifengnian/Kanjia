@@ -1,6 +1,7 @@
 package com.hust.party.test.servicetest;
 
 import com.kanjia.basic.PageInfo;
+import com.kanjia.mapper.ActivityMapper;
 import com.kanjia.mapper.HelpUserMapper;
 import com.kanjia.service.*;
 import com.kanjia.utils.OverTimeUtil;
@@ -8,6 +9,7 @@ import com.kanjia.utils.TimeUtil;
 import com.kanjia.vo.EnterpriseOrderPriceVo;
 import com.kanjia.vo.EnterpriseOrderVo;
 import com.kanjia.vo.KanjiaOrderVo;
+import com.kanjia.vo.PageActivityVo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,8 @@ public class ServiceTest {
     private EnterprisePaymentService enterprisePaymentService;
     @Autowired
     private HelpUserMapper helpUserMapper;
+    @Autowired
+    private ActivityMapper activityMapper;
 
     @Test
     public void testUserService() {
@@ -82,5 +86,10 @@ public class ServiceTest {
     public void testGetHelperAvatar(){
         List<String> helperAvatars = helpUserMapper.getHelperAvatars(1, 3);
         System.out.println(helperAvatars);
+    }
+    @Test
+    public void testListActivity(){
+        List<PageActivityVo> list = activityMapper.getAllActivity(null);
+        System.out.println(list.get(0).getMinPrice());
     }
 }

@@ -1,6 +1,7 @@
 package com.kanjia.service;
 
 import com.kanjia.pojo.Enterprise;
+import com.kanjia.vo.EnterpriseVo;
 
 /**
  * liyue 2018.6.29

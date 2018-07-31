@@ -4,9 +4,11 @@ import com.kanjia.basic.Page;
 import com.kanjia.basic.PageInfo;
 import com.kanjia.mapper.*;
 import com.kanjia.pojo.Activity;
+import com.kanjia.pojo.Enterprise;
 import com.kanjia.service.ActivityService;
 import com.kanjia.vo.DetailActivityPriceVo;
 import com.kanjia.vo.DetailActivityVo;
+import com.kanjia.vo.EnterpriseVo;
 import com.kanjia.vo.PageActivityVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +24,7 @@ public class ActivityServiceImpl extends AbstractBaseServiceImpl<Activity> imple
     @Autowired
     private UserOrderMapper userOrderMapper;
     @Autowired
-    private UserMapper userMapper;
+    private EnterpriseMapper enterpriseMapper;
 
     @Override
     public BaseMapper<Activity> getDao() {
@@ -157,6 +159,8 @@ public class ActivityServiceImpl extends AbstractBaseServiceImpl<Activity> imple
 
         List<DetailActivityVo> list = activityMapper.getDetailActivity(id);
         list.get(0).setPicture(pictureMapper.getPicture(list.get(0).getId()));
+        EnterpriseVo enterpriseVo=enterpriseMapper.getEnterpriseId(id);
+        list.get(0).setEnterprise(enterpriseVo);
 
 
         return list.get(0);

@@ -1,9 +1,5 @@
 package com.kanjia.vo;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +20,10 @@ public class PageActivityVo {
     private Integer pick;
 
     private Date activityTime;
+
+    private BigDecimal originPrice;
+
+    private BigDecimal minPrice;
 
     private String enterpriseName;
 
@@ -122,5 +122,22 @@ public class PageActivityVo {
 
     public void setHeadSculpture(List<String> headSculpture) {
         this.headSculpture = headSculpture;
+    }
+
+    public BigDecimal getOriginPrice() {
+        return originPrice;
+    }
+
+    public void setOriginPrice(BigDecimal originPrice) {
+        this.originPrice = originPrice;
+    }
+
+
+    public BigDecimal getMinPrice() {
+        return minPrice;
+    }
+
+    public void setMinPrice(BigDecimal minPrice) {
+        this.minPrice = minPrice;
     }
 }

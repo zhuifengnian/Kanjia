@@ -180,5 +180,11 @@
     <select id="getId" resultType="Integer">
     select id from enterprise where  1=1 and open_id = #{openId}
   </select>
-
+    <!--根据aid获取企业信息-->
+    <select id="getEnterpriseId" resultType="com.kanjia.vo.EnterpriseVo">
+     select     e.id as enteprirseId,e. enterprise_name as enterpriseName, e.phone as  enterprisePhone,a.longitude as longitude,a.latitude as latitude
+    from activity a left join enterprise e on a.enterprise_id = e.id
+    where 1=1
+    and a.id=#{id}
+  </select>
 </mapper>
