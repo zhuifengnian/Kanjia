@@ -8,6 +8,7 @@ import com.kanjia.service.UserOrderService;
 import com.kanjia.utils.PageUtil;
 import com.kanjia.vo.KanjiaOrderVo;
 import com.kanjia.vo.MyOrderVo;
+import com.kanjia.vo.OrderDetailVO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -45,4 +46,25 @@ public class OrderController {
         return new ReturnMessage(ResponseCode.OK, myOrderVoPageInfo);
     }
 
+    /**
+     * 生成订单
+     */
+    @ApiOperation(value = "生成一份订单", notes = "根据用户id和活动id生成一份订单")
+    @ResponseBody
+    @RequestMapping(value = "/generateOrder", method = RequestMethod.POST)
+    public ReturnMessage generateOrder(@RequestParam("uid") Integer uid, @RequestParam("aid") Integer aid) {
+        Integer oid = userOrderService.generateOrder(uid, aid);
+        return new ReturnMessage(ResponseCode.OK, oid);
+    }
+
+    /**
+     * 根据订单id获取订单详情
+     */
+    @ApiOperation(value = "根据订单id获取订单详情", notes = "根据订单id获取订单详情")
+    @ResponseBody
+    @RequestMapping(value = "/getOrderDetail", method = RequestMethod.GET)
+    public ReturnMessage getOrderDetail(@RequestParam("oid") Integer oid) {
+        OrderDetailVO orderDetail = userOrderService.getOrderDetail(oid);
+        return new ReturnMessage(ResponseCode.OK, orderDetail);
+    }
 }

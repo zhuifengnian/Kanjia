@@ -474,4 +474,14 @@
     and uo.state in (2,4)
   </select>
 
+  <select id="getOrderDetail" resultType="orderDetailVO">
+    select u.id as uid, uo.id as oid, get_state_name(uo.state) as stateName, a.picture, a.title, uo.current_price as currentPrice,
+      a.origin_price as originPrice, a.minu_price as minuPrice, a.limit_number as limitNumber, a.sold_number as soldNumber,
+      a.consume_time as consumeTime, a. consume_end_time as consumeEndTime, a.activity_time as activityTime, a.cut_time as cutTime,
+      uo.create_time as createTime, uo.qr_code as qrCode
+    from user_order uo left join activity a on uo.activity_id = a.id
+    left join user u on uo.user_id = u.id
+    where uo.id = #{oid}
+  </select>
+
 </mapper>

@@ -1,29 +1,31 @@
 package com.kanjia.service.impl;
 
+import com.kanjia.basic.Const;
 import com.kanjia.basic.Page;
 import com.kanjia.basic.PageInfo;
-import com.kanjia.mapper.BaseMapper;
-import com.kanjia.mapper.HelpUserMapper;
-import com.kanjia.mapper.UserOrderMapper;
+import com.kanjia.mapper.*;
+import com.kanjia.pojo.Activity;
+import com.kanjia.pojo.User;
 import com.kanjia.pojo.UserOrder;
 import com.kanjia.service.UserOrderService;
-import com.kanjia.vo.EnterpriseOrderVo;
-import com.kanjia.vo.EnterprisePaymentVo;
-import com.kanjia.vo.KanjiaOrderVo;
-import com.kanjia.vo.MyOrderVo;
+import com.kanjia.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.TreeSet;
+import java.util.UUID;
 
 @Service
 public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> implements UserOrderService {
     @Autowired
+    private UserMapper userMapper;
+    @Autowired
     private UserOrderMapper userOrderMapper;
     @Autowired
     private HelpUserMapper helpUserMapper;
+    @Autowired
+    private ActivityMapper activityMapper;
 
     @Override
     public BaseMapper<UserOrder> getDao() {
@@ -169,7 +171,7 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
         //将帮砍者头像加入
         for(KanjiaOrderVo kanjiaOrderVo: kanjiaOrderVos){
             Integer helperNum = kanjiaOrderVo.getHelperNum() > 3 ? 3 : kanjiaOrderVo.getHelperNum();
-            List<String> helperAvatars = helpUserMapper.getHelperAvatars(kanjiaOrderVo.getOid(), helperNum);
+            List<String> helperAvatars = helpUserMapper.getOrderHelperAvatars(kanjiaOrderVo.getOid(), helperNum);
             kanjiaOrderVo.setHelperAvatars(helperAvatars);
         }
         kanjiaOrderVoPageInfo.setRows(kanjiaOrderVos);
@@ -189,7 +191,7 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
         //将帮砍者头像加入
         for(MyOrderVo myOrderVo: myOrderVos){
             Integer helperNum = myOrderVo.getHelperNum() > 3 ? 3 : myOrderVo.getHelperNum();
-            List<String> helperAvatars = helpUserMapper.getHelperAvatars(myOrderVo.getOid(), helperNum);
+            List<String> helperAvatars = helpUserMapper.getOrderHelperAvatars(myOrderVo.getOid(), helperNum);
             myOrderVo.setHelperAvatars(helperAvatars);
         }
         myOrderVoPageInfo.setRows(myOrderVos);
@@ -200,6 +202,38 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
             myOrderVoPageInfo.setPageSize(page.getPageSize());
         }
         return myOrderVoPageInfo;
+    }
+
+    @Override
+    public Integer generateOrder(Integer uid, Integer aid) {
+        Activity activity = activityMapper.selectByPrimaryKey(aid);
+
+        UserOrder userOrder = new UserOrder();
+        userOrder.setUserId(uid);
+        userOrder.setActivityId(aid);
+        userOrder.setCurrentPrice(activity.getOriginPrice());
+        userOrder.setState(Const.ORDER_STATUS_ENGAGING);    //初始化订单状态为正在砍价
+        userOrder.setQrCode(UUID.randomUUID().toString());  //生成随机二维码
+        userOrderMapper.insert(userOrder);
+
+        return userOrder.getId();
+    }
+
+    @Override
+    public OrderDetailVO getOrderDetail(Integer oid) {
+        OrderDetailVO orderDetailVO = userOrderMapper.getOrderDetail(oid);
+        //根据用户id获取用户信息
+        User user = userMapper.selectByPrimaryKey(orderDetailVO.getUid());
+        OrderDetailUserVO orderDetailUserVO = new OrderDetailUserVO();
+        orderDetailUserVO.setUid(user.getId());
+        orderDetailUserVO.setNickname(user.getNickname());
+        orderDetailUserVO.setAvatarurl(user.getAvatarurl());
+        orderDetailVO.setOrderDetailUserVO(orderDetailUserVO);
+        //帮助者相关信息
+        List<OrderHelperVO> orderHelpers = helpUserMapper.getOrderHelpers(oid, 3);
+        orderDetailVO.setOrderHelperVOs(orderHelpers);
+
+        return orderDetailVO;
     }
 
 

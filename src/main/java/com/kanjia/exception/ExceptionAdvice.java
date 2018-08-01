@@ -42,6 +42,6 @@ public class ExceptionAdvice {
     @ResponseBody
     public ReturnMessage requestMissingServletRequest(MissingServletRequestParameterException ex) {
         String message = "缺少必要参数,参数名称为" + ex.getParameterName();
-        return new ReturnMessage(ResponseCode.PARAM_EROOR, message);
+        return new ReturnMessage(ResponseCode.PARAM_ERROR, message);
     }
 }

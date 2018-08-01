@@ -5,11 +5,11 @@ public class ConstantUtil {
     /**
      * 微信开发平台应用ID
      */
-    public static final String APP_ID = "wx9ccf4cb41902b28c";
+    public static final String APP_ID = "wxfa5900e974154497";
     /**
      * 应用对应的凭证
      */
-    public static final String APP_SECRET = "9a4f1bc28ffffc42837a5ba3ce6b9f2b";
+    public static final String APP_SECRET = "e4cb47c0a8aa5d9fa1c644e13e8ebeee";
     /**
      * 快递小程序appid
      */
@@ -29,7 +29,7 @@ public class ConstantUtil {
     /**
      * 商品描述
      */
-    public static final String BODY = "聚多多-测试支付";
+    public static final String BODY = "pick-测试支付";
     /**
      * 商户号对应的密钥
      */

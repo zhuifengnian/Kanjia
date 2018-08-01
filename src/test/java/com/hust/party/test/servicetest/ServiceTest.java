@@ -6,7 +6,6 @@ import com.kanjia.mapper.HelpUserMapper;
 import com.kanjia.service.*;
 import com.kanjia.utils.OverTimeUtil;
 import com.kanjia.utils.TimeUtil;
-import com.kanjia.vo.EnterpriseOrderPriceVo;
 import com.kanjia.vo.EnterpriseOrderVo;
 import com.kanjia.vo.KanjiaOrderVo;
 import com.kanjia.vo.PageActivityVo;
@@ -84,7 +83,7 @@ public class ServiceTest {
 
     @Test
     public void testGetHelperAvatar(){
-        List<String> helperAvatars = helpUserMapper.getHelperAvatars(1, 3);
+        List<String> helperAvatars = helpUserMapper.getOrderHelperAvatars(1, 3);
         System.out.println(helperAvatars);
     }
     @Test

@@ -6,7 +6,7 @@ package com.kanjia.basic;
  */
 public enum ResponseCode {
     OK(200),            //请求正确
-    PARAM_EROOR(201),   //参数错误
+    PARAM_ERROR(201),   //参数错误
     PARAM_NOT_COMPAT(202),   //参数类型不匹配
     NETWORK_ERROR(501);     //网络请求出现错误
 

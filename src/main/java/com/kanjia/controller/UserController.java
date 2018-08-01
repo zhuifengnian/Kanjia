@@ -79,7 +79,7 @@ public class UserController {
     public ReturnMessage getUserInfo(@RequestParam("uid") Integer uid) {
         User userInfoVO = userService.selectUserInfo(uid);
         if (userInfoVO == null) {
-            throw new ApiException(ResponseCode.PARAM_EROOR, "所传uid没有数据");
+            throw new ApiException(ResponseCode.PARAM_ERROR, "所传uid没有数据");
         }
         return new ReturnMessage(ResponseCode.OK, userInfoVO);
     }
