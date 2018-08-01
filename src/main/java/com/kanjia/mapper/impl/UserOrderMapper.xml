@@ -11,12 +11,10 @@
       <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="state" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="qr_code" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="pick" jdbcType="INTEGER" javaType="java.lang.Integer" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    id, user_id, activity_id, current_price, create_time, update_time, state, qr_code, 
-    pick
+    id, user_id, activity_id, current_price, create_time, update_time, state, qr_code
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -31,12 +29,10 @@
   <insert id="insert" parameterType="com.kanjia.pojo.UserOrder" useGeneratedKeys="true" keyProperty="id">
     insert into user_order (id, user_id, activity_id, 
       current_price, create_time, update_time, 
-      state, qr_code, pick
-      )
+      state, qr_code)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, 
       #{currentPrice,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{state,jdbcType=INTEGER}, #{qrCode,jdbcType=VARCHAR}, #{pick,jdbcType=INTEGER}
-      )
+      #{state,jdbcType=INTEGER}, #{qrCode,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.kanjia.pojo.UserOrder" useGeneratedKeys="true" keyProperty="id">
     insert into user_order
@@ -65,9 +61,6 @@
       <if test="qrCode != null" >
         qr_code,
       </if>
-      <if test="pick != null" >
-        pick,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -93,9 +86,6 @@
       </if>
       <if test="qrCode != null" >
         #{qrCode,jdbcType=VARCHAR},
-      </if>
-      <if test="pick != null" >
-        #{pick,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -123,9 +113,6 @@
       <if test="qrCode != null" >
         qr_code = #{qrCode,jdbcType=VARCHAR},
       </if>
-      <if test="pick != null" >
-        pick = #{pick,jdbcType=INTEGER},
-      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -137,8 +124,7 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       state = #{state,jdbcType=INTEGER},
-      qr_code = #{qrCode,jdbcType=VARCHAR},
-      pick = #{pick,jdbcType=INTEGER}
+      qr_code = #{qrCode,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <!--<select id="getQrCode" resultType="com.kanjia.vo.EnterprisePaymentPriceVo">-->

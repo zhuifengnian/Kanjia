@@ -38,7 +38,11 @@ public class DetailActivityVo {
 
     private EnterpriseVo enterprise;
 
+    private BigDecimal originPrice;
 
+    private BigDecimal minuPrice;
+
+    private  List<ActivityDescriptionVo> activityDescription;
 
     public Integer getId() {
         return id;
@@ -137,5 +141,29 @@ public class DetailActivityVo {
 
     public void setEnterprise(EnterpriseVo enterprise) {
         this.enterprise = enterprise;
+    }
+
+    public BigDecimal getOriginPrice() {
+        return originPrice;
+    }
+
+    public void setOriginPrice(BigDecimal originPrice) {
+        this.originPrice = originPrice;
+    }
+
+    public BigDecimal getMinuPrice() {
+        return minuPrice;
+    }
+
+    public void setMinuPrice(BigDecimal minuPrice) {
+        this.minuPrice = minuPrice;
+    }
+
+    public List<ActivityDescriptionVo> getActivityDescription() {
+        return activityDescription;
+    }
+
+    public void setActivityDescription(List<ActivityDescriptionVo> activityDescription) {
+        this.activityDescription = activityDescription;
     }
 }

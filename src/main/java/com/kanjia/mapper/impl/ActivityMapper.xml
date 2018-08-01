@@ -635,9 +635,9 @@
     <!--where 1=1-->
     <!--and a.id=#{id}-->
   <!--</select>-->
-    <!--获得活动详情-->
+    <!--获得描述详情-->
     <select id="getDetailActivity" resultType="com.kanjia.vo.DetailActivityVo">
-    select  a.id,a.title,a.video,a.adress,a.pick,
+    select  a.id,a.title,a.video,a.adress,a.pick,a.origin_price as originPrice,a.minu_price as minuPrice,
     a.activity_time as activityTime,a.limit_number as limitNumber,a.sold_number as soldNumber,a.cut_time as cutTime,a.description
     from activity a left join enterprise e on a.enterprise_id = e.id
     where 1=1

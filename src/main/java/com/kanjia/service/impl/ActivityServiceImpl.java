@@ -4,12 +4,10 @@ import com.kanjia.basic.Page;
 import com.kanjia.basic.PageInfo;
 import com.kanjia.mapper.*;
 import com.kanjia.pojo.Activity;
+import com.kanjia.pojo.ActivityDescription;
 import com.kanjia.pojo.Enterprise;
 import com.kanjia.service.ActivityService;
-import com.kanjia.vo.DetailActivityPriceVo;
-import com.kanjia.vo.DetailActivityVo;
-import com.kanjia.vo.EnterpriseVo;
-import com.kanjia.vo.PageActivityVo;
+import com.kanjia.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +23,10 @@ public class ActivityServiceImpl extends AbstractBaseServiceImpl<Activity> imple
     private UserOrderMapper userOrderMapper;
     @Autowired
     private EnterpriseMapper enterpriseMapper;
+    @Autowired
+    private ActivityDescriptionMapper activityDescriptionMapper;
+    @Autowired
+    private DescriptionPictureMapper descriptionPictureMapper;
 
     @Override
     public BaseMapper<Activity> getDao() {
@@ -42,8 +44,13 @@ public class ActivityServiceImpl extends AbstractBaseServiceImpl<Activity> imple
         List<PageActivityVo> list = activityMapper.getAllActivity(page);
         int i = 0;
         for (PageActivityVo pageActivityVo : list) {
-            list.get(i).setHeadSculpture(userOrderMapper.getOrdersPicture(pageActivityVo.getId()));
-            list.get(i).setHeadSculptureCount(list.get(i).getHeadSculpture().size());
+
+            List<String> list1=userOrderMapper.getOrdersPicture(pageActivityVo.getId());
+            list.get(i).setHeadSculptureCount(list1.size());
+            for(int j=5;j<list1.size();++j){
+                list1.remove(j);
+            }
+            list.get(i).setHeadSculpture(list1);
             ++i;
         }
         pageInfo.setTotal(activityMapper.getAllActivityCount());
@@ -162,7 +169,13 @@ public class ActivityServiceImpl extends AbstractBaseServiceImpl<Activity> imple
         list.get(0).setPicture(pictureMapper.getPicture(list.get(0).getId()));
         EnterpriseVo enterpriseVo=enterpriseMapper.getEnterpriseId(id);
         list.get(0).setEnterprise(enterpriseVo);
+        List<ActivityDescriptionVo> activityDescriptionVos=activityDescriptionMapper.getActivityId(id);
+        for(int i=0;i<activityDescriptionVos.size();++i) {
+            List<String> picture = descriptionPictureMapper.getDescriptionId(activityDescriptionVos.get(i).getId());
 
+            activityDescriptionVos.get(i).setPicture(picture);
+        }
+         list.get(0).setActivityDescription(activityDescriptionVos);
 
         return list.get(0);
     }
