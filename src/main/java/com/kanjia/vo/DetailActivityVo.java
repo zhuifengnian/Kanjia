@@ -42,6 +42,10 @@ public class DetailActivityVo {
 
     private BigDecimal minuPrice;
 
+    private List<String> headSculpture;
+
+    private Integer headSculptureCount;
+
     private  List<ActivityDescriptionVo> activityDescription;
 
     public Integer getId() {
@@ -165,5 +169,21 @@ public class DetailActivityVo {
 
     public void setActivityDescription(List<ActivityDescriptionVo> activityDescription) {
         this.activityDescription = activityDescription;
+    }
+
+    public List<String> getHeadSculpture() {
+        return headSculpture;
+    }
+
+    public void setHeadSculpture(List<String> headSculpture) {
+        this.headSculpture = headSculpture;
+    }
+
+    public Integer getHeadSculptureCount() {
+        return headSculptureCount;
+    }
+
+    public void setHeadSculptureCount(Integer headSculptureCount) {
+        this.headSculptureCount = headSculptureCount;
     }
 }

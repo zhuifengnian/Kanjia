@@ -374,7 +374,7 @@
 
     <!-- 查詢活动 -->
     <select id="getAllActivity" resultType="com.kanjia.vo.PageActivityVo">
-        select a.id,a.title,a.picture,a.adress,a.origin_price as originPrice,a.minu_price as minPrice,a.pick,a.activity_time as
+        select a.id,a.title,a.picture,a.adress,a.origin_price as originPrice,a.minu_price as minuPrice,a.pick,a.activity_time as
         activityTime,e.enterprise_name as enterpriseName,
         a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
         from activity a left join enterprise e on a.enterprise_id = e.id

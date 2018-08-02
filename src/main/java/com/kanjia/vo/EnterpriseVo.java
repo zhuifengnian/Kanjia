@@ -20,7 +20,7 @@ public class EnterpriseVo {
 
     private String latitude;
 
-
+    private String address;
     public Integer getEnteprirseId() {
         return enteprirseId;
     }
@@ -62,4 +62,11 @@ public class EnterpriseVo {
         this.latitude = latitude;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }

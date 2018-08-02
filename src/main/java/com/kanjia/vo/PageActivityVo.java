@@ -23,7 +23,7 @@ public class PageActivityVo {
 
     private BigDecimal originPrice;
 
-    private BigDecimal minPrice;
+    private BigDecimal minuPrice;
 
     private String enterpriseName;
 
@@ -133,13 +133,6 @@ public class PageActivityVo {
     }
 
 
-    public BigDecimal getMinPrice() {
-        return minPrice;
-    }
-
-    public void setMinPrice(BigDecimal minPrice) {
-        this.minPrice = minPrice;
-    }
 
     public Integer getHeadSculptureCount() {
         return headSculptureCount;
@@ -147,5 +140,13 @@ public class PageActivityVo {
 
     public void setHeadSculptureCount(Integer headSculptureCount) {
         this.headSculptureCount = headSculptureCount;
+    }
+
+    public BigDecimal getMinuPrice() {
+        return minuPrice;
+    }
+
+    public void setMinuPrice(BigDecimal minuPrice) {
+        this.minuPrice = minuPrice;
     }
 }

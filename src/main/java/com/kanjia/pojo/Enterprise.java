@@ -27,7 +27,9 @@ public class Enterprise {
 
     private Integer state;
 
-    public Enterprise(Integer id, String nickname, String openId, String enterpriseName, String license, String corporation, String phone, String card, String avatarurl, Date createTime, Date updateTime, Integer state) {
+    private String address;
+
+    public Enterprise(Integer id, String nickname, String openId, String enterpriseName, String license, String corporation, String phone, String card, String avatarurl, Date createTime, Date updateTime, Integer state, String address) {
         this.id = id;
         this.nickname = nickname;
         this.openId = openId;
@@ -40,6 +42,7 @@ public class Enterprise {
         this.createTime = createTime;
         this.updateTime = updateTime;
         this.state = state;
+        this.address = address;
     }
 
     public Enterprise() {
@@ -140,5 +143,13 @@ public class Enterprise {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address == null ? null : address.trim();
     }
 }

@@ -47,8 +47,8 @@ public class ActivityServiceImpl extends AbstractBaseServiceImpl<Activity> imple
 
             List<String> list1=userOrderMapper.getOrdersPicture(pageActivityVo.getId());
             list.get(i).setHeadSculptureCount(list1.size());
-            for(int j=5;j<list1.size();++j){
-                list1.remove(j);
+            if(list1.size()>5) {
+                list1 = list1.subList(0, 5);
             }
             list.get(i).setHeadSculpture(list1);
             ++i;
@@ -175,7 +175,14 @@ public class ActivityServiceImpl extends AbstractBaseServiceImpl<Activity> imple
 
             activityDescriptionVos.get(i).setPicture(picture);
         }
-         list.get(0).setActivityDescription(activityDescriptionVos);
+        list.get(0).setActivityDescription(activityDescriptionVos);
+
+        List<String> list1=userOrderMapper.getOrdersPicture(id);
+        list.get(0).setHeadSculptureCount(list1.size());
+        if(list1.size()>5) {
+            list1 = list1.subList(0, 5);
+        }
+        list.get(0).setHeadSculpture(list1);
 
         return list.get(0);
     }
