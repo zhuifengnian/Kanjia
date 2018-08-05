@@ -1,5 +1,7 @@
 package com.kanjia.vo;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -11,13 +13,20 @@ import java.util.List;
  * fan 2018/8/1 19:05
  */
 @Data
+@ApiModel(value = "订单详情")
 public class OrderDetailVO {
 
     private Integer uid;
 
+    private Integer aid;    //活动id
+
     private OrderDetailUserVO orderDetailUserVO;    //用户数据
 
+    private OrderDetailEnterpriseVO orderDetailEnterpriseVO;    //商户数据
+
     private Integer oid;
+
+    private Integer state;      //状态码
 
     private String stateName;   //状态名
 
@@ -35,7 +44,8 @@ public class OrderDetailVO {
 
     private Integer soldNumber;     //已售份数
 
-    private Date consumeTime;       //消费（砍价）开始时间
+    @ApiModelProperty("消费（砍价）开始时间")
+    private Date consumeTime;
 
     private Date consumeEndTime;    //消费（砍价）截止时间
 
@@ -46,6 +56,9 @@ public class OrderDetailVO {
     private Date createTime;        //订单创建时间
 
     private String qrCode;          //订单二维码
+
+    @ApiModelProperty("订单编号")
+    private String orderNumber;     //订单编号
 
     private List<OrderHelperVO> orderHelperVOs; //pick榜数据
 }

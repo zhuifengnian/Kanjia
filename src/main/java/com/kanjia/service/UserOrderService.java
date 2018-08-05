@@ -145,5 +145,11 @@ public interface UserOrderService extends BaseService<UserOrder> {
      */
     Integer generateOrder(Integer uid, Integer aid);
 
+    /**
+     * 获取订单详情
+     * @param oid
+     * @return
+     */
     OrderDetailVO getOrderDetail(Integer oid);
+
 }

@@ -2,6 +2,7 @@ package com.kanjia.utils;
 
 
 import java.sql.Timestamp;
+import java.util.Random;
 import java.util.TimeZone;
 
 /**
@@ -9,6 +10,9 @@ import java.util.TimeZone;
  * 封装时间
  */
 public class TimeUtil {
+
+    private static final int MIN = 100000000;
+    private static final int MAX = 900000000;
 
 
     public static Timestamp[] getTime() {
@@ -20,6 +24,21 @@ public class TimeUtil {
         Timestamp t2 = new Timestamp(twelve);
         Timestamp t[] = {t1, t2};
         return t;
+    }
+
+    /**
+     * 生成9位的随机数
+     */
+    public static String random9Number(){
+        Random random = new Random();
+        return MIN + random.nextInt(MAX) + "";
+    }
+
+    /**
+     * 生成时间戳
+     */
+    public static long currentTimeStamp(){
+        return System.currentTimeMillis();
     }
 
 }

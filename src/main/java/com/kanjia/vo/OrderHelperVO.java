@@ -10,6 +10,8 @@ import java.math.BigDecimal;
  */
 @Data
 public class OrderHelperVO {
+    private Integer uid;
+
     private String nickname;
 
     private String avatarurl;

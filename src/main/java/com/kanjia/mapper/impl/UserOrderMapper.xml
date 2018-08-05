@@ -11,10 +11,12 @@
       <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="state" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="qr_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="order_number" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    id, user_id, activity_id, current_price, create_time, update_time, state, qr_code
+    id, user_id, activity_id, current_price, create_time, update_time, state, qr_code, 
+    order_number
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -29,10 +31,12 @@
   <insert id="insert" parameterType="com.kanjia.pojo.UserOrder" useGeneratedKeys="true" keyProperty="id">
     insert into user_order (id, user_id, activity_id, 
       current_price, create_time, update_time, 
-      state, qr_code)
+      state, qr_code, order_number
+      )
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, 
       #{currentPrice,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{state,jdbcType=INTEGER}, #{qrCode,jdbcType=VARCHAR})
+      #{state,jdbcType=INTEGER}, #{qrCode,jdbcType=VARCHAR}, #{orderNumber,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.kanjia.pojo.UserOrder" useGeneratedKeys="true" keyProperty="id">
     insert into user_order
@@ -61,6 +65,9 @@
       <if test="qrCode != null" >
         qr_code,
       </if>
+      <if test="orderNumber != null" >
+        order_number,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -86,6 +93,9 @@
       </if>
       <if test="qrCode != null" >
         #{qrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNumber != null" >
+        #{orderNumber,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -113,10 +123,13 @@
       <if test="qrCode != null" >
         qr_code = #{qrCode,jdbcType=VARCHAR},
       </if>
+      <if test="orderNumber != null" >
+        order_number = #{orderNumber,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.kanjia.pojo.UserOrder" >
+  <update id="updateByPrimaryKey" parameterType="com.kanjia.pojo.UserOrder">
     update user_order
     set user_id = #{userId,jdbcType=INTEGER},
       activity_id = #{activityId,jdbcType=INTEGER},
@@ -124,9 +137,73 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       state = #{state,jdbcType=INTEGER},
-      qr_code = #{qrCode,jdbcType=VARCHAR}
+      qr_code = #{qrCode,jdbcType=VARCHAR},
+      order_number = #{orderNumber,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!-- 分页查詢 -->
+  <select id="select" parameterType="Map" resultMap="BaseResultMap">
+    SELECT *
+    FROM user_order
+    WHERE 1=1
+    <if test="userId != null" >
+      and user_id = #{userId,jdbcType=INTEGER}
+    </if>
+    <if test="activityId != null" >
+      and activity_id = #{activityId,jdbcType=INTEGER}
+    </if>
+    <if test="currentPrice != null" >
+      and current_price = #{currentPrice,jdbcType=DECIMAL}
+    </if>
+    <if test="createTime != null" >
+      and create_time = #{createTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="updateTime != null" >
+      and update_time = #{updateTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="state != null" >
+      and state = #{state,jdbcType=INTEGER}
+    </if>
+    <if test="qrCode != null" >
+      and qr_code = #{qrCode,jdbcType=VARCHAR}
+    </if>
+    <if test="orderNumber != null" >
+      and order_number = #{orderNumber,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <!-- 查詢数量 -->
+  <select id="selectCount" parameterType="com.kanjia.pojo.User"
+          resultType="Integer">
+    SELECT count(*)
+    FROM user_order
+    WHERE 1=1
+    <if test="userId != null" >
+      and user_id = #{userId,jdbcType=INTEGER}
+    </if>
+    <if test="activityId != null" >
+      and activity_id = #{activityId,jdbcType=INTEGER}
+    </if>
+    <if test="currentPrice != null" >
+      and current_price = #{currentPrice,jdbcType=DECIMAL}
+    </if>
+    <if test="createTime != null" >
+      and create_time = #{createTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="updateTime != null" >
+      and update_time = #{updateTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="state != null" >
+      and state = #{state,jdbcType=INTEGER}
+    </if>
+    <if test="qrCode != null" >
+      and qr_code = #{qrCode,jdbcType=VARCHAR}
+    </if>
+    <if test="orderNumber != null" >
+      and order_number = #{orderNumber,jdbcType=VARCHAR}
+    </if>
+  </select>
+
   <!--<select id="getQrCode" resultType="com.kanjia.vo.EnterprisePaymentPriceVo">-->
   <!--select uo.id,a.enterprise_id as enterpriseId,uo.current_price as currentPrice-->
   <!--from user_order uo left join activity a on uo.activity_id = a.id-->
@@ -458,13 +535,13 @@
   </select>
 
   <select id="listMyOrders" resultType="myOrderVo">
-  select uo.id as oid, get_state_name(uo.state) as stateName, a.title, a.picture, a.activity_time as activityTime, a.cut_time as cutTime,
-  a.origin_price as originPrice, uo.current_price as currentPrice, uo.qr_code as qrCode, get_helper_num_by_order_id(uo.id) as helperNum
-  from user_order uo left join activity a on uo.activity_id = a.id
-  where 1 = 1
-  and uo.user_id = #{uid}
-  and uo.state in (2,4)
-</select>
+    select uo.id as oid, uo.state, get_state_name(uo.state) as stateName, a.title, a.picture, a.activity_time as activityTime, a.cut_time as cutTime,
+    a.origin_price as originPrice, uo.current_price as currentPrice, uo.qr_code as qrCode, get_helper_num_by_order_id(uo.id) as helperNum
+    from user_order uo left join activity a on uo.activity_id = a.id
+    where 1 = 1
+    and uo.user_id = #{uid}
+    and uo.state in (2,4)
+  </select>
 
   <select id="listMyOrdersCount" resultType="int">
     select count(1)
@@ -475,13 +552,12 @@
   </select>
 
   <select id="getOrderDetail" resultType="orderDetailVO">
-    select u.id as uid, uo.id as oid, get_state_name(uo.state) as stateName, a.picture, a.title, uo.current_price as currentPrice,
-      a.origin_price as originPrice, a.minu_price as minuPrice, a.limit_number as limitNumber, a.sold_number as soldNumber,
-      a.consume_time as consumeTime, a. consume_end_time as consumeEndTime, a.activity_time as activityTime, a.cut_time as cutTime,
-      uo.create_time as createTime, uo.qr_code as qrCode
+    select u.id as uid, a.id as aid, uo.id as oid, uo.state, get_state_name(uo.state) as stateName, a.picture, a.title, uo.current_price as currentPrice,
+    a.origin_price as originPrice, a.minu_price as minuPrice, a.limit_number as limitNumber, a.sold_number as soldNumber,
+    a.consume_time as consumeTime, a. consume_end_time as consumeEndTime, a.activity_time as activityTime, a.cut_time as cutTime,
+    uo.create_time as createTime, uo.qr_code as qrCode, uo.order_number as orderNumber
     from user_order uo left join activity a on uo.activity_id = a.id
     left join user u on uo.user_id = u.id
     where uo.id = #{oid}
   </select>
-
 </mapper>

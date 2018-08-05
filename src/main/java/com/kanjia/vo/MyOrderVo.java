@@ -17,6 +17,8 @@ import java.util.TreeSet;
 public class MyOrderVo {
     private Integer oid;
 
+    private Integer state;
+
     private String stateName;
 
     private String title;
@@ -43,6 +45,14 @@ public class MyOrderVo {
 
     public void setOid(Integer oid) {
         this.oid = oid;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 
     public String getStateName() {

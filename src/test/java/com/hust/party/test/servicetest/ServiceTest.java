@@ -6,9 +6,7 @@ import com.kanjia.mapper.HelpUserMapper;
 import com.kanjia.service.*;
 import com.kanjia.utils.OverTimeUtil;
 import com.kanjia.utils.TimeUtil;
-import com.kanjia.vo.EnterpriseOrderVo;
-import com.kanjia.vo.KanjiaOrderVo;
-import com.kanjia.vo.PageActivityVo;
+import com.kanjia.vo.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,12 +81,14 @@ public class ServiceTest {
 
     @Test
     public void testGetHelperAvatar(){
-        List<String> helperAvatars = helpUserMapper.getOrderHelperAvatars(1, 3);
-        System.out.println(helperAvatars);
+        List<OrderHelperVO> orderHelpers = helpUserMapper.getOrderHelpers(1, null);
+        System.out.println(orderHelpers);
     }
+
     @Test
-    public void testListActivity(){
-        List<PageActivityVo> list = activityMapper.getAllActivity(null);
-        System.out.println(list.get(0).getMinPrice());
+    public void testGetOrderDetail(){
+        OrderDetailVO orderDetail = userOrderService.getOrderDetail(1);
+        System.out.println(orderDetail);
     }
+
 }

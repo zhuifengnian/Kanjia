@@ -5,16 +5,18 @@ import com.kanjia.basic.Page;
 import com.kanjia.basic.PageInfo;
 import com.kanjia.mapper.*;
 import com.kanjia.pojo.Activity;
+import com.kanjia.pojo.Enterprise;
 import com.kanjia.pojo.User;
 import com.kanjia.pojo.UserOrder;
 import com.kanjia.service.UserOrderService;
+import com.kanjia.utils.TimeUtil;
 import com.kanjia.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> implements UserOrderService {
@@ -26,6 +28,8 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
     private HelpUserMapper helpUserMapper;
     @Autowired
     private ActivityMapper activityMapper;
+    @Autowired
+    private EnterpriseMapper enterpriseMapper;
 
     @Override
     public BaseMapper<UserOrder> getDao() {
@@ -213,7 +217,11 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
         userOrder.setActivityId(aid);
         userOrder.setCurrentPrice(activity.getOriginPrice());
         userOrder.setState(Const.ORDER_STATUS_ENGAGING);    //初始化订单状态为正在砍价
-        userOrder.setQrCode(UUID.randomUUID().toString());  //生成随机二维码
+
+        userOrder.setQrCode(TimeUtil.random9Number());  //生成随机9位数二维码
+        //生成订单编号,规则为aid加时间戳，加uid
+        String orderNumber = "" + aid + TimeUtil.currentTimeStamp() + uid;
+        userOrder.setOrderNumber(orderNumber);
         userOrderMapper.insert(userOrder);
 
         return userOrder.getId();
@@ -229,12 +237,21 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
         orderDetailUserVO.setNickname(user.getNickname());
         orderDetailUserVO.setAvatarurl(user.getAvatarurl());
         orderDetailVO.setOrderDetailUserVO(orderDetailUserVO);
+
+        //获取订单对应的商户信息
+        Activity activity = activityMapper.selectByPrimaryKey(orderDetailVO.getAid());
+        Enterprise enterprise = enterpriseMapper.selectByPrimaryKey(activity.getEnterpriseId());
+        OrderDetailEnterpriseVO orderDetailEnterpriseVO = new OrderDetailEnterpriseVO();
+        orderDetailEnterpriseVO.setEnterpriseName(enterprise.getEnterpriseName());
+        orderDetailEnterpriseVO.setAddress(enterprise.getAddress());
+        orderDetailEnterpriseVO.setAvatarurl(enterprise.getAvatarurl());
+        orderDetailEnterpriseVO.setPhone(enterprise.getPhone());
+        orderDetailVO.setOrderDetailEnterpriseVO(orderDetailEnterpriseVO);
+
         //帮助者相关信息
         List<OrderHelperVO> orderHelpers = helpUserMapper.getOrderHelpers(oid, 3);
         orderDetailVO.setOrderHelperVOs(orderHelpers);
 
         return orderDetailVO;
     }
-
-
 }

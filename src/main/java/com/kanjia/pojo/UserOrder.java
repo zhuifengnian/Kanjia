@@ -20,7 +20,9 @@ public class UserOrder {
 
     private String qrCode;
 
-    public UserOrder(Integer id, Integer userId, Integer activityId, BigDecimal currentPrice, Date createTime, Date updateTime, Integer state, String qrCode) {
+    private String orderNumber;
+
+    public UserOrder(Integer id, Integer userId, Integer activityId, BigDecimal currentPrice, Date createTime, Date updateTime, Integer state, String qrCode, String orderNumber) {
         this.id = id;
         this.userId = userId;
         this.activityId = activityId;
@@ -29,6 +31,7 @@ public class UserOrder {
         this.updateTime = updateTime;
         this.state = state;
         this.qrCode = qrCode;
+        this.orderNumber = orderNumber;
     }
 
     public UserOrder() {
@@ -97,5 +100,13 @@ public class UserOrder {
 
     public void setQrCode(String qrCode) {
         this.qrCode = qrCode == null ? null : qrCode.trim();
+    }
+
+    public String getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber == null ? null : orderNumber.trim();
     }
 }
