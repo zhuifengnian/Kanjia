@@ -14,8 +14,8 @@ import com.kanjia.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -253,5 +253,63 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
         orderDetailVO.setOrderHelperVOs(orderHelpers);
 
         return orderDetailVO;
+    }
+
+    @Override
+    public PageInfo<OrderListVO> listOrders(Integer uid, Integer orderState, Page page) {
+        //分页准备
+        PageInfo<OrderListVO> pageInfo = new PageInfo<>();
+        if(page != null){
+            pageInfo.setPageNum(page.getPageNumber());
+            pageInfo.setPageSize(page.getPageSize());
+        }
+
+        List<OrderListVO> orderVOs = new ArrayList<>();
+
+        switch(orderState){
+            //全部
+            case Const.ORDER_LIST_STATUS_ALL:
+                orderVOs = userOrderMapper.listOrders(uid, Const.ORDER_LIST_STATUS_ALL, page);
+                pageInfo.setTotal(userOrderMapper.listOrdersCount(uid, Const.ORDER_LIST_STATUS_ALL));
+                break;
+            //砍价中
+            case Const.ORDER_LIST_STATUS_ENGAGING:
+                orderVOs = userOrderMapper.listOrders(uid, Const.ORDER_LIST_STATUS_ENGAGING, page);
+                pageInfo.setTotal(userOrderMapper.listOrdersCount(uid, Const.ORDER_LIST_STATUS_ENGAGING));
+                break;
+            //待消费
+            case Const.ORDER_LIST_STATUS_WAIT_CONSUME:
+                orderVOs = userOrderMapper.listOrders(uid, Const.ORDER_LIST_STATUS_WAIT_CONSUME, page);
+                pageInfo.setTotal(userOrderMapper.listOrdersCount(uid, Const.ORDER_LIST_STATUS_WAIT_CONSUME));
+                break;
+            //已完成
+            case Const.ORDER_LIST_STATUS_FINISH:
+                orderVOs = userOrderMapper.listOrders(uid, Const.ORDER_LIST_STATUS_FINISH, page);
+                pageInfo.setTotal(userOrderMapper.listOrdersCount(uid, Const.ORDER_LIST_STATUS_FINISH));
+                break;
+            //退款中
+            case Const.ORDER_LIST_STATUS_DRAWBACKING:
+                orderVOs = userOrderMapper.listOrders(uid, Const.ORDER_LIST_STATUS_DRAWBACKING, page);
+                pageInfo.setTotal(userOrderMapper.listOrdersCount(uid, Const.ORDER_LIST_STATUS_DRAWBACKING));
+                break;
+        }
+        //拿到用户id,再拿到其下指定订单
+        dealOrderListVO(orderVOs);
+        pageInfo.setRows(orderVOs);
+
+        return pageInfo;
+    }
+
+    /**
+     * 处理订单列表
+     * @param orderVOs
+     */
+    private void dealOrderListVO(List<OrderListVO> orderVOs) {
+        //将帮砍者头像加入
+        for(OrderListVO orderVO: orderVOs){
+            Integer helperNum = orderVO.getHelperNum() > 3 ? 3 : orderVO.getHelperNum();
+            List<String> helperAvatars = helpUserMapper.getOrderHelperAvatars(orderVO.getOid(), helperNum);
+            orderVO.setHelperAvatars(helperAvatars);
+        }
     }
 }

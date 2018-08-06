@@ -107,7 +107,7 @@
   </update>
 
   <select id="getOrderHelperAvatars" parameterType="int" resultType="string">
-      select u.nickname
+      select u.avatarurl
       from help_user hu left join user_order uo on hu.order_id = uo.id
         left join user u on hu.user_id = u.id
       where uo.id = #{oid}

@@ -1,5 +1,6 @@
 package com.hust.party.test.servicetest;
 
+import com.kanjia.basic.Const;
 import com.kanjia.basic.PageInfo;
 import com.kanjia.mapper.ActivityMapper;
 import com.kanjia.mapper.HelpUserMapper;
@@ -89,6 +90,13 @@ public class ServiceTest {
     public void testGetOrderDetail(){
         OrderDetailVO orderDetail = userOrderService.getOrderDetail(1);
         System.out.println(orderDetail);
+    }
+
+    @Test
+    public void testListOrders(){
+        PageInfo<OrderListVO> orderListVOPageInfo = userOrderService.listOrders(1, Const.ORDER_LIST_STATUS_DRAWBACKING, null);
+        System.out.println(orderListVOPageInfo);
+
     }
 
 }

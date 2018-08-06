@@ -152,4 +152,12 @@ public interface UserOrderService extends BaseService<UserOrder> {
      */
     OrderDetailVO getOrderDetail(Integer oid);
 
+    /**
+     * 根据订单状态，列出订单
+     * @param uid
+     * @param orderState
+     * @param page
+     * @return
+     */
+    PageInfo<OrderListVO> listOrders(Integer uid, Integer orderState, Page page);
 }

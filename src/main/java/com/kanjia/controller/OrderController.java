@@ -8,10 +8,7 @@ import com.kanjia.pojo.UserOrder;
 import com.kanjia.service.HelperService;
 import com.kanjia.service.UserOrderService;
 import com.kanjia.utils.PageUtil;
-import com.kanjia.vo.KanjiaOrderVo;
-import com.kanjia.vo.MyOrderVo;
-import com.kanjia.vo.OrderDetailVO;
-import com.kanjia.vo.OrderHelperVO;
+import com.kanjia.vo.*;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -49,6 +46,14 @@ public class OrderController {
     public ReturnMessage listMyOrders(@RequestParam("uid") Integer uid, @RequestParam(required = false, defaultValue = "6") Integer pageSize, @RequestParam(required = false) Integer pageNumber) {
         PageInfo<MyOrderVo> myOrderVoPageInfo = userOrderService.listMyOrders(uid, PageUtil.setPage(pageSize, pageNumber));
         return new ReturnMessage(ResponseCode.OK, myOrderVoPageInfo);
+    }
+
+    @ApiOperation(value = "根据订单类型获取不同订单", notes = "根据订单类型获取不同订单")
+    @ResponseBody
+    @RequestMapping(value = "/listOrders", method = RequestMethod.GET)
+    public ReturnMessage listOrders(@RequestParam("uid") Integer uid, @RequestParam Integer orderState, @RequestParam(required = false, defaultValue = "6") Integer pageSize, @RequestParam(required = false) Integer pageNumber) {
+        PageInfo<OrderListVO> orderListVO = userOrderService.listOrders(uid, orderState, PageUtil.setPage(pageSize, pageNumber));
+        return new ReturnMessage(ResponseCode.OK, orderListVO);
     }
 
     /**

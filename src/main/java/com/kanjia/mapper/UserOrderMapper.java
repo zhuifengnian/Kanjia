@@ -129,4 +129,8 @@ public interface UserOrderMapper extends BaseMapper<UserOrder> {
     void generateOrder(Integer uid, Integer aid);
 
     OrderDetailVO getOrderDetail(Integer oid);
+
+    List<OrderListVO> listOrders(@Param("uid") Integer uid,@Param("state") Integer state,@Param("page") Page page);
+
+    Integer listOrdersCount(@Param("uid") Integer uid,@Param("state") Integer state);
 }

@@ -551,6 +551,60 @@
     and uo.state in (2,4)
   </select>
 
+  <select id="listOrders" resultType="orderListVO">
+    select uo.id as oid, uo.state, get_state_name(uo.state) as stateName, a.title, a.picture, a.activity_time as activityTime, a.cut_time as cutTime,
+    a.origin_price as originPrice, uo.current_price as currentPrice, a.minu_price as minuPrice, uo.qr_code as qrCode, get_helper_num_by_order_id(uo.id) as helperNum
+    from user_order uo left join activity a on uo.activity_id = a.id
+    where 1 = 1
+    and uo.user_id = #{uid}
+    <choose>
+      <!--正在砍价,包括砍价中和待付款的订单-->
+      <when test="state == 101">
+        and uo.state = 1 or uo.state = 5
+      </when>
+      <!--待消费-->
+      <when test="state == 102">
+        and uo.state = 2
+      </when>
+      <!--已完成-->
+      <when test="state == 103">
+        and uo.state = 4
+      </when>
+      <!--退款中-->
+      <when test="state == 104">
+        and uo.state = 6
+      </when>
+    </choose>
+    <if test="page != null and page.start != null and page.pageSize!=null">
+      limit #{page.start},#{page.pageSize}
+    </if>
+  </select>
+
+  <select id="listOrdersCount" resultType="orderListVO">
+    select count(1)
+    from user_order uo left join activity a on uo.activity_id = a.id
+    where 1 = 1
+    and uo.user_id = #{uid}
+    <choose>
+      <!--正在砍价,包括砍价中和待付款的订单-->
+      <when test="state == 101">
+        and uo.state = 1 or uo.state = 5
+      </when>
+      <!--待消费-->
+      <when test="state == 102">
+        and uo.state = 2
+      </when>
+      <!--已完成-->
+      <when test="state == 103">
+        and uo.state = 4
+      </when>
+      <!--退款中-->
+      <when test="state == 104">
+        and uo.state = 6
+      </when>
+    </choose>
+  </select>
+
   <select id="getOrderDetail" resultType="orderDetailVO">
     select u.id as uid, a.id as aid, uo.id as oid, uo.state, get_state_name(uo.state) as stateName, a.picture, a.title, uo.current_price as currentPrice,
     a.origin_price as originPrice, a.minu_price as minuPrice, a.limit_number as limitNumber, a.sold_number as soldNumber,
