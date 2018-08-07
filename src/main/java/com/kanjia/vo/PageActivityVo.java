@@ -36,6 +36,7 @@ public class PageActivityVo {
     private List<String> headSculpture;
 
     private Integer headSculptureCount;
+
     public Integer getId() {
         return id;
     }

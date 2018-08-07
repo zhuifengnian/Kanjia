@@ -38,4 +38,5 @@ public class OrderListVO {
 
     private Integer helperNum;
 
+
 }

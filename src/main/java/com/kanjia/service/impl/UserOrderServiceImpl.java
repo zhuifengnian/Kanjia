@@ -4,10 +4,9 @@ import com.kanjia.basic.Const;
 import com.kanjia.basic.Page;
 import com.kanjia.basic.PageInfo;
 import com.kanjia.mapper.*;
-import com.kanjia.pojo.Activity;
-import com.kanjia.pojo.Enterprise;
-import com.kanjia.pojo.User;
-import com.kanjia.pojo.UserOrder;
+import com.kanjia.pojo.*;
+import com.kanjia.service.EnterpriseBillService;
+import com.kanjia.service.EnterprisePaymentService;
 import com.kanjia.service.UserOrderService;
 import com.kanjia.utils.TimeUtil;
 import com.kanjia.vo.*;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Service
@@ -30,6 +30,10 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
     private ActivityMapper activityMapper;
     @Autowired
     private EnterpriseMapper enterpriseMapper;
+    @Autowired
+    private EnterprisePaymentService enterprisePaymentService;
+    @Autowired
+    private EnterpriseBillService enterpriseBillService;
 
     @Override
     public BaseMapper<UserOrder> getDao() {
@@ -120,7 +124,7 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
             pageInfo.setRows(getEnterpriseAllOrder(id, page));
             pageInfo.setTotal(getEnterpriseAllOrderCount(id));
 
-        } else if ("未来".equals(name)) {
+        } else if ("未消费".equals(name)) {
             pageInfo.setRows(getEnterpriseFeatureOrder(id, t, page));
             pageInfo.setTotal(getEnterpriseFeatureOrderCount(id, t));
         } else if ("已消费".equals(name)) {
@@ -298,6 +302,40 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
         pageInfo.setRows(orderVOs);
 
         return pageInfo;
+    }
+
+    @Override
+    public int[] getCurrentPrice(String order_number) {
+        int []insert=new int[2];
+        UserOrder userOrder= userOrderMapper.getCurrentPrice(order_number);
+        userOrder.setState(Const.ORDER_STATUS_HAS_CONSUME);
+        userOrderMapper.updateByPrimaryKey(userOrder);
+        Activity activity= activityMapper.selectByPrimaryKey(userOrder.getActivityId());
+
+        EnterprisePayment enterprisePayment=enterprisePaymentService.getEnterprisePayment(activity.getEnterpriseId());
+       if(enterprisePayment.getTotalMoney()!=null) {
+           enterprisePayment.setTotalMoney(enterprisePayment.getTotalMoney().add(userOrder.getCurrentPrice()));
+       }
+       else{
+           enterprisePayment.setTotalMoney(userOrder.getCurrentPrice());
+
+       }
+     insert[0]=  enterprisePaymentService.updateByPrimaryKeySelective(enterprisePayment);
+      EnterpriseBill enterpriseBill=new EnterpriseBill();
+      enterpriseBill.setCreateTime(Calendar.getInstance().getTime());
+        enterpriseBill.setUpdateTime(Calendar.getInstance().getTime());
+        enterpriseBill.setEnterpriseId(activity.getEnterpriseId());
+        enterpriseBill.setMoney(userOrder.getCurrentPrice());
+        enterpriseBill.setOrderId(userOrder.getId());
+        enterpriseBill.setTitle(activity.getTitle());
+        enterpriseBill.setType("收入");
+       insert[1]= enterpriseBillService.insertSelective(enterpriseBill);
+        return insert;
+    }
+
+    @Override
+    public OrderInfoVo getOrderInfo(String qr_code) {
+        return userOrderMapper.getOrderInfo(qr_code);
     }
 
     /**

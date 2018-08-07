@@ -73,6 +73,15 @@ public interface ActivityMapper extends BaseMapper<Activity> {
     List<PageActivityVo> getEnterpriseDeleteActivity(@Param("id") Integer id, @Param("page") Page page);
 
     Integer getEnterpriseDeleteActivityCount(Integer id);
+    /**
+     * 获取商户已售罄活动
+     *
+     * @param id
+     * @return
+     */
+    List<PageActivityVo> getEnterpriseStockActivity(@Param("id") Integer id, @Param("page") Page page);
+
+    Integer getEnterpriseStockActivityCount(Integer id);
 
     /**
      * 获取活动详情

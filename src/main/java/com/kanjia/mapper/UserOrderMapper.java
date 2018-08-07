@@ -133,4 +133,17 @@ public interface UserOrderMapper extends BaseMapper<UserOrder> {
     List<OrderListVO> listOrders(@Param("uid") Integer uid,@Param("state") Integer state,@Param("page") Page page);
 
     Integer listOrdersCount(@Param("uid") Integer uid,@Param("state") Integer state);
+    /**
+     * 根据qr_code获取信息
+     * @param order_number
+     * @return
+     */
+    UserOrder getCurrentPrice(String order_number);
+
+    /**
+     * 根据二维码获取订单详情
+     * @param qr_code
+     * @return
+     */
+    OrderInfoVo getOrderInfo(String qr_code);
 }

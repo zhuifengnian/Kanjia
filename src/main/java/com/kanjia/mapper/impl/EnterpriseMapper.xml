@@ -196,7 +196,13 @@
      select   e.address as address, e.id as enteprirseId,e. enterprise_name as enterpriseName, e.phone as  enterprisePhone,a.longitude as longitude,a.latitude as latitude
     from activity a left join enterprise e on a.enterprise_id = e.id
     where 1=1
-    and a.id=#{id}
+    and a.id=#{aid}
   </select>
-
+  <!--根据eid获取信息-->
+  <select id="getEnterpriseinfo" resultType="com.kanjia.vo.PageEnterpriseVo">
+     select    id as enteprirseId,enterprise_name as enterpriseName,avatarurl as avatarurl
+    from  enterprise
+    where 1=1
+    and id=#{eid}
+  </select>
 </mapper>

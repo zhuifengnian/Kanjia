@@ -2,6 +2,7 @@ package com.kanjia.mapper;
 
 import com.kanjia.pojo.Enterprise;
 import com.kanjia.vo.EnterpriseVo;
+import com.kanjia.vo.PageEnterpriseVo;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -20,4 +21,11 @@ public interface EnterpriseMapper extends BaseMapper<Enterprise> {
      * @return
      */
     EnterpriseVo getEnterpriseId(Integer aid);
+
+    /**
+     * 根据eid取数据
+     * @param eid
+     * @return
+     */
+    PageEnterpriseVo getEnterpriseinfo(Integer eid);
 }
