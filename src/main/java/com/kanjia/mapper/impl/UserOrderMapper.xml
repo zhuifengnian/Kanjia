@@ -580,7 +580,7 @@
     </if>
   </select>
 
-  <select id="listOrdersCount" resultType="orderListVO">
+  <select id="listOrdersCount" resultType="int">
     select count(1)
     from user_order uo left join activity a on uo.activity_id = a.id
     where 1 = 1

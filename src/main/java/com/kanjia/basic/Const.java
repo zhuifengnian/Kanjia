@@ -18,7 +18,7 @@ public class Const {
 
     //订单列表相关，只用于标记，不是数据库中的值（全部，砍价中，待消费，已完成，退款中）
     public static final int ORDER_LIST_STATUS_ALL = 100;     //列出所有状态的订单
-    public static final int ORDER_LIST_STATUS_ENGAGING = 101;     //列出砍价中的订单
+    public static final int ORDER_LIST_STATUS_ENGAGING = 101;     //列出砍价中的订单(包括待支付）
     public static final int ORDER_LIST_STATUS_WAIT_CONSUME = 102;     //列出等待消费的订单
     public static final int ORDER_LIST_STATUS_FINISH = 103;     //列出已完成的订单
     public static final int ORDER_LIST_STATUS_DRAWBACKING = 104;     //列出退款中的订单
