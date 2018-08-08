@@ -625,7 +625,26 @@
     where 1=1
     and a.state=0
   </select>
-
+  <!--获得企业售罄活动-->
+  <select id="getEnterpriseStockActivity" resultType="com.kanjia.vo.PageActivityVo">
+    select a.id,a.title,a.picture,a.adress,a.origin_price,a.pick,a.activity_time as
+    activityTime,e.enterprise_name as enterpriseName,
+    a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
+    from activity a left join enterprise e on a.enterprise_id = e.id
+    where 1=1
+    and a.state=1
+    and a.limit_number =a.sold_number
+    <if test="page != null and page.start != null and page.pageSize!=null">
+      limit #{page.start},#{page.pageSize}
+    </if>
+  </select>
+  <select id="getEnterpriseStockActivityCount" resultType="Integer">
+    select count(1)
+    from activity a left join enterprise e on a.enterprise_id = e.id
+    where 1=1
+    and a.state=1
+     and a.limit_number =a.sold_number
+  </select>
   <!--&lt;!&ndash;获得活动详情&ndash;&gt;-->
   <!--<select id="getDetailActivity" resultType="com.kanjia.vo.DetailActivityVo">-->
     <!--select  a.id,a.title,a.video,a.adress,a.origin_price as originPrice,a.minu_price as minuPrice,-->

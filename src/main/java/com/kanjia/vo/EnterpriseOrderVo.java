@@ -15,8 +15,6 @@ public class EnterpriseOrderVo {
 
     private Integer userId;
 
-    private Integer pick;
-
     private String title;
 
     private String picture;
@@ -38,14 +36,6 @@ public class EnterpriseOrderVo {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
-    }
-
-    public Integer getPick() {
-        return pick;
-    }
-
-    public void setPick(Integer pick) {
-        this.pick = pick;
     }
 
     public String getTitle() {

@@ -6,6 +6,7 @@ import com.kanjia.mapper.EnterpriseMapper;
 import com.kanjia.mapper.EnterprisePaymentMapper;
 import com.kanjia.pojo.Enterprise;
 import com.kanjia.service.EnterpriseService;
+import com.kanjia.vo.PageEnterpriseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +14,6 @@ import org.springframework.stereotype.Service;
 public class EnterpriseServiceImpl extends AbstractBaseServiceImpl<Enterprise> implements EnterpriseService {
     @Autowired
     private EnterpriseMapper enterpriseMapper;
-    @Autowired
-    private EnterprisePaymentMapper enterprisePaymentMapper;
-    @Autowired
-    private EnterpriseService enterpriseService;
 
     @Override
     public BaseMapper<Enterprise> getDao() {
@@ -27,6 +24,11 @@ public class EnterpriseServiceImpl extends AbstractBaseServiceImpl<Enterprise> i
     public Integer getId(String openId) {
 
         return enterpriseMapper.getId(openId);
+    }
+
+    @Override
+    public PageEnterpriseVo getEnterpriseinfo(Integer eid) {
+        return enterpriseMapper.getEnterpriseinfo(eid);
     }
 
 

@@ -160,4 +160,16 @@ public interface UserOrderService extends BaseService<UserOrder> {
      * @return
      */
     PageInfo<OrderListVO> listOrders(Integer uid, Integer orderState, Page page);
+    /**
+     * 根据qr_code获取信息
+     * @param order_number
+     * @return
+     */
+    int[] getCurrentPrice(String order_number);
+    /**
+     * 根据二维码获取订单详情
+     * @param qr_code
+     * @return
+     */
+    OrderInfoVo getOrderInfo(String qr_code);
 }

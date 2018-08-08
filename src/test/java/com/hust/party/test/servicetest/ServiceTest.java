@@ -4,6 +4,8 @@ import com.kanjia.basic.Const;
 import com.kanjia.basic.PageInfo;
 import com.kanjia.mapper.ActivityMapper;
 import com.kanjia.mapper.HelpUserMapper;
+import com.kanjia.pojo.Activity;
+import com.kanjia.pojo.EnterpriseBill;
 import com.kanjia.service.*;
 import com.kanjia.utils.OverTimeUtil;
 import com.kanjia.utils.TimeUtil;
@@ -42,6 +44,8 @@ public class ServiceTest {
     private HelpUserMapper helpUserMapper;
     @Autowired
     private ActivityMapper activityMapper;
+    @Autowired
+    private EnterpriseBillService enterpriseBillService;
 
     @Test
     public void testUserService() {
@@ -97,6 +101,15 @@ public class ServiceTest {
         PageInfo<OrderListVO> orderListVOPageInfo = userOrderService.listOrders(1, Const.ORDER_LIST_STATUS_DRAWBACKING, null);
         System.out.println(orderListVOPageInfo);
 
+    }
+    @Test
+    public void activity(){
+//        Activity activity=new Activity();
+//        activity.setState(4);
+//        activity.setId(5);
+//        Integer insert = activityService.updateByPrimaryKeySelective(activity);
+        List<EnterpriseBill> enterpriseBill=enterpriseBillService.getMoney(1);
+        System.out.println(enterpriseBill.size());
     }
 
 }
