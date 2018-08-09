@@ -37,6 +37,8 @@ public class PageActivityVo {
 
     private Integer headSculptureCount;
 
+    private Integer state;
+
     public Integer getId() {
         return id;
     }
@@ -149,5 +151,13 @@ public class PageActivityVo {
 
     public void setMinuPrice(BigDecimal minuPrice) {
         this.minuPrice = minuPrice;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 }

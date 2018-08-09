@@ -49,7 +49,7 @@ public class EnterpriseController {
     @RequestMapping(value = "/insertActivity", method = RequestMethod.POST)
     public ReturnMessage insertActivity(Activity activity, @RequestParam("enterpriseId") Integer enterpriseId) {
         activity.setEnterpriseId(enterpriseId);
-        activity.setState(3);
+        activity.setState(1);
         Integer insert = activityService.insert(activity);
         return new ReturnMessage(ResponseCode.OK, insert);
     }
@@ -58,7 +58,7 @@ public class EnterpriseController {
     @RequestMapping(value = "/undercarriageActivity", method = RequestMethod.POST)
     public ReturnMessage undercarriageActivity(@RequestParam("activityId") Integer activityId) {
        Activity activity=new Activity();
-        activity.setState(4);
+        activity.setState(3);
         activity.setId(activityId);
         Integer insert = activityService.updateByPrimaryKeySelective(activity);
         return new ReturnMessage(ResponseCode.OK, insert);
@@ -128,9 +128,9 @@ public class EnterpriseController {
     @ApiOperation(value = "查看活动", notes = "查看活动")
     @ResponseBody
     @RequestMapping(value = "/checkActivity", method = RequestMethod.POST)
-    public ReturnMessage checkActivity(@RequestParam("enterprise_id") Integer id, @RequestParam("name") String name, @RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Integer pageNumber) {
+    public ReturnMessage checkActivity(@RequestParam("enterprise_id") Integer id, @RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Integer pageNumber) {
 
-        PageInfo<PageActivityVo> pageInfo = activityService.getEnterpriseActivity(name, id, PageUtil.setPage(pageNumber));
+        PageInfo<PageActivityVo> pageInfo = activityService.getEnterpriseActivity("全部", id, PageUtil.setPage(pageNumber));
         return new ReturnMessage(ResponseCode.OK, pageInfo);
     }
 
