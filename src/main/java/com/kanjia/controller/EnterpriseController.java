@@ -129,7 +129,7 @@ public class EnterpriseController {
     @RequestMapping(value = "/checkActivity", method = RequestMethod.POST)
     public ReturnMessage checkActivity(@RequestParam("enterprise_id") Integer id, @RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Integer pageNumber) {
 
-        PageInfo<PageActivityVo> pageInfo = activityService.getEnterpriseActivity("全部", id, PageUtil.setPage(pageNumber));
+        PageInfo<PageActivityVo> pageInfo = activityService.getEnterpriseActivity("全部", id, PageUtil.setPage(pageSize, pageNumber));
         return new ReturnMessage(ResponseCode.OK, pageInfo);
     }
 
@@ -138,7 +138,7 @@ public class EnterpriseController {
     @RequestMapping(value = "/checkOrder", method = RequestMethod.POST)
     public ReturnMessage checkOrder(@RequestParam("enterprise_id") Integer id, @RequestParam("name") String name, @RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Integer pageNumber) {
         Timestamp timestamp[] = TimeUtil.getTime();
-        PageInfo<EnterpriseOrderVo> pageInfo = userOrderService.getEnterpriseOrder(name, id, timestamp[0], timestamp[1], PageUtil.setPage(pageNumber));
+        PageInfo<EnterpriseOrderVo> pageInfo = userOrderService.getEnterpriseOrder(name, id, timestamp[0], timestamp[1], PageUtil.setPage(pageSize, pageNumber));
         return new ReturnMessage(ResponseCode.OK, pageInfo);
     }
 

@@ -27,9 +27,21 @@ public class Enterprise {
 
     private Integer state;
 
+    private String cityName;
+
+    private String countyName;
+
+    private String detailInfo;
+
     private String address;
 
-    public Enterprise(Integer id, String nickname, String openId, String enterpriseName, String license, String corporation, String phone, String card, String avatarurl, Date createTime, Date updateTime, Integer state, String address) {
+    private String longitude;
+
+    private String latitude;
+
+    private String provinceName;
+
+    public Enterprise(Integer id, String nickname, String openId, String enterpriseName, String license, String corporation, String phone, String card, String avatarurl, Date createTime, Date updateTime, Integer state, String cityName, String countyName, String detailInfo, String address, String longitude, String latitude, String provinceName) {
         this.id = id;
         this.nickname = nickname;
         this.openId = openId;
@@ -42,7 +54,13 @@ public class Enterprise {
         this.createTime = createTime;
         this.updateTime = updateTime;
         this.state = state;
+        this.cityName = cityName;
+        this.countyName = countyName;
+        this.detailInfo = detailInfo;
         this.address = address;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.provinceName = provinceName;
     }
 
     public Enterprise() {
@@ -145,11 +163,59 @@ public class Enterprise {
         this.state = state;
     }
 
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName == null ? null : cityName.trim();
+    }
+
+    public String getCountyName() {
+        return countyName;
+    }
+
+    public void setCountyName(String countyName) {
+        this.countyName = countyName == null ? null : countyName.trim();
+    }
+
+    public String getDetailInfo() {
+        return detailInfo;
+    }
+
+    public void setDetailInfo(String detailInfo) {
+        this.detailInfo = detailInfo == null ? null : detailInfo.trim();
+    }
+
     public String getAddress() {
         return address;
     }
 
     public void setAddress(String address) {
         this.address = address == null ? null : address.trim();
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude == null ? null : longitude.trim();
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude == null ? null : latitude.trim();
+    }
+
+    public String getProvinceName() {
+        return provinceName;
+    }
+
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName == null ? null : provinceName.trim();
     }
 }

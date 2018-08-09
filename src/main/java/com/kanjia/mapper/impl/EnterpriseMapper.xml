@@ -15,12 +15,19 @@
       <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="city_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="county_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="detail_Info" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="address" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="longitude" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="latitude" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="province_name" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
     id, nickname, open_id, enterprise_name, license, corporation, phone, card, avatarurl, 
-    create_time, update_time, state, address
+    create_time, update_time, state, city_name, county_name, detail_Info, address, longitude, 
+    latitude, province_name
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -37,12 +44,16 @@
       enterprise_name, license, corporation, 
       phone, card, avatarurl, 
       create_time, update_time, state, 
-      address)
+      city_name, county_name, detail_Info, 
+      address, longitude, latitude, 
+      province_name)
     values (#{id,jdbcType=INTEGER}, #{nickname,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, 
       #{enterpriseName,jdbcType=VARCHAR}, #{license,jdbcType=VARCHAR}, #{corporation,jdbcType=VARCHAR}, 
       #{phone,jdbcType=VARCHAR}, #{card,jdbcType=VARCHAR}, #{avatarurl,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, 
-      #{address,jdbcType=VARCHAR})
+      #{cityName,jdbcType=VARCHAR}, #{countyName,jdbcType=VARCHAR}, #{detailInfo,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, 
+      #{provinceName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.kanjia.pojo.Enterprise" useGeneratedKeys="true" keyProperty="id">
     insert into enterprise
@@ -83,8 +94,26 @@
       <if test="state != null" >
         state,
       </if>
+      <if test="cityName != null" >
+        city_name,
+      </if>
+      <if test="countyName != null" >
+        county_name,
+      </if>
+      <if test="detailInfo != null" >
+        detail_Info,
+      </if>
       <if test="address != null" >
         address,
+      </if>
+      <if test="longitude != null" >
+        longitude,
+      </if>
+      <if test="latitude != null" >
+        latitude,
+      </if>
+      <if test="provinceName != null" >
+        province_name,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -124,8 +153,26 @@
       <if test="state != null" >
         #{state,jdbcType=INTEGER},
       </if>
+      <if test="cityName != null" >
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="countyName != null" >
+        #{countyName,jdbcType=VARCHAR},
+      </if>
+      <if test="detailInfo != null" >
+        #{detailInfo,jdbcType=VARCHAR},
+      </if>
       <if test="address != null" >
         #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceName != null" >
+        #{provinceName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -165,8 +212,26 @@
       <if test="state != null" >
         state = #{state,jdbcType=INTEGER},
       </if>
+      <if test="cityName != null" >
+        city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="countyName != null" >
+        county_name = #{countyName,jdbcType=VARCHAR},
+      </if>
+      <if test="detailInfo != null" >
+        detail_Info = #{detailInfo,jdbcType=VARCHAR},
+      </if>
       <if test="address != null" >
         address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        longitude = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceName != null" >
+        province_name = #{provinceName,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -184,7 +249,13 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       state = #{state,jdbcType=INTEGER},
-      address = #{address,jdbcType=VARCHAR}
+      city_name = #{cityName,jdbcType=VARCHAR},
+      county_name = #{countyName,jdbcType=VARCHAR},
+      detail_Info = #{detailInfo,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=VARCHAR},
+      province_name = #{provinceName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <!--根据open_id获取eid-->
@@ -205,4 +276,5 @@
     where 1=1
     and id=#{eid}
   </select>
+
 </mapper>
