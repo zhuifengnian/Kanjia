@@ -3,6 +3,10 @@ package com.kanjia.wxpay;
 
 public class ConstantUtil {
     /**
+     * 获取微信小程序openid的接口地址
+     */
+    public static final String GET_OPENID_URL = "https://api.weixin.qq.com/sns/jscode2session";
+    /**
      * 微信开发平台应用ID
      */
     public static final String APP_ID = "wxfa5900e974154497";
@@ -11,13 +15,13 @@ public class ConstantUtil {
      */
     public static final String APP_SECRET = "e4cb47c0a8aa5d9fa1c644e13e8ebeee";
     /**
-     * 快递小程序appid
+     * 商户端小程序appid
      */
-    public static final String APP_ID2="wx446dd0aedf7c2f55";
+    public static final String APP_ID2="wx9ccf4cb41902b28c";
     /**
-     * 快递小程序凭证
+     * 商户端小程序凭证
      */
-    public static final String APP_SECRET2 = "3249504bf15014d5daf1c13a48c89d52";
+    public static final String APP_SECRET2 = "9a4f1bc28ffffc42837a5ba3ce6b9f2b";
     /**
      * 应用对应的密钥
      */

@@ -22,7 +22,6 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    private static final String GET_OPENID_URL = "https://api.weixin.qq.com/sns/jscode2session";
 
     @Autowired
     private UserService userService;
@@ -40,19 +39,6 @@ public class UserController {
             uid = userService.insert(user);
         }
         User user1 = userService.selectUserInfo(uid);
-//        ReflectUtil.copyProperties(kuaidiLoginUserVO, kuaiDiUser);
-//        //在管理员表中查找用户是否具有管理员权限
-//        List<KuaiDiAdmin> kuaiDiAdmins = kuaidiAdminService.selectByUid(uid);
-//
-//        //当其为管理员时，拿到他可以管理的学校
-//        if(kuaiDiAdmins.size() > 0){
-//            kuaidiLoginUserVO.setHasAdminPrivate(true);
-//            ArrayList<Integer> schoolIds = new ArrayList<>();
-//            for(KuaiDiAdmin kuaiDiAdmin: kuaiDiAdmins){
-//                schoolIds.add(kuaiDiAdmin.getSchoolId());
-//            }
-//            kuaidiLoginUserVO.setAdminPermissionShoolId(schoolIds);
-//        }
 
         return new ReturnMessage(ResponseCode.OK, user1);
     }
@@ -63,7 +49,7 @@ public class UserController {
     public ReturnMessage getopenid(@RequestParam("js_code") String js_code) {
 
         TenpayHttpClient httpClient = new TenpayHttpClient();
-        String tmpUrl = GET_OPENID_URL + "?appid=" + ConstantUtil.APP_ID + "&secret=" + ConstantUtil.APP_SECRET + "&js_code=" + js_code + "&grant_type=authorization_code";
+        String tmpUrl = ConstantUtil.GET_OPENID_URL + "?appid=" + ConstantUtil.APP_ID + "&secret=" + ConstantUtil.APP_SECRET + "&js_code=" + js_code + "&grant_type=authorization_code";
         try {
             httpClient.httpGetMethod(tmpUrl);
             String resContent = httpClient.getResContent();

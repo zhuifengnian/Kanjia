@@ -4,10 +4,8 @@ import com.kanjia.basic.Const;
 import com.kanjia.basic.PageInfo;
 import com.kanjia.basic.ResponseCode;
 import com.kanjia.basic.ReturnMessage;
-import com.kanjia.pojo.Activity;
-import com.kanjia.pojo.Enterprise;
-import com.kanjia.pojo.EnterprisePayment;
-import com.kanjia.pojo.UserOrder;
+import com.kanjia.exception.ApiException;
+import com.kanjia.pojo.*;
 import com.kanjia.service.ActivityService;
 import com.kanjia.service.EnterprisePaymentService;
 import com.kanjia.service.EnterpriseService;
@@ -17,11 +15,14 @@ import com.kanjia.utils.PageUtil;
 import com.kanjia.utils.QiNiuUtil;
 import com.kanjia.utils.TimeUtil;
 import com.kanjia.vo.*;
+import com.kanjia.wxpay.ConstantUtil;
+import com.kanjia.wxpay.TenpayHttpClient;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
@@ -163,6 +164,29 @@ public class EnterpriseController {
         return new ReturnMessage(ResponseCode.OK, insert);
     }
 
+    @ApiOperation(value = "企业注册或登录", notes = "插入企业到数据库，当企业已经存在时，不插入，会返回商家信息")
+    @ResponseBody
+    @RequestMapping(value = "/insertAndLogin", method = RequestMethod.POST)
+    public ReturnMessage insertAndLogin(Enterprise enterprise) {
+        //当商家不存在时，在数据库中先记录这个；否则直接返回商家
+        //在数据库中根据open_id查找用户是否存在
+        Integer enid = enterpriseService.getId(enterprise.getOpenId());
+        if (enid == null) {
+            //执行插入操作
+            enterprise.setState(1);
+            enid = enterpriseService.insert(enterprise);
+            if(enid != null){
+                //商户账户
+                EnterprisePayment enterprisePayment = new EnterprisePayment();
+                enterprisePayment.setEnterpriseId(enid);
+
+                enterprisePaymentService.insert(enterprisePayment);
+            }
+        }
+        Enterprise enterprise1 = enterpriseService.selectByPrimaryKey(enid);
+        return new ReturnMessage(ResponseCode.OK, enterprise1);
+    }
+
     @RequestMapping(value = "/insertEnterpriseLicence", method = RequestMethod.POST)
     @ApiOperation(value = "企业上传营业执照接口", httpMethod = "POST")
     @ResponseBody
@@ -220,5 +244,22 @@ public class EnterpriseController {
     public ReturnMessage scancode(@RequestParam("qr_code") String qr_code){
         OrderInfoVo orderInfo =userOrderService.getOrderInfo(qr_code);
         return new ReturnMessage(ResponseCode.OK, orderInfo);
+    }
+
+
+    @ApiOperation(value = "返回商户端用户的openid", notes = "获取商户端用户的openid，这里是通过服务器向微信的服务器发送请求获得的，需要传入js_code")
+    @ResponseBody
+    @RequestMapping(value = "/getopenid", method = RequestMethod.POST)
+    public ReturnMessage getopenid(@RequestParam("js_code") String js_code) {
+
+        TenpayHttpClient httpClient = new TenpayHttpClient();
+        String tmpUrl = ConstantUtil.GET_OPENID_URL + "?appid=" + ConstantUtil.APP_ID2 + "&secret=" + ConstantUtil.APP_SECRET2 + "&js_code=" + js_code + "&grant_type=authorization_code";
+        try {
+            httpClient.httpGetMethod(tmpUrl);
+            String resContent = httpClient.getResContent();
+            return new ReturnMessage(ResponseCode.OK, resContent);
+        } catch (IOException e) {
+            throw new ApiException(ResponseCode.NETWORK_ERROR, "网络请求出现错误");
+        }
     }
 }
