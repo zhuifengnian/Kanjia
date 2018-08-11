@@ -34,6 +34,8 @@ public class EnterpriseBillServiceImpl extends AbstractBaseServiceImpl<Enterpris
     @Override
     public PageInfo<EnterpriseBillVo> getListBill(Integer eid,Page page) {
         PageInfo<EnterpriseBillVo> enterpriseBillVoPageInfo=new PageInfo<>();
+        enterpriseBillVoPageInfo.setPageSize(page.getPageSize());
+        enterpriseBillVoPageInfo.setPageNum(page.getPageNumber());
       List<EnterpriseBillVo> enterpriseBillVoList=  enterpriseBillMapper.getListBill(eid,page);
         enterpriseBillVoPageInfo.setRows(enterpriseBillVoList);
         enterpriseBillVoPageInfo.setTotal(enterpriseBillVoList.size());
