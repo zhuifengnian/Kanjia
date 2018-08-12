@@ -276,5 +276,11 @@
     where 1=1
     and id=#{eid}
   </select>
-
+  <select id="getActivityJian" resultType="com.kanjia.pojo.ActivityJian">
+    select  a.id,a.title,a.picture,a.address,a.origin_price as originPrice,a.minu_price as minuPrice,a.activity_time as activityTime,a.limit_number as limitNumber,
+a.consume_time as  consumeTime,a.consume_end_time as consumeEndTime,a.cut_time as cutTime,a.state as state,cg.name as categoryName
+ from activity a left join category cg on cg.id=a.category_id
+    where 1=1
+    and a.id=#{activity_id}
+  </select>
 </mapper>

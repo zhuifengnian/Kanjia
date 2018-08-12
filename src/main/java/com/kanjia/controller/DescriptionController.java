@@ -2,6 +2,7 @@ package com.kanjia.controller;
 
 import com.kanjia.basic.ResponseCode;
 import com.kanjia.basic.ReturnMessage;
+import com.kanjia.pojo.ActivityDescription;
 import com.kanjia.pojo.DescriptionPicture;
 import com.kanjia.service.ActivityDescriptionService;
 import com.kanjia.service.DescriptionPictureService;
@@ -31,11 +32,18 @@ public class DescriptionController {
         int[] insert = JsonUtil.checkUserIdJson(json);
         return new ReturnMessage(ResponseCode.OK, insert);
     }
+    @RequestMapping(value = "/modifyDscription", method = RequestMethod.POST)
+    @ApiOperation(value = "修改活动详情", httpMethod = "POST")
+    @ResponseBody
+    public ReturnMessage modifyDscription(ActivityDescription activityDescription) {
+       int insert= activityDescriptionService.updateByPrimaryKeySelective(activityDescription);
+        return new ReturnMessage(ResponseCode.OK, insert);
+    }
 
     @RequestMapping(value = "/insertDescriptionPicture", method = RequestMethod.POST)
-    @ApiOperation(value = "存储图片信息")
+    @ApiOperation(value = "存储活动详情图片信息")
     @ResponseBody
-    public ReturnMessage insertDescriptionPicture(@RequestParam("descriptionId") Integer descriptionId, @RequestParam(value = "flyfile", required = false) MultipartFile flfile) {
+    public ReturnMessage insertDescriptionPicture(@RequestParam("descriptionId") Integer descriptionId, @RequestParam(value = "picture", required = false) MultipartFile flfile) {
         String picture = "";
         DescriptionPicture descriptionPicture = new DescriptionPicture();
         descriptionPicture.setDecriptionId(descriptionId);
@@ -44,7 +52,7 @@ public class DescriptionController {
             descriptionPicture.setPicture(picture);
         }
 
-        int insert = descriptionPictureService.insertSelective(descriptionPicture);
+        int insert = descriptionPictureService.updateByPrimaryKeySelective(descriptionPicture);
 
         return new ReturnMessage(ResponseCode.OK, insert);
     }

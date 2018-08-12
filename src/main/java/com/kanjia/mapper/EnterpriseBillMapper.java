@@ -7,10 +7,9 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 @Repository
-public interface EnterpriseBillMapper extends BaseMapper<EnterpriseBill> {
+public interface EnterpriseBillMapper extends BaseMapper<com.kanjia.pojo.EnterpriseBill> {
     /**
      * 根据eid获取列表
      * @param eid
@@ -23,4 +22,11 @@ public interface EnterpriseBillMapper extends BaseMapper<EnterpriseBill> {
      * @return
      */
     List<EnterpriseBill> getMoney(Integer eid);
+
+    /**
+     * 获取每月数量
+     * @param eid
+     * @return
+     */
+    List<Integer> getListBillCount( Integer eid);
 }

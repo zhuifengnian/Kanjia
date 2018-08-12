@@ -321,6 +321,7 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
 
        }
      insert[0]=  enterprisePaymentService.updateByPrimaryKeySelective(enterprisePayment);
+
       EnterpriseBill enterpriseBill=new EnterpriseBill();
       enterpriseBill.setCreateTime(Calendar.getInstance().getTime());
         enterpriseBill.setUpdateTime(Calendar.getInstance().getTime());
@@ -329,6 +330,8 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
         enterpriseBill.setOrderId(userOrder.getId());
         enterpriseBill.setTitle(activity.getTitle());
         enterpriseBill.setType("收入");
+        String billnumber=Calendar.getInstance().toString()+userOrder.getCurrentPrice()+userOrder.getId();
+        enterpriseBill.setBillNumber(billnumber);
        insert[1]= enterpriseBillService.insertSelective(enterpriseBill);
         return insert;
     }

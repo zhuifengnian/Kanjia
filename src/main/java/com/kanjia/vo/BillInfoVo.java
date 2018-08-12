@@ -10,7 +10,7 @@ public class BillInfoVo {
 
     private Integer id;
 
-    private BigDecimal money;
+    private String money;
 
     private Date createTime;
 
@@ -20,6 +20,8 @@ public class BillInfoVo {
 
     private String name;
 
+    private String billNumber;
+
     public Integer getId() {
         return id;
     }
@@ -28,13 +30,7 @@ public class BillInfoVo {
         this.id = id;
     }
 
-    public BigDecimal getMoney() {
-        return money;
-    }
 
-    public void setMoney(BigDecimal money) {
-        this.money = money;
-    }
 
     public Date getCreateTime() {
         return createTime;
@@ -66,5 +62,21 @@ public class BillInfoVo {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getBillNumber() {
+        return billNumber;
+    }
+
+    public void setBillNumber(String billNumber) {
+        this.billNumber = billNumber;
+    }
+
+    public String getMoney() {
+        return money;
+    }
+
+    public void setMoney(String money) {
+        this.money = money;
     }
 }

@@ -1,20 +1,13 @@
 package com.kanjia.controller;
 
-import com.kanjia.basic.Page;
 import com.kanjia.basic.PageInfo;
 import com.kanjia.basic.ResponseCode;
 import com.kanjia.basic.ReturnMessage;
-import com.kanjia.mapper.EnterpriseBillMapper;
-import com.kanjia.pojo.EnterpriseBill;
-import com.kanjia.pojo.EnterprisePayment;
-import com.kanjia.pojo.UserOrder;
+import com.kanjia.pojo.Bill;
 import com.kanjia.service.EnterpriseBillService;
-import com.kanjia.service.EnterprisePaymentService;
-import com.kanjia.service.UserOrderService;
 import com.kanjia.utils.PageUtil;
 import com.kanjia.vo.BillInfoVo;
 import com.kanjia.vo.EnterpriseBillVo;
-import com.kanjia.vo.EnterprisePaymentPriceVo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +30,7 @@ public class EnterpriseBillController {
     @ApiOperation(value = "账单列表", httpMethod = "POST")
     @ResponseBody
     public ReturnMessage billList(@RequestParam("enterpriseId") Integer enterpriseId,@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Integer pageNumber) {
-       PageInfo<EnterpriseBillVo> enterpriseBillVoList= enterpriseBillService.getListBill(enterpriseId,PageUtil.setPage(pageSize, pageNumber));
+       PageInfo<List<Bill>> enterpriseBillVoList= enterpriseBillService.getListBill(enterpriseId,PageUtil.setPage(pageSize,pageNumber));
 
         return new ReturnMessage(ResponseCode.OK, enterpriseBillVoList);
     }

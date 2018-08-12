@@ -1,6 +1,7 @@
 package com.kanjia.vo;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -9,65 +10,67 @@ import java.util.Date;
 public class EnterpriseBillVo {
 
 
-    private Integer id;
 
-    private Integer enterpriseId;
+    private String billNumber;
 
-    private String type;
+        private Integer id;
 
-    private String title;
 
-    private BigDecimal money;
+        private String type;
 
-    private Date createTime;
+        private String title;
 
-    public Integer getId() {
-        return id;
+        private BigDecimal money;
+
+        private Date createTime;
+
+        public Integer getId() {
+            return id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public BigDecimal getMoney() {
+            return money;
+        }
+
+        public void setMoney(BigDecimal money) {
+            this.money = money;
+        }
+
+        public Date getCreateTime() {
+            return createTime;
+        }
+
+        public void setCreateTime(Date createTime) {
+            this.createTime = createTime;
+        }
+
+
+    public String getBillNumber() {
+        return billNumber;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getEnterpriseId() {
-        return enterpriseId;
-    }
-
-    public void setEnterpriseId(Integer enterpriseId) {
-        this.enterpriseId = enterpriseId;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public BigDecimal getMoney() {
-        return money;
-    }
-
-    public void setMoney(BigDecimal money) {
-        this.money = money;
+    public void setBillNumber(String billNumber) {
+        this.billNumber = billNumber;
     }
 }
+

@@ -74,35 +74,45 @@ public class EnterpriseController {
         return new ReturnMessage(ResponseCode.OK, insert);
     }
     @RequestMapping(value = "/insertActivityPicture", method = RequestMethod.POST)
-    @ApiOperation(value = "存储图片信息")
+    @ApiOperation(value = "存储活动图片信息")
     @ResponseBody
-    public ReturnMessage insertActivityPicture(@RequestParam("activityId") Integer activityId, @RequestParam(value = "flyfile", required = false) MultipartFile flfile, Integer num) {
+    public ReturnMessage insertActivityPicture(@RequestParam("activityId") Integer activityId, @RequestParam(value = "picture", required = false) MultipartFile flfile) {
         String picture = "";
         Activity activity = new Activity();
         activity.setId(activityId);
-        if (flfile != null)
+        if (flfile != null) {
             picture = QiNiuUtil.manageFile(flfile);
-        if (num == 1) {
             activity.setPicture(picture);
-        } else if (num == 2) {
-            activity.setVideo(picture);
         }
-
         int insert = activityService.updateByPrimaryKeySelective(activity);
 
         return new ReturnMessage(ResponseCode.OK, insert);
     }
 
-
-    @ApiOperation(value = "修改活动", notes = "修改活动")
+    @RequestMapping(value = "/insertEnterprisePicture", method = RequestMethod.POST)
+    @ApiOperation(value = "存储企业头像图片信息")
     @ResponseBody
-    @RequestMapping(value = "/modifyActivity", method = RequestMethod.POST)
-    public ReturnMessage modifyActivity(Activity activity) {
+    public ReturnMessage insertEnterprisePicture(@RequestParam("enterpriseId") Integer enterpriseId, @RequestParam(value = "picture", required = false) MultipartFile flfile) {
+        String picture = "";
+        Enterprise enterprise=new Enterprise();
+        enterprise.setId(enterpriseId);
+        if (flfile != null) {
+            picture = QiNiuUtil.manageFile(flfile);
+           enterprise.setAvatarurl(picture);
+        }
+        int insert = enterpriseService.updateByPrimaryKeySelective(enterprise);
 
-        activity.setUpdateTime(Calendar.getInstance().getTime());
-        Integer insert = activityService.updateByPrimaryKeySelective(activity);
         return new ReturnMessage(ResponseCode.OK, insert);
     }
+//    @ApiOperation(value = "修改活动", notes = "修改活动")
+//    @ResponseBody
+//    @RequestMapping(value = "/modifyActivity", method = RequestMethod.POST)
+//    public ReturnMessage modifyActivity(Activity activity) {
+//
+//        activity.setUpdateTime(Calendar.getInstance().getTime());
+//        Integer insert = activityService.updateByPrimaryKeySelective(activity);
+//        return new ReturnMessage(ResponseCode.OK, insert);
+//    }
     @ApiOperation(value = "修改活动返回", notes = "修改活动返回")
     @ResponseBody
     @RequestMapping(value = "/modifyActivityInfo", method = RequestMethod.POST)
@@ -121,6 +131,7 @@ public class EnterpriseController {
         Activity activity = new Activity();
         activity.setUpdateTime(Calendar.getInstance().getTime());
         activity.setState(0);
+        activity.setId(id);
         Integer insert = activityService.updateByPrimaryKeySelective(activity);
         return new ReturnMessage(ResponseCode.OK, insert);
     }
@@ -245,6 +256,15 @@ public class EnterpriseController {
         OrderInfoVo orderInfo =userOrderService.getOrderInfo(qr_code);
         return new ReturnMessage(ResponseCode.OK, orderInfo);
     }
+    @ApiOperation(value = "获取活动详情", notes = "获取活动详情")
+    @ResponseBody
+    @RequestMapping(value = "/getIdActivity", method = RequestMethod.POST)
+    public ReturnMessage getIdActivity(@RequestParam("activity_id") Integer id) {
+
+        ActivityJian activityJian=enterpriseService.getActivityJian(id);
+        return new ReturnMessage(ResponseCode.OK, activityJian);
+    }
+
 
 
     @ApiOperation(value = "返回商户端用户的openid", notes = "获取商户端用户的openid，这里是通过服务器向微信的服务器发送请求获得的，需要传入js_code")

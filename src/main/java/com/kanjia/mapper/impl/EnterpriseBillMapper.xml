@@ -11,10 +11,11 @@
       <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="order_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="bill_number" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    id, enterprise_id, type, title, money, create_time, update_time, order_id
+    id, enterprise_id, type, title, money, create_time, update_time, order_id, bill_number
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -29,12 +30,14 @@
   <insert id="insert" parameterType="com.kanjia.pojo.EnterpriseBill" useGeneratedKeys="true" keyProperty="id">
     insert into enterprise_bill (id, enterprise_id, type, 
       title, money, create_time, 
-      update_time, order_id)
+      update_time, order_id, bill_number
+      )
     values (#{id,jdbcType=INTEGER}, #{enterpriseId,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, 
       #{title,jdbcType=VARCHAR}, #{money,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{orderId,jdbcType=INTEGER})
+      #{updateTime,jdbcType=TIMESTAMP}, #{orderId,jdbcType=INTEGER}, #{billNumber,jdbcType=VARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.kanjia.pojo.EnterpriseBill" useGeneratedKeys="true" keyProperty="id" >
+  <insert id="insertSelective" parameterType="com.kanjia.pojo.EnterpriseBill" useGeneratedKeys="true" keyProperty="id">
     insert into enterprise_bill
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -60,6 +63,9 @@
       </if>
       <if test="orderId != null" >
         order_id,
+      </if>
+      <if test="billNumber != null" >
+        bill_number,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -87,6 +93,9 @@
       <if test="orderId != null" >
         #{orderId,jdbcType=INTEGER},
       </if>
+      <if test="billNumber != null" >
+        #{billNumber,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.kanjia.pojo.EnterpriseBill" >
@@ -113,6 +122,9 @@
       <if test="orderId != null" >
         order_id = #{orderId,jdbcType=INTEGER},
       </if>
+      <if test="billNumber != null" >
+        bill_number = #{billNumber,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -124,18 +136,29 @@
       money = #{money,jdbcType=DECIMAL},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      order_id = #{orderId,jdbcType=INTEGER}
+      order_id = #{orderId,jdbcType=INTEGER},
+      bill_number = #{billNumber,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <!--根据eid获取信息-->
   <select id="getListBill" resultType="com.kanjia.vo.EnterpriseBillVo">
-    select    id,enterprise_id as enterpriseId,type,title,money,create_time as createTime
+    select    id,enterprise_id as enterpriseId,type,title,money,create_time as createTime ,bill_number as billNumber
     from  enterprise_bill
     where 1=1
-    and enterprise_id=#{eid}
+    and enterprise_id=1
+    order by create_time desc
     <if test="page != null and page.start != null and page.pageSize!=null">
       limit #{page.start},#{page.pageSize}
     </if>
+  </select>
+  <!--根据eid获取信息-->
+  <select id="getListBillCount" resultType="Integer">
+    select    count(1)
+    from  enterprise_bill
+    where 1=1
+    and enterprise_id=1
+    group by date_format(create_time, '%Y%m') desc
+
   </select>
   <!--获取钱数-->
   <select id="getMoney" resultType="com.kanjia.pojo.EnterpriseBill">
