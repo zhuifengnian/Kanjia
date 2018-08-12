@@ -132,10 +132,20 @@
     select    id,enterprise_id as enterpriseId,type,title,money,create_time as createTime
     from  enterprise_bill
     where 1=1
-    and enterprise_id=#{eid}
+    and enterprise_id=1
+    order by create_time desc
     <if test="page != null and page.start != null and page.pageSize!=null">
       limit #{page.start},#{page.pageSize}
     </if>
+  </select>
+  <!--根据eid获取信息-->
+  <select id="getListBillCount" resultType="Integer">
+    select    count(1)
+    from  enterprise_bill
+    where 1=1
+    and enterprise_id=1
+    group by date_format(create_time, '%Y%m') desc
+
   </select>
   <!--获取钱数-->
   <select id="getMoney" resultType="com.kanjia.pojo.EnterpriseBill">

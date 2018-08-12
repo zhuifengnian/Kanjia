@@ -1,4 +1,4 @@
-package com.kanjia.vo;
+package com.kanjia.pojo;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -7,12 +7,33 @@ import java.util.Date;
 /**
  * Created by liyue on 2018/6/29
  */
-public class EnterpriseBillVo {
+public class Bill {
 
 
 
 
+    private Content content;
 
+    private String time;
+
+    public Content getContent() {
+        return content;
+    }
+
+    public void setContent(Content content) {
+        this.content = content;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+
+    public class Content{
         private Integer id;
 
 
@@ -22,7 +43,7 @@ public class EnterpriseBillVo {
 
         private BigDecimal money;
 
-        private Date createTime;
+        private String createTime;
 
         public Integer getId() {
             return id;
@@ -56,14 +77,14 @@ public class EnterpriseBillVo {
             this.money = money;
         }
 
-        public Date getCreateTime() {
+
+        public String getCreateTime() {
             return createTime;
         }
 
-        public void setCreateTime(Date createTime) {
+        public void setCreateTime(String createTime) {
             this.createTime = createTime;
         }
-
+    }
 
 }
-

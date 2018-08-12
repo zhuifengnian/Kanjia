@@ -33,9 +33,9 @@ public class DescriptionController {
     }
 
     @RequestMapping(value = "/insertDescriptionPicture", method = RequestMethod.POST)
-    @ApiOperation(value = "存储图片信息")
+    @ApiOperation(value = "存储活动详情图片信息")
     @ResponseBody
-    public ReturnMessage insertDescriptionPicture(@RequestParam("descriptionId") Integer descriptionId, @RequestParam(value = "flyfile", required = false) MultipartFile flfile) {
+    public ReturnMessage insertDescriptionPicture(@RequestParam("descriptionId") Integer descriptionId, @RequestParam(value = "picture", required = false) MultipartFile flfile) {
         String picture = "";
         DescriptionPicture descriptionPicture = new DescriptionPicture();
         descriptionPicture.setDecriptionId(descriptionId);
@@ -44,7 +44,7 @@ public class DescriptionController {
             descriptionPicture.setPicture(picture);
         }
 
-        int insert = descriptionPictureService.insertSelective(descriptionPicture);
+        int insert = descriptionPictureService.updateByPrimaryKeySelective(descriptionPicture);
 
         return new ReturnMessage(ResponseCode.OK, insert);
     }

@@ -17,6 +17,7 @@ import com.kanjia.utils.PageUtil;
 import com.kanjia.utils.QiNiuUtil;
 import com.kanjia.utils.TimeUtil;
 import com.kanjia.vo.*;
+import com.sun.tools.javac.comp.Enter;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -73,26 +74,36 @@ public class EnterpriseController {
         return new ReturnMessage(ResponseCode.OK, insert);
     }
     @RequestMapping(value = "/insertActivityPicture", method = RequestMethod.POST)
-    @ApiOperation(value = "存储图片信息")
+    @ApiOperation(value = "存储活动图片信息")
     @ResponseBody
-    public ReturnMessage insertActivityPicture(@RequestParam("activityId") Integer activityId, @RequestParam(value = "flyfile", required = false) MultipartFile flfile, Integer num) {
+    public ReturnMessage insertActivityPicture(@RequestParam("activityId") Integer activityId, @RequestParam(value = "picture", required = false) MultipartFile flfile) {
         String picture = "";
         Activity activity = new Activity();
         activity.setId(activityId);
-        if (flfile != null)
+        if (flfile != null) {
             picture = QiNiuUtil.manageFile(flfile);
-        if (num == 1) {
             activity.setPicture(picture);
-        } else if (num == 2) {
-            activity.setVideo(picture);
         }
-
         int insert = activityService.updateByPrimaryKeySelective(activity);
 
         return new ReturnMessage(ResponseCode.OK, insert);
     }
 
+    @RequestMapping(value = "/insertEnterprisePicture", method = RequestMethod.POST)
+    @ApiOperation(value = "存储企业头像图片信息")
+    @ResponseBody
+    public ReturnMessage insertEnterprisePicture(@RequestParam("enterpriseId") Integer enterpriseId, @RequestParam(value = "picture", required = false) MultipartFile flfile) {
+        String picture = "";
+        Enterprise enterprise=new Enterprise();
+        enterprise.setId(enterpriseId);
+        if (flfile != null) {
+            picture = QiNiuUtil.manageFile(flfile);
+           enterprise.setAvatarurl(picture);
+        }
+        int insert = enterpriseService.updateByPrimaryKeySelective(enterprise);
 
+        return new ReturnMessage(ResponseCode.OK, insert);
+    }
     @ApiOperation(value = "修改活动", notes = "修改活动")
     @ResponseBody
     @RequestMapping(value = "/modifyActivity", method = RequestMethod.POST)
