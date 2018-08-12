@@ -23,7 +23,7 @@ public class DetailActivityPriceVo {
 
     private String video;
 
-    private String adress;
+    private String address;
 
     private BigDecimal originPrice;
 

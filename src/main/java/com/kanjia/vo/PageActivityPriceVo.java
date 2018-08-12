@@ -21,7 +21,7 @@ public class PageActivityPriceVo {
 
     private String picture;
 
-    private String adress;
+    private String address;
 
     private BigDecimal originPrice;
 
