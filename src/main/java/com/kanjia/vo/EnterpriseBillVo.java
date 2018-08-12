@@ -11,7 +11,7 @@ public class EnterpriseBillVo {
 
 
 
-
+    private String billNumber;
 
         private Integer id;
 
@@ -65,5 +65,12 @@ public class EnterpriseBillVo {
         }
 
 
+    public String getBillNumber() {
+        return billNumber;
+    }
+
+    public void setBillNumber(String billNumber) {
+        this.billNumber = billNumber;
+    }
 }
 

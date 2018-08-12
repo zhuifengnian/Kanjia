@@ -20,7 +20,9 @@ public class EnterpriseBill {
 
     private Integer orderId;
 
-    public EnterpriseBill(Integer id, Integer enterpriseId, String type, String title, BigDecimal money, Date createTime, Date updateTime, Integer orderId) {
+    private String billNumber;
+
+    public EnterpriseBill(Integer id, Integer enterpriseId, String type, String title, BigDecimal money, Date createTime, Date updateTime, Integer orderId, String billNumber) {
         this.id = id;
         this.enterpriseId = enterpriseId;
         this.type = type;
@@ -29,6 +31,7 @@ public class EnterpriseBill {
         this.createTime = createTime;
         this.updateTime = updateTime;
         this.orderId = orderId;
+        this.billNumber = billNumber;
     }
 
     public EnterpriseBill() {
@@ -97,5 +100,13 @@ public class EnterpriseBill {
 
     public void setOrderId(Integer orderId) {
         this.orderId = orderId;
+    }
+
+    public String getBillNumber() {
+        return billNumber;
+    }
+
+    public void setBillNumber(String billNumber) {
+        this.billNumber = billNumber == null ? null : billNumber.trim();
     }
 }

@@ -14,6 +14,7 @@ import com.kanjia.vo.EnterpriseBillVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,11 +53,18 @@ public class EnterpriseBillServiceImpl extends AbstractBaseServiceImpl<Enterpris
                    Bill.Content content = bill.new Content();//把内部类当成一个成员变量进行实例化
                    content.setId(enterpriseBillVoList.get(z).getId());
                    content.setCreateTime(sdf.format(enterpriseBillVoList.get(z).getCreateTime()));
-                   content.setMoney(enterpriseBillVoList.get(z).getMoney());
+                    if(enterpriseBillVoList.get(z).getType().equals("收入")){
+                       content.setMoney(enterpriseBillVoList.get(z).getMoney().toString());
+                   }else{
+                        content.setMoney("-"+enterpriseBillVoList.get(z).getMoney().toString());
+                    }
+
                    content.setTitle(enterpriseBillVoList.get(z).getTitle());
                    content.setType(enterpriseBillVoList.get(z).getType());
+                   content.setBillNumber(enterpriseBillVoList.get(z).getBillNumber());
                    bill.setContent(content);
                    bill.setTime(sdfs.format(enterpriseBillVoList.get(z).getCreateTime()));
+
                    billList.add(bill);
                    z++;
                }
@@ -72,21 +80,24 @@ public class EnterpriseBillServiceImpl extends AbstractBaseServiceImpl<Enterpris
     public BillInfoVo getBillInfo(Integer id) {
         com.kanjia.pojo.EnterpriseBill enterpriseBill=enterpriseBillMapper.selectByPrimaryKey(id);
         BillInfoVo billInfoVo=new BillInfoVo();
+        UserOrder userOrder = userOrderMapper.selectByPrimaryKey(enterpriseBill.getOrderId());
         if(enterpriseBill.getType().equals("收入")) {
-            UserOrder userOrder = userOrderMapper.selectByPrimaryKey(enterpriseBill.getOrderId());
             billInfoVo.setCreateTime(enterpriseBill.getCreateTime());
-            billInfoVo.setMoney(enterpriseBill.getMoney());
+            billInfoVo.setMoney(enterpriseBill.getMoney().toString());
             billInfoVo.setId(enterpriseBill.getId());
             billInfoVo.setOrderNumber(userOrder.getOrderNumber());
             billInfoVo.setType(enterpriseBill.getType());
             billInfoVo.setName(enterpriseBill.getTitle());
+            billInfoVo.setBillNumber(enterpriseBill.getBillNumber());
         }
         else{
             billInfoVo.setType(enterpriseBill.getType());
-            billInfoVo.setMoney(enterpriseBill.getMoney());
+            billInfoVo.setMoney("-"+enterpriseBill.getMoney().toString());
             billInfoVo.setId(enterpriseBill.getId());
             billInfoVo.setCreateTime(enterpriseBill.getCreateTime());
             billInfoVo.setName(enterpriseBill.getTitle());
+            billInfoVo.setBillNumber(enterpriseBill.getBillNumber());
+            billInfoVo.setOrderNumber(userOrder.getOrderNumber());
         }
         return billInfoVo;
     }

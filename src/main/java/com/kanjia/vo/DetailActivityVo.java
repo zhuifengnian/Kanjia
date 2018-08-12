@@ -22,7 +22,7 @@ public class DetailActivityVo {
 
     private String video;
 
-    private String adress;
+    private String address;
 
     private Integer pick;
 
@@ -80,13 +80,7 @@ public class DetailActivityVo {
         this.video = video;
     }
 
-    public String getAdress() {
-        return adress;
-    }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
-    }
 
     public Integer getPick() {
         return pick;
@@ -185,5 +179,13 @@ public class DetailActivityVo {
 
     public void setHeadSculptureCount(Integer headSculptureCount) {
         this.headSculptureCount = headSculptureCount;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

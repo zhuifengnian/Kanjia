@@ -12,7 +12,7 @@ public class Activity {
 
     private String video;
 
-    private String adress;
+    private String address;
 
     private BigDecimal originPrice;
 
@@ -48,12 +48,12 @@ public class Activity {
 
     private String description;
 
-    public Activity(Integer id, String title, String picture, String video, String adress, BigDecimal originPrice, BigDecimal minuPrice, Date activityTime, Integer enterpriseId, Integer limitNumber, Integer soldNumber, Date consumeTime, Date consumeEndTime, Date cutTime, Integer state, Date createTime, Date updateTime, Integer categoryId, String longitude, String latitude, Integer pick, String description) {
+    public Activity(Integer id, String title, String picture, String video, String address, BigDecimal originPrice, BigDecimal minuPrice, Date activityTime, Integer enterpriseId, Integer limitNumber, Integer soldNumber, Date consumeTime, Date consumeEndTime, Date cutTime, Integer state, Date createTime, Date updateTime, Integer categoryId, String longitude, String latitude, Integer pick, String description) {
         this.id = id;
         this.title = title;
         this.picture = picture;
         this.video = video;
-        this.adress = adress;
+        this.address = address;
         this.originPrice = originPrice;
         this.minuPrice = minuPrice;
         this.activityTime = activityTime;
@@ -109,12 +109,12 @@ public class Activity {
         this.video = video == null ? null : video.trim();
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress == null ? null : adress.trim();
+    public void setAddress(String address) {
+        this.address = address == null ? null : address.trim();
     }
 
     public BigDecimal getOriginPrice() {

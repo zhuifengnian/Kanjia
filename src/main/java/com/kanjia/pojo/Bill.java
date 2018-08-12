@@ -35,13 +35,13 @@ public class Bill {
 
     public class Content{
         private Integer id;
-
+        private String billNumber;
 
         private String type;
 
         private String title;
 
-        private BigDecimal money;
+        private String money;
 
         private String createTime;
 
@@ -69,13 +69,7 @@ public class Bill {
             this.title = title;
         }
 
-        public BigDecimal getMoney() {
-            return money;
-        }
 
-        public void setMoney(BigDecimal money) {
-            this.money = money;
-        }
 
 
         public String getCreateTime() {
@@ -84,6 +78,22 @@ public class Bill {
 
         public void setCreateTime(String createTime) {
             this.createTime = createTime;
+        }
+
+        public String getBillNumber() {
+            return billNumber;
+        }
+
+        public void setBillNumber(String billNumber) {
+            this.billNumber = billNumber;
+        }
+
+        public String getMoney() {
+            return money;
+        }
+
+        public void setMoney(String money) {
+            this.money = money;
         }
     }
 

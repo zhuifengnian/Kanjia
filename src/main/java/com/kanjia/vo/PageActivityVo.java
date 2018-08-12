@@ -15,7 +15,7 @@ public class PageActivityVo {
 
     private String picture;
 
-    private String adress;
+    private String address;
 
     private Integer pick;
 
@@ -63,13 +63,7 @@ public class PageActivityVo {
         this.picture = picture;
     }
 
-    public String getAdress() {
-        return adress;
-    }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
-    }
 
     public Integer getPick() {
         return pick;
@@ -159,5 +153,13 @@ public class PageActivityVo {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
