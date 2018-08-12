@@ -2,6 +2,7 @@ package com.kanjia.controller;
 
 import com.kanjia.basic.ResponseCode;
 import com.kanjia.basic.ReturnMessage;
+import com.kanjia.pojo.ActivityDescription;
 import com.kanjia.pojo.DescriptionPicture;
 import com.kanjia.service.ActivityDescriptionService;
 import com.kanjia.service.DescriptionPictureService;
@@ -29,6 +30,13 @@ public class DescriptionController {
     @ResponseBody
     public ReturnMessage activityDescription(@RequestBody String json) {
         int[] insert = JsonUtil.checkUserIdJson(json);
+        return new ReturnMessage(ResponseCode.OK, insert);
+    }
+    @RequestMapping(value = "/modifyDscription", method = RequestMethod.POST)
+    @ApiOperation(value = "修改活动详情", httpMethod = "POST")
+    @ResponseBody
+    public ReturnMessage modifyDscription(ActivityDescription activityDescription) {
+       int insert= activityDescriptionService.updateByPrimaryKeySelective(activityDescription);
         return new ReturnMessage(ResponseCode.OK, insert);
     }
 

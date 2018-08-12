@@ -12,6 +12,7 @@ import java.util.List;
 
 public class ActivityDescriptionVo {
     private Integer id;
+
     private String title;
 
     private String content;

@@ -20,8 +20,6 @@ public class DetailActivityVo {
 
     private List<String> picture;
 
-    private String video;
-
     private String address;
 
     private Integer pick;
@@ -71,15 +69,6 @@ public class DetailActivityVo {
     public void setPicture(List<String> picture) {
         this.picture = picture;
     }
-
-    public String getVideo() {
-        return video;
-    }
-
-    public void setVideo(String video) {
-        this.video = video;
-    }
-
 
 
     public Integer getPick() {

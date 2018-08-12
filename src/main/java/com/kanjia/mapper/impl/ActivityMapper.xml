@@ -656,10 +656,11 @@
   <!--</select>-->
   <!--获得描述详情-->
   <select id="getDetailActivity" resultType="com.kanjia.vo.DetailActivityVo">
-    select  a.id,a.title,a.video,a.address as address,a.pick,a.origin_price as originPrice,a.minu_price as minuPrice,
+    select  a.id,a.title,a.address as address,a.pick,a.origin_price as originPrice,a.minu_price as minuPrice,
     a.activity_time as activityTime,a.limit_number as limitNumber,a.sold_number as soldNumber,a.cut_time as cutTime,a.description
     from activity a left join enterprise e on a.enterprise_id = e.id
     where 1=1
     and a.id=#{id}
   </select>
+
 </mapper>

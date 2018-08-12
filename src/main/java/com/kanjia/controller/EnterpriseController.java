@@ -4,10 +4,7 @@ import com.kanjia.basic.Const;
 import com.kanjia.basic.PageInfo;
 import com.kanjia.basic.ResponseCode;
 import com.kanjia.basic.ReturnMessage;
-import com.kanjia.pojo.Activity;
-import com.kanjia.pojo.Enterprise;
-import com.kanjia.pojo.EnterprisePayment;
-import com.kanjia.pojo.UserOrder;
+import com.kanjia.pojo.*;
 import com.kanjia.service.ActivityService;
 import com.kanjia.service.EnterprisePaymentService;
 import com.kanjia.service.EnterpriseService;
@@ -104,15 +101,15 @@ public class EnterpriseController {
 
         return new ReturnMessage(ResponseCode.OK, insert);
     }
-    @ApiOperation(value = "修改活动", notes = "修改活动")
-    @ResponseBody
-    @RequestMapping(value = "/modifyActivity", method = RequestMethod.POST)
-    public ReturnMessage modifyActivity(Activity activity) {
-
-        activity.setUpdateTime(Calendar.getInstance().getTime());
-        Integer insert = activityService.updateByPrimaryKeySelective(activity);
-        return new ReturnMessage(ResponseCode.OK, insert);
-    }
+//    @ApiOperation(value = "修改活动", notes = "修改活动")
+//    @ResponseBody
+//    @RequestMapping(value = "/modifyActivity", method = RequestMethod.POST)
+//    public ReturnMessage modifyActivity(Activity activity) {
+//
+//        activity.setUpdateTime(Calendar.getInstance().getTime());
+//        Integer insert = activityService.updateByPrimaryKeySelective(activity);
+//        return new ReturnMessage(ResponseCode.OK, insert);
+//    }
     @ApiOperation(value = "修改活动返回", notes = "修改活动返回")
     @ResponseBody
     @RequestMapping(value = "/modifyActivityInfo", method = RequestMethod.POST)
@@ -131,6 +128,7 @@ public class EnterpriseController {
         Activity activity = new Activity();
         activity.setUpdateTime(Calendar.getInstance().getTime());
         activity.setState(0);
+        activity.setId(id);
         Integer insert = activityService.updateByPrimaryKeySelective(activity);
         return new ReturnMessage(ResponseCode.OK, insert);
     }
@@ -232,5 +230,14 @@ public class EnterpriseController {
         OrderInfoVo orderInfo =userOrderService.getOrderInfo(qr_code);
         return new ReturnMessage(ResponseCode.OK, orderInfo);
     }
+    @ApiOperation(value = "获取活动详情", notes = "获取活动详情")
+    @ResponseBody
+    @RequestMapping(value = "/getIdActivity", method = RequestMethod.POST)
+    public ReturnMessage getIdActivity(@RequestParam("activity_id") Integer id) {
+
+        ActivityJian activityJian=enterpriseService.getActivityJian(id);
+        return new ReturnMessage(ResponseCode.OK, activityJian);
+    }
+
 
 }

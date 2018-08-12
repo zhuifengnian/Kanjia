@@ -2,6 +2,7 @@ package com.kanjia.mapper;
 
 import com.kanjia.basic.Page;
 import com.kanjia.pojo.Activity;
+import com.kanjia.pojo.ActivityJian;
 import com.kanjia.vo.DetailActivityVo;
 import com.kanjia.vo.PageActivityVo;
 import org.apache.ibatis.annotations.Param;
@@ -92,6 +93,7 @@ public interface ActivityMapper extends BaseMapper<Activity> {
     List<DetailActivityVo> getDetailActivity(Integer id);
 
     Integer getDetailActivityCount(Integer id);
+
 
 
 }

@@ -1,5 +1,6 @@
 package com.kanjia.mapper;
 
+import com.kanjia.pojo.ActivityJian;
 import com.kanjia.pojo.Enterprise;
 import com.kanjia.vo.EnterpriseVo;
 import com.kanjia.vo.PageEnterpriseVo;
@@ -28,4 +29,11 @@ public interface EnterpriseMapper extends BaseMapper<Enterprise> {
      * @return
      */
     PageEnterpriseVo getEnterpriseinfo(Integer eid);
+
+    /**
+     * 获取活动详情进行修改
+     * @param activity_id
+     * @return
+     */
+    ActivityJian getActivityJian(Integer activity_id);
 }
