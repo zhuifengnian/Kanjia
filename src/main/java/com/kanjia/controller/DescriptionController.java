@@ -52,7 +52,7 @@ public class DescriptionController {
             descriptionPicture.setPicture(picture);
         }
 
-        int insert = descriptionPictureService.updateByPrimaryKeySelective(descriptionPicture);
+        int insert = descriptionPictureService.insert(descriptionPicture);
 
         return new ReturnMessage(ResponseCode.OK, insert);
     }
