@@ -16,7 +16,16 @@
             base-package="com.kanjia.controller"/>
     <context:component-scan base-package="com.kanjia.basic"/>
     <!-- 注解驱动：配置处理器映射器和适配器 -->
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven conversion-service="conversionService"/>
+    <!--配置自定义转换器-->
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <!--一个string转date类型的转换器-->
+                <bean class="com.kanjia.web.DateConverter"/>
+            </set>
+        </property>
+    </bean>
     <!--配置静态资源的访问映射，此配置中的文件，将不被前端控制器拦截 -->
     <!--<mvc:resources location="/js/" mapping="/js/**" />-->
     <!--<mvc:resources location="/css/" mapping="/css/**" />-->

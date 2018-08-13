@@ -229,7 +229,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.kanjia.pojo.Activity" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.kanjia.pojo.Activity" useGeneratedKeys="true" keyProperty="id" >
     update activity
     <set >
       <if test="title != null" >
