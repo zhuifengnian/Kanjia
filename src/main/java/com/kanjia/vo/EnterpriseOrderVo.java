@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * Created by liyue on 2018/6/29
@@ -20,6 +21,9 @@ public class EnterpriseOrderVo {
     private String picture;
 
     private String nickName;
+
+    private Integer state;
+
 
 
     public Integer getId() {
@@ -61,4 +65,16 @@ public class EnterpriseOrderVo {
     public void setNickName(String nickName) {
         this.nickName = nickName;
     }
+
+
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+
 }

@@ -24,6 +24,7 @@
       <arg column="longitude" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="latitude" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="pick" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="types" jdbcType="INTEGER" javaType="java.lang.Integer" />
     </constructor>
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.kanjia.pojo.Activity" >
@@ -49,13 +50,14 @@
       <arg column="longitude" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="latitude" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="pick" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="types" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="description" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
     id, title, picture, video, address, origin_price, minu_price, activity_time, enterprise_id, 
     limit_number, sold_number, consume_time, consume_end_time, cut_time, state, create_time, 
-    update_time, category_id, longitude, latitude, pick
+    update_time, category_id, longitude, latitude, pick, types
   </sql>
   <sql id="Blob_Column_List" >
     description
@@ -80,7 +82,7 @@
       consume_end_time, cut_time, state, 
       create_time, update_time, category_id, 
       longitude, latitude, pick, 
-      description)
+      types, description)
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}, 
       #{video,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{originPrice,jdbcType=DECIMAL}, 
       #{minuPrice,jdbcType=DECIMAL}, #{activityTime,jdbcType=TIMESTAMP}, #{enterpriseId,jdbcType=INTEGER}, 
@@ -88,7 +90,7 @@
       #{consumeEndTime,jdbcType=TIMESTAMP}, #{cutTime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{categoryId,jdbcType=INTEGER}, 
       #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{pick,jdbcType=INTEGER}, 
-      #{description,jdbcType=LONGVARCHAR})
+      #{types,jdbcType=INTEGER}, #{description,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.kanjia.pojo.Activity" useGeneratedKeys="true" keyProperty="id">
     insert into activity
@@ -155,6 +157,9 @@
       </if>
       <if test="pick != null" >
         pick,
+      </if>
+      <if test="types != null" >
+        types,
       </if>
       <if test="description != null" >
         description,
@@ -224,12 +229,15 @@
       <if test="pick != null" >
         #{pick,jdbcType=INTEGER},
       </if>
+      <if test="types != null" >
+        #{types,jdbcType=INTEGER},
+      </if>
       <if test="description != null" >
         #{description,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.kanjia.pojo.Activity" useGeneratedKeys="true" keyProperty="id" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.kanjia.pojo.Activity" >
     update activity
     <set >
       <if test="title != null" >
@@ -292,6 +300,9 @@
       <if test="pick != null" >
         pick = #{pick,jdbcType=INTEGER},
       </if>
+      <if test="types != null" >
+        types = #{types,jdbcType=INTEGER},
+      </if>
       <if test="description != null" >
         description = #{description,jdbcType=LONGVARCHAR},
       </if>
@@ -320,6 +331,7 @@
       longitude = #{longitude,jdbcType=VARCHAR},
       latitude = #{latitude,jdbcType=VARCHAR},
       pick = #{pick,jdbcType=INTEGER},
+      types = #{types,jdbcType=INTEGER},
       description = #{description,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -344,7 +356,8 @@
       category_id = #{categoryId,jdbcType=INTEGER},
       longitude = #{longitude,jdbcType=VARCHAR},
       latitude = #{latitude,jdbcType=VARCHAR},
-      pick = #{pick,jdbcType=INTEGER}
+      pick = #{pick,jdbcType=INTEGER},
+      types = #{types,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <!--&lt;!&ndash; 查詢活动 &ndash;&gt;-->
