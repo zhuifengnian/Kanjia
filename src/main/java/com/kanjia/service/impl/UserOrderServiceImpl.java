@@ -330,7 +330,7 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
         enterpriseBill.setOrderId(userOrder.getId());
         enterpriseBill.setTitle(activity.getTitle());
         enterpriseBill.setType("收入");
-        String billnumber=Calendar.getInstance().toString()+userOrder.getCurrentPrice()+userOrder.getId();
+        String billnumber=String.valueOf(Calendar.getInstance().getTimeInMillis())+ userOrder.getId();
         enterpriseBill.setBillNumber(billnumber);
        insert[1]= enterpriseBillService.insertSelective(enterpriseBill);
         return insert;
