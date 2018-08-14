@@ -309,6 +309,7 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
         int []insert=new int[2];
         UserOrder userOrder= userOrderMapper.getCurrentPrice(order_number);
         userOrder.setState(Const.ORDER_STATUS_HAS_CONSUME);
+        userOrder.setUpdateTime(Calendar.getInstance().getTime());
         userOrderMapper.updateByPrimaryKey(userOrder);
         Activity activity= activityMapper.selectByPrimaryKey(userOrder.getActivityId());
 

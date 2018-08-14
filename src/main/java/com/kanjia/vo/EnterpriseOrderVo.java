@@ -24,8 +24,13 @@ public class EnterpriseOrderVo {
 
     private Integer state;
 
+    private Date startTime;
 
+    private Date endTime;
 
+    private Date consumeTime;
+
+    private Date createTime;
     public Integer getId() {
         return id;
     }
@@ -77,4 +82,35 @@ public class EnterpriseOrderVo {
     }
 
 
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public Date getConsumeTime() {
+        return consumeTime;
+    }
+
+    public void setConsumeTime(Date consumeTime) {
+        this.consumeTime = consumeTime;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 }
