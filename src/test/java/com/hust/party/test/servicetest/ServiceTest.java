@@ -7,6 +7,7 @@ import com.kanjia.mapper.HelpUserMapper;
 import com.kanjia.pojo.Activity;
 import com.kanjia.pojo.EnterpriseBill;
 import com.kanjia.service.*;
+import com.kanjia.utils.JsonUtil;
 import com.kanjia.utils.OverTimeUtil;
 import com.kanjia.utils.TimeUtil;
 import com.kanjia.vo.*;
@@ -108,8 +109,11 @@ public class ServiceTest {
 //        activity.setState(4);
 //        activity.setId(5);
 //        Integer insert = activityService.updateByPrimaryKeySelective(activity);
-        List<EnterpriseBill> enterpriseBill=enterpriseBillService.getMoney(1);
-        System.out.println(enterpriseBill.size());
+     //   List<EnterpriseBill> enterpriseBill=enterpriseBillService.getMoney(1);
+     //   System.out.println(enterpriseBill.size());
+        String obj="{\"aid\":1,\"detail\":[{\"title\":\"注意事项\",\"content\":\"不超过3天\"},{\"title\":\"你好\",\"content\":\"不超过1天\"}]}";
+
+        JsonUtil.checkUserIdJson(obj);
     }
 
 }

@@ -5,7 +5,7 @@ import java.util.Date;
 public class DescriptionPicture {
     private Integer id;
 
-    private Integer decriptionId;
+    private Integer activityId;
 
     private String picture;
 
@@ -13,9 +13,9 @@ public class DescriptionPicture {
 
     private Date updateTime;
 
-    public DescriptionPicture(Integer id, Integer decriptionId, String picture, Date createTime, Date updateTime) {
+    public DescriptionPicture(Integer id, Integer activityId, String picture, Date createTime, Date updateTime) {
         this.id = id;
-        this.decriptionId = decriptionId;
+        this.activityId = activityId;
         this.picture = picture;
         this.createTime = createTime;
         this.updateTime = updateTime;
@@ -33,12 +33,12 @@ public class DescriptionPicture {
         this.id = id;
     }
 
-    public Integer getDecriptionId() {
-        return decriptionId;
+    public Integer getActivityId() {
+        return activityId;
     }
 
-    public void setDecriptionId(Integer decriptionId) {
-        this.decriptionId = decriptionId;
+    public void setActivityId(Integer activityId) {
+        this.activityId = activityId;
     }
 
     public String getPicture() {

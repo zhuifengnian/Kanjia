@@ -43,10 +43,10 @@ public class DescriptionController {
     @RequestMapping(value = "/insertDescriptionPicture", method = RequestMethod.POST)
     @ApiOperation(value = "存储活动详情图片信息")
     @ResponseBody
-    public ReturnMessage insertDescriptionPicture(@RequestParam("descriptionId") Integer descriptionId, @RequestParam(value = "picture", required = false) MultipartFile flfile) {
+    public ReturnMessage insertDescriptionPicture(@RequestParam("activityId") Integer activityId, @RequestParam(value = "picture", required = false) MultipartFile flfile) {
         String picture = "";
         DescriptionPicture descriptionPicture = new DescriptionPicture();
-        descriptionPicture.setDecriptionId(descriptionId);
+        descriptionPicture.setActivityId(activityId);
         if (flfile != null) {
             picture = QiNiuUtil.manageFile(flfile);
             descriptionPicture.setPicture(picture);

@@ -14,16 +14,15 @@ public class JsonUtil {
     public static int[] checkUserIdJson(String json) {
         json = "[" + json + "]";
         JSONArray jsonArray = JSONArray.fromObject(json);
+        Object id = jsonArray.getJSONObject(0).get("aid");
         Object result = jsonArray.getJSONObject(0).get("detail");
-        Object person = "[" + result + "]";
-        JSONArray activityid = JSONArray.fromObject(person);
-        Object id = activityid.getJSONObject(0).get("activityId");
-        JSONArray jsonArrays = JSONArray.fromObject(person);
+
+        JSONArray jsonArrays = JSONArray.fromObject(result);
         int []insert=new int[jsonArrays.size()];
 
         for(int i=0;i<jsonArrays.size();i++) {
             Object title = jsonArrays.getJSONObject(i).get("title");
-            Object text = jsonArrays.getJSONObject(i).get("text");
+            Object text = jsonArrays.getJSONObject(i).get("content");
             ActivityDescription activityDescription=new ActivityDescription();
             activityDescription.setContent(String.valueOf(text));
             activityDescription.setTitle(String.valueOf(title));
