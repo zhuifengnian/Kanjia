@@ -18,9 +18,9 @@ public interface ActivityMapper extends BaseMapper<Activity> {
      * @param page
      * @return
      */
-    List<PageActivityVo> getAllActivity(Page page);
+    List<PageActivityVo> getAllActivity(@Param("categoryId") Integer categoryId, @Param("page")Page page);
 
-    Integer getAllActivityCount();
+    Integer getAllActivityCount(Integer categoryId);
 
 
     /**

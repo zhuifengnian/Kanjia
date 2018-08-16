@@ -21,9 +21,7 @@ public interface ActivityService extends BaseService<Activity> {
      * @return
      */
     //  List<PageActivityVo> getAllActivity(Page page);
-    PageInfo<PageActivityVo> getAllActivity(Page page);
-
-    Integer getAllActivityCount();
+   PageInfo<PageActivityVo> getAllActivity(@Param("categoryId") Integer categoryId, @Param("page")Page page);
 
 
     /**

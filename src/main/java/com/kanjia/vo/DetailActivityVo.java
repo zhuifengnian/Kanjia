@@ -22,7 +22,6 @@ public class DetailActivityVo {
 
     private String address;
 
-    private Integer pick;
 
     private Date activityTime;
 
@@ -43,6 +42,14 @@ public class DetailActivityVo {
     private List<String> headSculpture;
 
     private Integer headSculptureCount;
+
+    private Integer categoryId;
+
+    private Integer types;
+
+    private String longitude;
+
+    private String latitude;
 
     private  List<ActivityDescriptionVo> activityDescription;
 
@@ -71,13 +78,7 @@ public class DetailActivityVo {
     }
 
 
-    public Integer getPick() {
-        return pick;
-    }
 
-    public void setPick(Integer pick) {
-        this.pick = pick;
-    }
 
     public Date getActivityTime() {
         return activityTime;
@@ -176,5 +177,37 @@ public class DetailActivityVo {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public Integer getTypes() {
+        return types;
+    }
+
+    public void setTypes(Integer types) {
+        this.types = types;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
     }
 }

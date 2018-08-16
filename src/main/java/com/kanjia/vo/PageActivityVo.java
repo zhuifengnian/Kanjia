@@ -17,10 +17,6 @@ public class PageActivityVo {
 
     private String address;
 
-    private Integer pick;
-
-    private Date activityTime;
-
     private BigDecimal originPrice;
 
     private BigDecimal minuPrice;
@@ -33,11 +29,11 @@ public class PageActivityVo {
 
     private Date cutTime;
 
-    private List<String> headSculpture;
+    private String longitude;
 
-    private Integer headSculptureCount;
+    private String latitude;
 
-    private Integer state;
+    private Integer types;
 
     public Integer getId() {
         return id;
@@ -63,23 +59,6 @@ public class PageActivityVo {
         this.picture = picture;
     }
 
-
-
-    public Integer getPick() {
-        return pick;
-    }
-
-    public void setPick(Integer pick) {
-        this.pick = pick;
-    }
-
-    public Date getActivityTime() {
-        return activityTime;
-    }
-
-    public void setActivityTime(Date activityTime) {
-        this.activityTime = activityTime;
-    }
 
     public String getEnterpriseName() {
         return enterpriseName;
@@ -113,13 +92,7 @@ public class PageActivityVo {
         this.cutTime = cutTime;
     }
 
-    public List<String> getHeadSculpture() {
-        return headSculpture;
-    }
 
-    public void setHeadSculpture(List<String> headSculpture) {
-        this.headSculpture = headSculpture;
-    }
 
     public BigDecimal getOriginPrice() {
         return originPrice;
@@ -131,13 +104,6 @@ public class PageActivityVo {
 
 
 
-    public Integer getHeadSculptureCount() {
-        return headSculptureCount;
-    }
-
-    public void setHeadSculptureCount(Integer headSculptureCount) {
-        this.headSculptureCount = headSculptureCount;
-    }
 
     public BigDecimal getMinuPrice() {
         return minuPrice;
@@ -147,13 +113,6 @@ public class PageActivityVo {
         this.minuPrice = minuPrice;
     }
 
-    public Integer getState() {
-        return state;
-    }
-
-    public void setState(Integer state) {
-        this.state = state;
-    }
 
     public String getAddress() {
         return address;
@@ -161,5 +120,29 @@ public class PageActivityVo {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public Integer getTypes() {
+        return types;
+    }
+
+    public void setTypes(Integer types) {
+        this.types = types;
     }
 }

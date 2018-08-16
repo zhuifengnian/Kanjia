@@ -19,6 +19,8 @@ public class ActivityDescriptionVo {
 
     private List<String> picture;
 
+    private Integer activityId;
+
     public String getTitle() {
         return title;
     }
@@ -50,5 +52,13 @@ public class ActivityDescriptionVo {
 
     public void setPicture(List<String> picture) {
         this.picture = picture;
+    }
+
+    public Integer getActivityId() {
+        return activityId;
+    }
+
+    public void setActivityId(Integer activityId) {
+        this.activityId = activityId;
     }
 }

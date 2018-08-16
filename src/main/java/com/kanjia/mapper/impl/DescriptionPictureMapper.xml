@@ -94,9 +94,8 @@
   </update>
   <!--获得描述图片详情-->
   <select id="getDescriptionId" resultType="String">
-    select  dp.picture as picture
-    from description_picture dp
-    where 1=1
-    and dp.decription_id=#{did}
+    select picture
+    from description_picture
+    where activity_id=#{did}
   </select>
 </mapper>

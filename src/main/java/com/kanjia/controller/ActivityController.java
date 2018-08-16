@@ -37,8 +37,8 @@ public class ActivityController {
     @ApiOperation(value = "获取活动列表", notes = "获取活动列表")
     @ResponseBody
     @RequestMapping(value = "/getListActivity", method = RequestMethod.POST)
-    public ReturnMessage getListActivity(@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Integer pageNumber) {
-        PageInfo<PageActivityVo> pageinfo = activityService.getAllActivity(PageUtil.setPage(pageSize, pageNumber));
+    public ReturnMessage getListActivity(@RequestParam("category_id") Integer categoryId,@RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Integer pageNumber) {
+        PageInfo<PageActivityVo> pageinfo = activityService.getAllActivity(categoryId,PageUtil.setPage(pageSize, pageNumber));
 
         return new ReturnMessage(ResponseCode.OK, pageinfo);
     }

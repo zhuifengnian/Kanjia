@@ -4,8 +4,6 @@ import com.kanjia.basic.Page;
 import com.kanjia.basic.PageInfo;
 import com.kanjia.mapper.*;
 import com.kanjia.pojo.Activity;
-import com.kanjia.pojo.ActivityDescription;
-import com.kanjia.pojo.Enterprise;
 import com.kanjia.service.ActivityService;
 import com.kanjia.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,29 +37,20 @@ public class ActivityServiceImpl extends AbstractBaseServiceImpl<Activity> imple
 //    }
 
     @Override
-    public PageInfo<PageActivityVo> getAllActivity(Page page) {
+    public PageInfo<PageActivityVo> getAllActivity(Integer categoryId, Page page) {
         PageInfo<PageActivityVo> pageInfo = new PageInfo<>();
-        List<PageActivityVo> list = activityMapper.getAllActivity(page);
-        int i = 0;
-        for (PageActivityVo pageActivityVo : list) {
-
-            List<String> list1=userOrderMapper.getOrdersPicture(pageActivityVo.getId());
-            list.get(i).setHeadSculptureCount(list1.size());
-            if(list1.size()>5) {
-                list1 = list1.subList(0, 5);
-            }
-            list.get(i).setHeadSculpture(list1);
-            ++i;
+        if(page!=null){
+            pageInfo.setPageNum(page.getPageNumber());
+            pageInfo.setPageSize(page.getPageSize());
         }
-        pageInfo.setTotal(activityMapper.getAllActivityCount());
+        List<PageActivityVo> list = activityMapper.getAllActivity(categoryId,page);
+
+        pageInfo.setTotal(activityMapper.getAllActivityCount(categoryId));
         pageInfo.setRows(list);
         return pageInfo;
     }
 
-    @Override
-    public Integer getAllActivityCount() {
-        return activityMapper.getAllActivityCount();
-    }
+
 
     @Override
     public List<PageActivityVo> getQitaActivity(Page page) {
@@ -152,61 +141,61 @@ public class ActivityServiceImpl extends AbstractBaseServiceImpl<Activity> imple
         if ("全部".equals(name)) {
             int i=0;
             List<PageActivityVo> pageActivityVos =getEnterpriseAllActivity(id, page);
-            for (PageActivityVo pageActivityVo : pageActivityVos) {
-
-                List<String> list1=userOrderMapper.getOrdersPicture(pageActivityVo.getId());
-                pageActivityVos.get(i).setHeadSculptureCount(list1.size());
-                if(list1.size()>5) {
-                    list1 = list1.subList(0, 5);
-                }
-                pageActivityVos.get(i).setHeadSculpture(list1);
-                ++i;
-            }
+//            for (PageActivityVo pageActivityVo : pageActivityVos) {
+//
+//                List<String> list1=userOrderMapper.getOrdersPicture(pageActivityVo.getId());
+//                pageActivityVos.get(i).setHeadSculptureCount(list1.size());
+//                if(list1.size()>5) {
+//                    list1 = list1.subList(0, 5);
+//                }
+//                pageActivityVos.get(i).setHeadSculpture(list1);
+//                ++i;
+//            }
             pageInfo.setRows(pageActivityVos);
             pageInfo.setTotal(getEnterpriseAllActivityCount(id));
         } else if ("已下架".equals(name)) {
             int i=0;
             List<PageActivityVo> pageActivityVos =getEnterpriseDeleteActivity(id, page);
-            for (PageActivityVo pageActivityVo : pageActivityVos) {
-
-                List<String> list1=userOrderMapper.getOrdersPicture(pageActivityVo.getId());
-                pageActivityVos.get(i).setHeadSculptureCount(list1.size());
-                if(list1.size()>5) {
-                    list1 = list1.subList(0, 5);
-                }
-                pageActivityVos.get(i).setHeadSculpture(list1);
-                ++i;
-            }
+//            for (PageActivityVo pageActivityVo : pageActivityVos) {
+//
+//                List<String> list1=userOrderMapper.getOrdersPicture(pageActivityVo.getId());
+//                pageActivityVos.get(i).setHeadSculptureCount(list1.size());
+//                if(list1.size()>5) {
+//                    list1 = list1.subList(0, 5);
+//                }
+//                pageActivityVos.get(i).setHeadSculpture(list1);
+//                ++i;
+//            }
             pageInfo.setRows(pageActivityVos);
             pageInfo.setTotal(getEnterpriseDeleteActivityCount(id));
         } else if ("上架中".equals(name)) {
             int i=0;
             List<PageActivityVo> pageActivityVos =getEnterpriseNowActivity(id, page);
-            for (PageActivityVo pageActivityVo : pageActivityVos) {
-
-                List<String> list1=userOrderMapper.getOrdersPicture(pageActivityVo.getId());
-                pageActivityVos.get(i).setHeadSculptureCount(list1.size());
-                if(list1.size()>5) {
-                    list1 = list1.subList(0, 5);
-                }
-                pageActivityVos.get(i).setHeadSculpture(list1);
-                ++i;
-            }
+//            for (PageActivityVo pageActivityVo : pageActivityVos) {
+//
+//                List<String> list1=userOrderMapper.getOrdersPicture(pageActivityVo.getId());
+//                pageActivityVos.get(i).setHeadSculptureCount(list1.size());
+//                if(list1.size()>5) {
+//                    list1 = list1.subList(0, 5);
+//                }
+//                pageActivityVos.get(i).setHeadSculpture(list1);
+//                ++i;
+//            }
             pageInfo.setRows(pageActivityVos);
             pageInfo.setTotal(getEnterpriseNowActivityCount(id));
         }else if ("售罄".equals(name)) {
             int i=0;
             List<PageActivityVo> pageActivityVos =getEnterpriseStockActivity(id, page);
-            for (PageActivityVo pageActivityVo : pageActivityVos) {
-
-                List<String> list1=userOrderMapper.getOrdersPicture(pageActivityVo.getId());
-                pageActivityVos.get(i).setHeadSculptureCount(list1.size());
-                if(list1.size()>5) {
-                    list1 = list1.subList(0, 5);
-                }
-                pageActivityVos.get(i).setHeadSculpture(list1);
-                ++i;
-            }
+//            for (PageActivityVo pageActivityVo : pageActivityVos) {
+//
+//                List<String> list1=userOrderMapper.getOrdersPicture(pageActivityVo.getId());
+//                pageActivityVos.get(i).setHeadSculptureCount(list1.size());
+//                if(list1.size()>5) {
+//                    list1 = list1.subList(0, 5);
+//                }
+//                pageActivityVos.get(i).setHeadSculpture(list1);
+//                ++i;
+//            }
             pageInfo.setRows(pageActivityVos);
             pageInfo.setTotal(getEnterpriseStockActivityCount(id));
         }
@@ -232,7 +221,7 @@ public class ActivityServiceImpl extends AbstractBaseServiceImpl<Activity> imple
         list.get(0).setEnterprise(enterpriseVo);
         List<ActivityDescriptionVo> activityDescriptionVos=activityDescriptionMapper.getActivityId(id);
         for(int i=0;i<activityDescriptionVos.size();++i) {
-            List<String> picture = descriptionPictureMapper.getDescriptionId(activityDescriptionVos.get(i).getId());
+            List<String> picture = descriptionPictureMapper.getDescriptionId(activityDescriptionVos.get(i).getActivityId());
 
             activityDescriptionVos.get(i).setPicture(picture);
         }

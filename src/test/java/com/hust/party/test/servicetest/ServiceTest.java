@@ -111,9 +111,11 @@ public class ServiceTest {
 //        Integer insert = activityService.updateByPrimaryKeySelective(activity);
      //   List<EnterpriseBill> enterpriseBill=enterpriseBillService.getMoney(1);
      //   System.out.println(enterpriseBill.size());
-        String obj="{\"aid\":1,\"detail\":[{\"title\":\"注意事项\",\"content\":\"不超过3天\"},{\"title\":\"你好\",\"content\":\"不超过1天\"}]}";
+      //  String obj="{\"aid\":1,\"detail\":[{\"title\":\"注意事项\",\"content\":\"不超过3天\"},{\"title\":\"你好\",\"content\":\"不超过1天\"}]}";
 
-        JsonUtil.checkUserIdJson(obj);
+      //  JsonUtil.checkUserIdJson(obj);
+      List<PageActivityVo> pageActivityVos=  activityMapper.getAllActivity(1,null);
+      System.out.println(pageActivityVos.size());
     }
 
 }
