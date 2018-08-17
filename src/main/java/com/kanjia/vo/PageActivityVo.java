@@ -39,6 +39,9 @@ public class PageActivityVo {
 
     private Integer headSculptureCount;
 
+    private Integer state;
+    private Date activityTime;
+
     public Integer getId() {
         return id;
     }
@@ -164,5 +167,21 @@ public class PageActivityVo {
 
     public void setHeadSculptureCount(Integer headSculptureCount) {
         this.headSculptureCount = headSculptureCount;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    public Date getActivityTime() {
+        return activityTime;
+    }
+
+    public void setActivityTime(Date activityTime) {
+        this.activityTime = activityTime;
     }
 }

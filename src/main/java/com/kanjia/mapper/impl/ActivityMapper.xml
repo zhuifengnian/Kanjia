@@ -389,7 +389,7 @@
   <select id="getAllActivity" resultType="com.kanjia.vo.PageActivityVo">
     select a.id as id,a.title as title,a.picture as  picture,a.address as address,a.origin_price as originPrice,a.minu_price as minuPrice,
     e.enterprise_name as enterpriseName,a.limit_number as limitNumber,a.sold_number as soldNumber,a.cut_time as cutTime,a.longitude as longitude,
-    a.latitude as latitude,a.types as types
+    a.latitude as latitude,a.types as types,a.state as state,a.activity_time as activityTime
     from activity a left join enterprise e on a.enterprise_id = e.id
     where 1=1
     and a.state=1
@@ -443,7 +443,7 @@
   <select id="getQitaActivity" resultType="com.kanjia.vo.PageActivityVo">
     select a.id as id,a.title as title,a.picture as  picture,a.address as address,a.origin_price as originPrice,a.minu_price as minuPrice,
     e.enterprise_name as enterpriseName,a.limit_number as limitNumber,a.sold_number as soldNumber,a.cut_time as cutTime,a.longitude as longitude,
-    a.latitude as latitude,a.types as types
+    a.latitude as latitude,a.types as types,a.state as state,a.activity_time as activityTime
     from activity a left join enterprise e on a.enterprise_id = e.id
     where 1=1
     and a.category_id>3
@@ -497,7 +497,7 @@
   <select id="getNameActivity" resultType="com.kanjia.vo.PageActivityVo">
     select a.id as id,a.title as title,a.picture as  picture,a.address as address,a.origin_price as originPrice,a.minu_price as minuPrice,
     e.enterprise_name as enterpriseName,a.limit_number as limitNumber,a.sold_number as soldNumber,a.cut_time as cutTime,a.longitude as longitude,
-    a.latitude as latitude,a.types as types
+    a.latitude as latitude,a.types as types,a.state as state,a.activity_time as activityTime
     from activity a left join category c on a.category_id=c.id left join enterprise e on a.enterprise_id = e.id
     where 1=1
     and c.name=#{name}
@@ -541,10 +541,11 @@
   <select id="getEnterpriseAllActivity" resultType="com.kanjia.vo.PageActivityVo">
     select a.id as id,a.title as title,a.picture as  picture,a.address as address,a.origin_price as originPrice,a.minu_price as minuPrice,
     e.enterprise_name as enterpriseName,a.limit_number as limitNumber,a.sold_number as soldNumber,a.cut_time as cutTime,a.longitude as longitude,
-    a.latitude as latitude,a.types as types
+    a.latitude as latitude,a.types as types,a.state as state,a.activity_time as activityTime
     from activity a left join enterprise e on a.enterprise_id = e.id
     where 1=1
     and a.enterprise_id=#{id}
+    and a.state in (1,3)
     <if test="page != null and page.start != null and page.pageSize!=null">
       limit #{page.start},#{page.pageSize}
     </if>
@@ -554,6 +555,7 @@
     from activity a left join enterprise e on a.enterprise_id = e.id
     where 1=1
     and a.enterprise_id=#{id}
+    and a.state in (1,3)
   </select>
 
   <!--&lt;!&ndash;获得企业正上线的活动&ndash;&gt;-->
@@ -581,11 +583,11 @@
   <select id="getEnterpriseNowActivity" resultType="com.kanjia.vo.PageActivityVo">
     select a.id as id,a.title as title,a.picture as  picture,a.address as address,a.origin_price as originPrice,a.minu_price as minuPrice,
     e.enterprise_name as enterpriseName,a.limit_number as limitNumber,a.sold_number as soldNumber,a.cut_time as cutTime,a.longitude as longitude,
-    a.latitude as latitude,a.types as types
+    a.latitude as latitude,a.types as types,a.state as state,a.activity_time as activityTime
     from activity a left join enterprise e on a.enterprise_id = e.id
     where 1=1
     and a.cut_time >now()
-    and a.state=1
+    and (a.state=1 or a.state=2)
 
     <if test="page != null and page.start != null and page.pageSize!=null">
       limit #{page.start},#{page.pageSize}
@@ -625,7 +627,7 @@
   <select id="getEnterpriseDeleteActivity" resultType="com.kanjia.vo.PageActivityVo">
     select a.id as id,a.title as title,a.picture as  picture,a.address as address,a.origin_price as originPrice,a.minu_price as minuPrice,
     e.enterprise_name as enterpriseName,a.limit_number as limitNumber,a.sold_number as soldNumber,a.cut_time as cutTime,a.longitude as longitude,
-    a.latitude as latitude,a.types as types
+    a.latitude as latitude,a.types as types,a.state as state,a.activity_time as activityTime
     from activity a left join enterprise e on a.enterprise_id = e.id
     where 1=1
     and a.state=0
@@ -643,7 +645,7 @@
   <select id="getEnterpriseStockActivity" resultType="com.kanjia.vo.PageActivityVo">
     select a.id as id,a.title as title,a.picture as  picture,a.address as address,a.origin_price as originPrice,a.minu_price as minuPrice,
     e.enterprise_name as enterpriseName,a.limit_number as limitNumber,a.sold_number as soldNumber,a.cut_time as cutTime,a.longitude as longitude,
-    a.latitude as latitude,a.types as types
+    a.latitude as latitude,a.types as types,a.state as state,a.activity_time as activityTime
     from activity a left join enterprise e on a.enterprise_id = e.id
     where 1=1
     and a.state=1
