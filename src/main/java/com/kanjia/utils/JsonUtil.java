@@ -13,7 +13,6 @@ import java.util.List;
 public class JsonUtil {
 
     public static List<ActivityDescription> checkUserIdJson(String json) {
-        json = "[" + json + "]";
         JSONArray jsonArray = JSONArray.fromObject(json);
         Object id = jsonArray.getJSONObject(0).get("aid");
         Object result = jsonArray.getJSONObject(0).get("detail");

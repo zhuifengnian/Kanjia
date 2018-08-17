@@ -5,6 +5,7 @@ import com.kanjia.basic.PageInfo;
 import com.kanjia.mapper.ActivityMapper;
 import com.kanjia.mapper.HelpUserMapper;
 import com.kanjia.pojo.Activity;
+import com.kanjia.pojo.ActivityDescription;
 import com.kanjia.pojo.EnterpriseBill;
 import com.kanjia.service.*;
 import com.kanjia.utils.JsonUtil;
@@ -111,11 +112,12 @@ public class ServiceTest {
 //        Integer insert = activityService.updateByPrimaryKeySelective(activity);
      //   List<EnterpriseBill> enterpriseBill=enterpriseBillService.getMoney(1);
      //   System.out.println(enterpriseBill.size());
-      //  String obj="{\"aid\":1,\"detail\":[{\"title\":\"注意事项\",\"content\":\"不超过3天\"},{\"title\":\"你好\",\"content\":\"不超过1天\"}]}";
+        String obj="{\"aid\":1,\"detail\":[{\"title\":\"注意事项\",\"content\":\"不超过3天\"},{\"title\":\"你好\",\"content\":\"不超过1天\"}]}";
 
-      //  JsonUtil.checkUserIdJson(obj);
-      List<PageActivityVo> pageActivityVos=  activityMapper.getAllActivity(1,null);
-      System.out.println(pageActivityVos.size());
+       List<ActivityDescription>  activityDescriptionList=JsonUtil.checkUserIdJson(obj);
+       System.out.println(activityDescriptionList.size());
+    //  List<PageActivityVo> pageActivityVos=  activityMapper.getAllActivity(1,null);
+    //  System.out.println(pageActivityVos.size());
     }
 
 }
