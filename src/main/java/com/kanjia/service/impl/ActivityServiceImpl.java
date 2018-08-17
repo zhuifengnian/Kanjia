@@ -44,7 +44,17 @@ public class ActivityServiceImpl extends AbstractBaseServiceImpl<Activity> imple
             pageInfo.setPageSize(page.getPageSize());
         }
         List<PageActivityVo> list = activityMapper.getAllActivity(categoryId,page);
+        int i=0;
+        for (PageActivityVo pageActivityVo : list) {
 
+            List<String> list1=userOrderMapper.getOrdersPicture(pageActivityVo.getId());
+           list.get(i).setHeadSculptureCount(list1.size());
+            if(list1.size()>5) {
+                list1 = list1.subList(0, 5);
+            }
+            list.get(i).setHeadSculpture(list1);
+            ++i;
+        }
         pageInfo.setTotal(activityMapper.getAllActivityCount(categoryId));
         pageInfo.setRows(list);
         return pageInfo;
@@ -141,61 +151,61 @@ public class ActivityServiceImpl extends AbstractBaseServiceImpl<Activity> imple
         if ("全部".equals(name)) {
             int i=0;
             List<PageActivityVo> pageActivityVos =getEnterpriseAllActivity(id, page);
-//            for (PageActivityVo pageActivityVo : pageActivityVos) {
-//
-//                List<String> list1=userOrderMapper.getOrdersPicture(pageActivityVo.getId());
-//                pageActivityVos.get(i).setHeadSculptureCount(list1.size());
-//                if(list1.size()>5) {
-//                    list1 = list1.subList(0, 5);
-//                }
-//                pageActivityVos.get(i).setHeadSculpture(list1);
-//                ++i;
-//            }
+            for (PageActivityVo pageActivityVo : pageActivityVos) {
+
+                List<String> list1=userOrderMapper.getOrdersPicture(pageActivityVo.getId());
+                pageActivityVos.get(i).setHeadSculptureCount(list1.size());
+                if(list1.size()>5) {
+                    list1 = list1.subList(0, 5);
+                }
+                pageActivityVos.get(i).setHeadSculpture(list1);
+                ++i;
+            }
             pageInfo.setRows(pageActivityVos);
             pageInfo.setTotal(getEnterpriseAllActivityCount(id));
         } else if ("已下架".equals(name)) {
             int i=0;
             List<PageActivityVo> pageActivityVos =getEnterpriseDeleteActivity(id, page);
-//            for (PageActivityVo pageActivityVo : pageActivityVos) {
-//
-//                List<String> list1=userOrderMapper.getOrdersPicture(pageActivityVo.getId());
-//                pageActivityVos.get(i).setHeadSculptureCount(list1.size());
-//                if(list1.size()>5) {
-//                    list1 = list1.subList(0, 5);
-//                }
-//                pageActivityVos.get(i).setHeadSculpture(list1);
-//                ++i;
-//            }
+            for (PageActivityVo pageActivityVo : pageActivityVos) {
+
+                List<String> list1=userOrderMapper.getOrdersPicture(pageActivityVo.getId());
+                pageActivityVos.get(i).setHeadSculptureCount(list1.size());
+                if(list1.size()>5) {
+                    list1 = list1.subList(0, 5);
+                }
+                pageActivityVos.get(i).setHeadSculpture(list1);
+                ++i;
+            }
             pageInfo.setRows(pageActivityVos);
             pageInfo.setTotal(getEnterpriseDeleteActivityCount(id));
         } else if ("上架中".equals(name)) {
             int i=0;
             List<PageActivityVo> pageActivityVos =getEnterpriseNowActivity(id, page);
-//            for (PageActivityVo pageActivityVo : pageActivityVos) {
-//
-//                List<String> list1=userOrderMapper.getOrdersPicture(pageActivityVo.getId());
-//                pageActivityVos.get(i).setHeadSculptureCount(list1.size());
-//                if(list1.size()>5) {
-//                    list1 = list1.subList(0, 5);
-//                }
-//                pageActivityVos.get(i).setHeadSculpture(list1);
-//                ++i;
-//            }
+            for (PageActivityVo pageActivityVo : pageActivityVos) {
+
+                List<String> list1=userOrderMapper.getOrdersPicture(pageActivityVo.getId());
+                pageActivityVos.get(i).setHeadSculptureCount(list1.size());
+                if(list1.size()>5) {
+                    list1 = list1.subList(0, 5);
+                }
+                pageActivityVos.get(i).setHeadSculpture(list1);
+                ++i;
+            }
             pageInfo.setRows(pageActivityVos);
             pageInfo.setTotal(getEnterpriseNowActivityCount(id));
         }else if ("售罄".equals(name)) {
             int i=0;
             List<PageActivityVo> pageActivityVos =getEnterpriseStockActivity(id, page);
-//            for (PageActivityVo pageActivityVo : pageActivityVos) {
-//
-//                List<String> list1=userOrderMapper.getOrdersPicture(pageActivityVo.getId());
-//                pageActivityVos.get(i).setHeadSculptureCount(list1.size());
-//                if(list1.size()>5) {
-//                    list1 = list1.subList(0, 5);
-//                }
-//                pageActivityVos.get(i).setHeadSculpture(list1);
-//                ++i;
-//            }
+            for (PageActivityVo pageActivityVo : pageActivityVos) {
+
+                List<String> list1=userOrderMapper.getOrdersPicture(pageActivityVo.getId());
+                pageActivityVos.get(i).setHeadSculptureCount(list1.size());
+                if(list1.size()>5) {
+                    list1 = list1.subList(0, 5);
+                }
+                pageActivityVos.get(i).setHeadSculpture(list1);
+                ++i;
+            }
             pageInfo.setRows(pageActivityVos);
             pageInfo.setTotal(getEnterpriseStockActivityCount(id));
         }

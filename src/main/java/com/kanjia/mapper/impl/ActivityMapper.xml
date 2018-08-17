@@ -539,9 +539,9 @@
 
   <!--获得企业所有活动-->
   <select id="getEnterpriseAllActivity" resultType="com.kanjia.vo.PageActivityVo">
-    select a.id,a.title,a.picture,a.address,a.state,a.origin_price,a.pick,a.minu_price as minuPrice,a.activity_time as
-    activityTime,e.enterprise_name as enterpriseName,
-    a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime,a.origin_price as originPrice
+    select a.id as id,a.title as title,a.picture as  picture,a.address as address,a.origin_price as originPrice,a.minu_price as minuPrice,
+    e.enterprise_name as enterpriseName,a.limit_number as limitNumber,a.sold_number as soldNumber,a.cut_time as cutTime,a.longitude as longitude,
+    a.latitude as latitude,a.types as types
     from activity a left join enterprise e on a.enterprise_id = e.id
     where 1=1
     and a.enterprise_id=#{id}

@@ -35,6 +35,10 @@ public class PageActivityVo {
 
     private Integer types;
 
+    private List<String> headSculpture;
+
+    private Integer headSculptureCount;
+
     public Integer getId() {
         return id;
     }
@@ -144,5 +148,21 @@ public class PageActivityVo {
 
     public void setTypes(Integer types) {
         this.types = types;
+    }
+
+    public List<String> getHeadSculpture() {
+        return headSculpture;
+    }
+
+    public void setHeadSculpture(List<String> headSculpture) {
+        this.headSculpture = headSculpture;
+    }
+
+    public Integer getHeadSculptureCount() {
+        return headSculptureCount;
+    }
+
+    public void setHeadSculptureCount(Integer headSculptureCount) {
+        this.headSculptureCount = headSculptureCount;
     }
 }
