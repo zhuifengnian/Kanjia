@@ -41,7 +41,7 @@ public class Test {
         // 发送请求参数
         JsonObject paramJson = new JsonObject();
         paramJson.addProperty("scene", "a=1234567890");
-        paramJson.addProperty("page", "pages/mark/index");
+        paramJson.addProperty("page", "pages/index/index");
         paramJson.addProperty("width", 430);
         paramJson.addProperty("auto_color", true);
         /**
@@ -59,7 +59,7 @@ public class Test {
         printWriter.flush();
         //开始获取数据
         BufferedInputStream bis = new BufferedInputStream(httpURLConnection.getInputStream());
-        OutputStream os = new FileOutputStream(new File("d://abc.png"));
+        OutputStream os = new FileOutputStream(new File("d://abce.png"));
         int len;
         byte[] arr = new byte[1024];
         while ((len = bis.read(arr)) != -1) {

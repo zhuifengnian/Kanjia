@@ -1,8 +1,6 @@
 package com.kanjia.service.impl;
 
-import com.kanjia.basic.Const;
-import com.kanjia.basic.Page;
-import com.kanjia.basic.PageInfo;
+import com.kanjia.basic.*;
 import com.kanjia.mapper.*;
 import com.kanjia.pojo.*;
 import com.kanjia.service.EnterpriseBillService;
@@ -340,6 +338,18 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
     @Override
     public OrderInfoVo getOrderInfo(String qr_code) {
         return userOrderMapper.getOrderInfo(qr_code);
+    }
+
+    @Override
+    public ReturnMessage deleteOrder(Integer oid) {
+        //删除订单即将订单的状态设为不可用
+        UserOrder userOrder = userOrderMapper.selectByPrimaryKey(oid);
+        if(userOrder == null){
+            return new ReturnMessage(ResponseCode.PARAM_ERROR, "所传订单id不存在");
+        }
+        userOrder.setState(Const.ORDER_STATUS_CANCEL);
+        int i = userOrderMapper.updateByPrimaryKey(userOrder);
+        return new ReturnMessage(ResponseCode.OK, i);
     }
 
     /**

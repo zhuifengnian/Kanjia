@@ -93,4 +93,17 @@ public class OrderController {
         return new ReturnMessage(ResponseCode.OK, orderDetail);
     }
 
+    /**
+     * 删除订单接口
+     */
+    @ApiOperation(value = "根据订单id删除订单", notes = "根据订单id删除订单")
+    @ResponseBody
+    @RequestMapping(value = "/deleteOrder", method = RequestMethod.GET)
+    public ReturnMessage deleteOrder(@RequestParam("oid") Integer oid) {
+        try {
+            return userOrderService.deleteOrder(oid);
+        } catch (Exception e) {
+            return new ReturnMessage(ResponseCode.SERVER_ERROR, "服务器内部错误");
+        }
+    }
 }

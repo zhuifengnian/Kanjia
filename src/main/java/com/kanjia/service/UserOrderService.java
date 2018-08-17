@@ -3,6 +3,7 @@ package com.kanjia.service;
 
 import com.kanjia.basic.Page;
 import com.kanjia.basic.PageInfo;
+import com.kanjia.basic.ReturnMessage;
 import com.kanjia.pojo.UserOrder;
 import com.kanjia.vo.*;
 import org.apache.ibatis.annotations.Param;
@@ -172,4 +173,9 @@ public interface UserOrderService extends BaseService<UserOrder> {
      * @return
      */
     OrderInfoVo getOrderInfo(String qr_code);
+
+    /**
+     * 删除订单接口
+     */
+    ReturnMessage deleteOrder(Integer oid);
 }

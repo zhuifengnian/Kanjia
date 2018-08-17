@@ -1,5 +1,8 @@
 package com.kanjia.service.impl;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.kanjia.service.TenPayService;
 import com.kanjia.wxpay.ConstantUtil;
 import com.kanjia.wxpay.MD5Util;
@@ -7,9 +10,13 @@ import com.kanjia.wxpay.PrepayIdRequestHandler;
 import com.kanjia.wxpay.WXUtil;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.math.BigDecimal;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,6 +89,92 @@ public class TenPayServiceImpl implements TenPayService {
             map.put("info", "获取prepayid失败");
         }
         return map;
+    }
+
+    @Override
+    public void requestMiniCodePicture(String page, String scene, HttpServletResponse response) throws IOException {
+        URL url = new URL("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + ConstantUtil.APP_ID2 +
+                "&secret=" + ConstantUtil.APP_SECRET2);
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        urlConnection.setRequestMethod("GET");
+        urlConnection.setConnectTimeout(2000);
+        urlConnection.setDoInput(true);
+        int responseCode = urlConnection.getResponseCode();
+        if(responseCode == HttpURLConnection.HTTP_OK){
+            BufferedInputStream bis = new BufferedInputStream(urlConnection.getInputStream());
+            byte[] buf = new byte[1024];
+            int len;
+            StringBuffer sb = new StringBuffer();
+            while((len = bis.read(buf)) >= 0){
+                sb.append(new String(buf, 0 , len));
+            }
+            String ret = sb.toString();
+            JsonParser parser = new JsonParser();
+            JsonElement parse1 = parser.parse(ret);
+            String access_token = parse1.getAsJsonObject().get("access_token").getAsString();
+
+            getQrCodePicture(access_token, page, scene, response);
+        }
+//        return null;
+    }
+
+    /**
+     * 从微信后台获得数据流，并将其生成图片文件
+     *
+     * @param access_token  微信给的凭证
+     * @param page  生成的页面路径
+     * @param scene 传入的参数
+     * @param response
+     * @throws IOException
+     */
+    private void getQrCodePicture(String access_token, String page, String scene, HttpServletResponse response) throws IOException {
+        URL url = new URL("https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=" + access_token);
+        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+        httpURLConnection.setRequestMethod("POST");// 提交模式
+        // conn.setConnectTimeout(10000);//连接超时 单位毫秒
+        // conn.setReadTimeout(2000);//读取超时 单位毫秒
+        // 发送POST请求必须设置如下两行
+        httpURLConnection.setDoOutput(true);
+        httpURLConnection.setDoInput(true);
+        // 获取URLConnection对象对应的输出流
+        PrintWriter printWriter = new PrintWriter(httpURLConnection.getOutputStream());
+        // 发送请求参数
+        JsonObject paramJson = new JsonObject();
+        paramJson.addProperty("scene", scene);
+        paramJson.addProperty("page", page);
+        paramJson.addProperty("width", 430);
+        paramJson.addProperty("auto_color", true);
+        /**
+         * line_color生效
+         * paramJson.put("auto_color", false);
+         * JSONObject lineColor = new JSONObject();
+         * lineColor.put("r", 0);
+         * lineColor.put("g", 0);
+         * lineColor.put("b", 0);
+         * paramJson.put("line_color", lineColor);
+         * */
+
+        printWriter.write(paramJson.toString());
+        // flush输出流的缓冲
+        printWriter.flush();
+        //开始获取数据
+        BufferedInputStream bis = new BufferedInputStream(httpURLConnection.getInputStream());
+
+        //转码，免得文件名中文乱码
+//        filename = URLEncoder.encode(filename,"UTF-8");
+        String filename = "qrcode.png";
+        //1.设置文件ContentType类型，这样设置，会自动判断下载文件类型
+        response.setContentType("image/png");
+        //设置文件下载头
+        response.addHeader("Content-Disposition", "attachment;filename=" + filename);
+        ServletOutputStream outputStream = response.getOutputStream();
+        int len;
+        byte[] arr = new byte[1024];
+        while ((len = bis.read(arr)) != -1) {
+            outputStream.write(arr, 0, len);
+            outputStream.flush();
+        }
+        bis.close();
     }
 
 }
