@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 /**
  * liyue 2018/6/29
  */
@@ -29,7 +31,11 @@ public class DescriptionController {
     @ApiOperation(value = "活动详情插入", httpMethod = "POST")
     @ResponseBody
     public ReturnMessage activityDescription(@RequestBody String json) {
-        int[] insert = JsonUtil.checkUserIdJson(json);
+        List<ActivityDescription>  activityDescriptionList= JsonUtil.checkUserIdJson(json);
+        int []insert=new int[activityDescriptionList.size()];
+        for(int i=0;i<activityDescriptionList.size();++i){
+            insert[i]=activityDescriptionService.insert(activityDescriptionList.get(i));
+        }
         return new ReturnMessage(ResponseCode.OK, insert);
     }
     @RequestMapping(value = "/modifyDscription", method = RequestMethod.POST)

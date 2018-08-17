@@ -6,19 +6,20 @@ import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class JsonUtil {
-    @Autowired
-    private static ActivityDescriptionService activityDescriptionService;
-    public static int[] checkUserIdJson(String json) {
+
+    public static List<ActivityDescription> checkUserIdJson(String json) {
         json = "[" + json + "]";
         JSONArray jsonArray = JSONArray.fromObject(json);
         Object id = jsonArray.getJSONObject(0).get("aid");
         Object result = jsonArray.getJSONObject(0).get("detail");
 
         JSONArray jsonArrays = JSONArray.fromObject(result);
-        int []insert=new int[jsonArrays.size()];
+        List<ActivityDescription> activityDescriptionList =new ArrayList<>();
 
         for(int i=0;i<jsonArrays.size();i++) {
             Object title = jsonArrays.getJSONObject(i).get("title");
@@ -27,10 +28,10 @@ public class JsonUtil {
             activityDescription.setContent(String.valueOf(text));
             activityDescription.setTitle(String.valueOf(title));
             activityDescription.setActivityId(Integer.valueOf(String.valueOf(id)));
-            insert[i]=activityDescriptionService.insertSelective(activityDescription);
+            activityDescriptionList.add(activityDescription);
 
         }
-        return insert;
+        return activityDescriptionList;
     }
 
 
