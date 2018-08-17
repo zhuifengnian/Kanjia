@@ -441,9 +441,9 @@
 
   <!--获取其他活动-->
   <select id="getQitaActivity" resultType="com.kanjia.vo.PageActivityVo">
-    select a.id,a.title,a.picture,a.address,a.origin_price,a.pick,a.activity_time as
-    activityTime,e.enterprise_name as enterpriseName,
-    a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
+    select a.id as id,a.title as title,a.picture as  picture,a.address as address,a.origin_price as originPrice,a.minu_price as minuPrice,
+    e.enterprise_name as enterpriseName,a.limit_number as limitNumber,a.sold_number as soldNumber,a.cut_time as cutTime,a.longitude as longitude,
+    a.latitude as latitude,a.types as types
     from activity a left join enterprise e on a.enterprise_id = e.id
     where 1=1
     and a.category_id>3
@@ -495,9 +495,9 @@
 
   <!--根据活动name值进行查找信息-->
   <select id="getNameActivity" resultType="com.kanjia.vo.PageActivityVo">
-    select a.id,a.title,a.picture,a.address,a.origin_price,a.pick,a.activity_time as
-    activityTime,e.enterprise_name as enterpriseName,
-    a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
+    select a.id as id,a.title as title,a.picture as  picture,a.address as address,a.origin_price as originPrice,a.minu_price as minuPrice,
+    e.enterprise_name as enterpriseName,a.limit_number as limitNumber,a.sold_number as soldNumber,a.cut_time as cutTime,a.longitude as longitude,
+    a.latitude as latitude,a.types as types
     from activity a left join category c on a.category_id=c.id left join enterprise e on a.enterprise_id = e.id
     where 1=1
     and c.name=#{name}
@@ -579,9 +579,9 @@
 
   <!--获得企业正上线的活动-->
   <select id="getEnterpriseNowActivity" resultType="com.kanjia.vo.PageActivityVo">
-    select a.id,a.title,a.picture,a.address as address,a.origin_price,a.pick,a.activity_time as
-    activityTime,e.enterprise_name as enterpriseName,
-    a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
+    select a.id as id,a.title as title,a.picture as  picture,a.address as address,a.origin_price as originPrice,a.minu_price as minuPrice,
+    e.enterprise_name as enterpriseName,a.limit_number as limitNumber,a.sold_number as soldNumber,a.cut_time as cutTime,a.longitude as longitude,
+    a.latitude as latitude,a.types as types
     from activity a left join enterprise e on a.enterprise_id = e.id
     where 1=1
     and a.cut_time >now()
@@ -623,9 +623,9 @@
 
   <!--获得企业删除活动-->
   <select id="getEnterpriseDeleteActivity" resultType="com.kanjia.vo.PageActivityVo">
-    select a.id,a.title,a.picture,a.address as address,a.origin_price,a.pick,a.activity_time as
-    activityTime,e.enterprise_name as enterpriseName,
-    a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
+    select a.id as id,a.title as title,a.picture as  picture,a.address as address,a.origin_price as originPrice,a.minu_price as minuPrice,
+    e.enterprise_name as enterpriseName,a.limit_number as limitNumber,a.sold_number as soldNumber,a.cut_time as cutTime,a.longitude as longitude,
+    a.latitude as latitude,a.types as types
     from activity a left join enterprise e on a.enterprise_id = e.id
     where 1=1
     and a.state=0
@@ -641,9 +641,9 @@
   </select>
   <!--获得企业售罄活动-->
   <select id="getEnterpriseStockActivity" resultType="com.kanjia.vo.PageActivityVo">
-    select a.id,a.title,a.picture,a.address as address,a.origin_price,a.pick,a.activity_time as
-    activityTime,e.enterprise_name as enterpriseName,
-    a.limit_number as limitNumber,a.sold_number as soldNumber, a.cut_time as cutTime
+    select a.id as id,a.title as title,a.picture as  picture,a.address as address,a.origin_price as originPrice,a.minu_price as minuPrice,
+    e.enterprise_name as enterpriseName,a.limit_number as limitNumber,a.sold_number as soldNumber,a.cut_time as cutTime,a.longitude as longitude,
+    a.latitude as latitude,a.types as types
     from activity a left join enterprise e on a.enterprise_id = e.id
     where 1=1
     and a.state=1
