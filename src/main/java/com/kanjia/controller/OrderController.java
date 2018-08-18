@@ -63,18 +63,7 @@ public class OrderController {
     @ResponseBody
     @RequestMapping(value = "/generateOrder", method = RequestMethod.POST)
     public ReturnMessage generateOrder(@RequestParam("uid") Integer uid, @RequestParam("aid") Integer aid) {
-        //首先判断用户是否有正在砍价的该商品
-        UserOrder userOrder = new UserOrder();
-        userOrder.setUserId(uid);
-        userOrder.setActivityId(aid);
-        userOrder.setState(Const.ORDER_STATUS_ENGAGING);    //状态为正在砍价
-        List<UserOrder> select = userOrderService.select(userOrder, null);
-        if(select.size() > 0){
-            return new ReturnMessage(ResponseCode.PARAM_ERROR, "用户已经有这样一份订单正在砍价，不能重新生成");
-        }
-        //可以生成订单
-        Integer oid = userOrderService.generateOrder(uid, aid);
-        return new ReturnMessage(ResponseCode.OK, oid);
+        return userOrderService.generateOrder(uid, aid);
     }
 
     /**
@@ -98,7 +87,7 @@ public class OrderController {
      */
     @ApiOperation(value = "根据订单id删除订单", notes = "根据订单id删除订单")
     @ResponseBody
-    @RequestMapping(value = "/deleteOrder", method = RequestMethod.GET)
+    @RequestMapping(value = "/deleteOrder", method = RequestMethod.POST)
     public ReturnMessage deleteOrder(@RequestParam("oid") Integer oid) {
         try {
             return userOrderService.deleteOrder(oid);
@@ -106,4 +95,21 @@ public class OrderController {
             return new ReturnMessage(ResponseCode.SERVER_ERROR, "服务器内部错误");
         }
     }
+
+    /**
+     * 订单支付完成接口
+     */
+    @ApiOperation(value = "订单支付完成接口", notes = "当支付成功后，调用此接口，将订单状态由待付款变成待消费（已付款）的状态，" +
+            "若订单未处于待消费状态时，将提示前台不可调用此接口")
+    @ResponseBody
+    @RequestMapping(value = "/finishPay", method = RequestMethod.POST)
+    public ReturnMessage finishPay(@RequestParam("oid") Integer oid) {
+        try {
+            return userOrderService.finishPay(oid);
+        } catch (Exception e) {
+            return new ReturnMessage(ResponseCode.SERVER_ERROR, "服务器内部错误");
+        }
+    }
+
+
 }

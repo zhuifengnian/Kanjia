@@ -142,9 +142,9 @@ public interface UserOrderService extends BaseService<UserOrder> {
     PageInfo<MyOrderVo> listMyOrders(Integer uid, Page page);
 
     /**
-     * 生成订单接口
+     * 生成订单接口,注意直接购买类型的订单或者未指定类型的订单生成后的状态为待付款；拼团和砍价生成后的状态为正在拼团（砍价）
      */
-    Integer generateOrder(Integer uid, Integer aid);
+    ReturnMessage generateOrder(Integer uid, Integer aid);
 
     /**
      * 获取订单详情
@@ -178,4 +178,9 @@ public interface UserOrderService extends BaseService<UserOrder> {
      * 删除订单接口
      */
     ReturnMessage deleteOrder(Integer oid);
+
+    /**
+     * 订单完成支付后调用
+     */
+    ReturnMessage finishPay(Integer oid);
 }

@@ -6,6 +6,7 @@ import com.kanjia.pojo.*;
 import com.kanjia.service.EnterpriseBillService;
 import com.kanjia.service.EnterprisePaymentService;
 import com.kanjia.service.UserOrderService;
+import com.kanjia.utils.ReflectUtil;
 import com.kanjia.utils.TimeUtil;
 import com.kanjia.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -211,22 +212,42 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
     }
 
     @Override
-    public Integer generateOrder(Integer uid, Integer aid) {
+    public ReturnMessage generateOrder(Integer uid, Integer aid) {
         Activity activity = activityMapper.selectByPrimaryKey(aid);
+        if(activity == null){
+            return new ReturnMessage(ResponseCode.PARAM_ERROR, "所传活动不存在");
+        }
 
+        //首先判断用户是否有正在砍价的该商品
         UserOrder userOrder = new UserOrder();
         userOrder.setUserId(uid);
         userOrder.setActivityId(aid);
-        userOrder.setCurrentPrice(activity.getOriginPrice());
-        userOrder.setState(Const.ORDER_STATUS_ENGAGING);    //初始化订单状态为正在砍价
+        if(activity.getTypes() == null || Const.ACTIVITY_TYPE_BUY == activity.getTypes()){
+            userOrder.setState(Const.ORDER_STATUS_WAITING_PAY);
+        }else{
+            userOrder.setState(Const.ORDER_STATUS_ENGAGING);    //状态为正在砍价
+        }
+        List<UserOrder> select = userOrderMapper.select(ReflectUtil.generalMap(userOrder));
+        if(select.size() > 0){
+            return new ReturnMessage(ResponseCode.SERVICE_NOT_ALLOWED, "该商品您有一个订单尚未付款，请先去付款");
+        }
 
-        userOrder.setQrCode(TimeUtil.random9Number());  //生成随机9位数二维码
+        UserOrder tmpOrder = new UserOrder();
+        tmpOrder.setUserId(uid);
+        tmpOrder.setActivityId(aid);
+        tmpOrder.setCurrentPrice(activity.getOriginPrice());
+        if(activity.getTypes() == null || Const.ACTIVITY_TYPE_BUY == activity.getTypes()){
+            tmpOrder.setState(Const.ORDER_STATUS_WAITING_PAY);
+        }else{
+            tmpOrder.setState(Const.ORDER_STATUS_ENGAGING);    //初始化订单状态为正在砍价
+        }
+        tmpOrder.setQrCode(TimeUtil.random9Number());  //生成随机9位数二维码
         //生成订单编号,规则为aid加时间戳，加uid
         String orderNumber = "" + aid + TimeUtil.currentTimeStamp() + uid;
-        userOrder.setOrderNumber(orderNumber);
-        userOrderMapper.insert(userOrder);
+        tmpOrder.setOrderNumber(orderNumber);
+        userOrderMapper.insert(tmpOrder);
 
-        return userOrder.getId();
+        return new ReturnMessage(ResponseCode.OK, tmpOrder.getId());
     }
 
     @Override
@@ -347,8 +368,29 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
         if(userOrder == null){
             return new ReturnMessage(ResponseCode.PARAM_ERROR, "所传订单id不存在");
         }
-        userOrder.setState(Const.ORDER_STATUS_CANCEL);
-        int i = userOrderMapper.updateByPrimaryKey(userOrder);
+        //修改状态
+        UserOrder tmpOrder = new UserOrder();
+        tmpOrder.setId(oid);
+        tmpOrder.setState(Const.ORDER_STATUS_CANCEL);
+        int i = userOrderMapper.updateByPrimaryKeySelective(tmpOrder);
+        return new ReturnMessage(ResponseCode.OK, i);
+    }
+
+    @Override
+    public ReturnMessage finishPay(Integer oid) {
+        UserOrder userOrder = userOrderMapper.selectByPrimaryKey(oid);
+        if(userOrder == null){
+            return new ReturnMessage(ResponseCode.PARAM_ERROR, "所传订单id不存在");
+        }
+        //判断订单是否处于待付款状态，如果不是，则提示前台不可调用
+        if(Const.ORDER_STATUS_WAITING_PAY != userOrder.getState()){
+            return new ReturnMessage(ResponseCode.SERVICE_NOT_ALLOWED, "订单状态不为待付款状态，无法修改");
+        }
+        //开始修改状态
+        UserOrder tmpOrder = new UserOrder();
+        tmpOrder.setId(oid);
+        tmpOrder.setState(Const.ORDER_STATUS_WAITING_CONCUMUE);
+        int i = userOrderMapper.updateByPrimaryKeySelective(tmpOrder);
         return new ReturnMessage(ResponseCode.OK, i);
     }
 

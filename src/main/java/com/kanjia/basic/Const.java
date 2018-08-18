@@ -22,4 +22,10 @@ public class Const {
     public static final int ORDER_LIST_STATUS_WAIT_CONSUME = 102;     //列出等待消费的订单
     public static final int ORDER_LIST_STATUS_FINISH = 103;     //列出已完成的订单
     public static final int ORDER_LIST_STATUS_DRAWBACKING = 104;     //列出退款中的订单
+    
+    //活动类型（直接购买，拼团，砍价）
+    public static final int ACTIVITY_TYPE_BUY = 1;   //直接购买
+    public static final int ACTIVITY_TYPE_PIN_TUAN = 2;   //拼团
+    public static final int ACTIVITY_TYPE_KAN_JIA = 3;   //砍价
+
 }

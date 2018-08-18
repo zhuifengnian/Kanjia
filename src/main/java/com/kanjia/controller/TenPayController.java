@@ -1,5 +1,6 @@
 package com.kanjia.controller;
 
+import com.kanjia.basic.Const;
 import com.kanjia.basic.ResponseCode;
 import com.kanjia.basic.ReturnMessage;
 import com.kanjia.exception.ApiException;
@@ -48,7 +49,7 @@ public class TenPayController {
      * @throws Exception
      */
     @RequestMapping(value = "/app/tenpay/orderPrepay", method = RequestMethod.POST)
-    @ApiOperation(value = "订单调用此接口，生成预支付订单，获取prepayId", httpMethod = "POST")
+    @ApiOperation(value = "订单调用此接口，生成预支付订单，获取prepayId。需要订单处于待付款状态时，才可调用，否则会给前端提醒", httpMethod = "POST")
     public @ResponseBody
     Map<String, Object> orderPrepay(@RequestParam("uid") Integer uid, @RequestParam("oid") Integer oid, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -66,7 +67,10 @@ public class TenPayController {
         if(orders == null){
             throw new ApiException(ResponseCode.PARAM_ERROR, "所给订单id不存在");
         }
-        Integer aid = orders.getActivityId();
+        //判断订单是否处于待付款的状态
+        if(Const.ORDER_STATUS_WAITING_PAY != orders.getState()){
+            throw new ApiException(ResponseCode.SERVICE_NOT_ALLOWED, "订单状态不为待付款，无法进行支付操作");
+        }
 
         //拿到订单所应支付的金额
         BigDecimal currentPrice = orders.getCurrentPrice();
