@@ -10,7 +10,6 @@ import com.kanjia.service.ActivityService;
 import com.kanjia.service.EnterprisePaymentService;
 import com.kanjia.service.EnterpriseService;
 import com.kanjia.service.UserOrderService;
-import com.kanjia.utils.OverTimeUtil;
 import com.kanjia.utils.PageUtil;
 import com.kanjia.utils.QiNiuUtil;
 import com.kanjia.utils.TimeUtil;
@@ -25,7 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.List;
 
 /**
  * liyue 2018/6/29
@@ -58,7 +56,7 @@ public class EnterpriseController {
     @RequestMapping(value = "/undercarriageActivity", method = RequestMethod.POST)
     public ReturnMessage undercarriageActivity(@RequestParam("activityId") Integer activityId) {
        Activity activity=new Activity();
-        activity.setState(3);
+        activity.setState(Const.ACTIVITY_TYPE_down);
         activity.setId(activityId);
         Integer insert = activityService.updateByPrimaryKeySelective(activity);
         return new ReturnMessage(ResponseCode.OK, insert);
@@ -68,7 +66,7 @@ public class EnterpriseController {
     @RequestMapping(value = "/groundActivity", method = RequestMethod.POST)
     public ReturnMessage groundActivity(@RequestParam("activityId") Integer activityId) {
         Activity activity=new Activity();
-        activity.setState(1);
+        activity.setState(Const.ACTIVITY_TYPE_GROUP);
         activity.setId(activityId);
         Integer insert = activityService.updateByPrimaryKeySelective(activity);
         return new ReturnMessage(ResponseCode.OK, insert);
@@ -104,15 +102,6 @@ public class EnterpriseController {
 
         return new ReturnMessage(ResponseCode.OK, insert);
     }
-//    @ApiOperation(value = "修改活动", notes = "修改活动")
-//    @ResponseBody
-//    @RequestMapping(value = "/modifyActivity", method = RequestMethod.POST)
-//    public ReturnMessage modifyActivity(Activity activity) {
-//
-//        activity.setUpdateTime(Calendar.getInstance().getTime());
-//        Integer insert = activityService.updateByPrimaryKeySelective(activity);
-//        return new ReturnMessage(ResponseCode.OK, insert);
-//    }
     @ApiOperation(value = "修改活动返回", notes = "修改活动返回")
     @ResponseBody
     @RequestMapping(value = "/modifyActivityInfo", method = RequestMethod.POST)
@@ -214,16 +203,6 @@ public class EnterpriseController {
         return new ReturnMessage(ResponseCode.OK, insert);
     }
 
-//    @RequestMapping(value = "/checkData", method = RequestMethod.POST)
-//    @ApiOperation(value = "企业获取数据", httpMethod = "POST")
-//    @ResponseBody
-//    public ReturnMessage checkData(@RequestParam("enterpriseId") Integer enterpriseId, @RequestParam("name") String name, @RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Integer pageNumber) {
-//
-//        PageInfo<EnterpriseOrderVo> pageInfo = userOrderService.EnterpriseMonthOrder(enterpriseId, OverTimeUtil.getTime(name), PageUtil.setPage(pageNumber));
-//
-//
-//        return new ReturnMessage(ResponseCode.OK, pageInfo);
-//    }
     @RequestMapping(value = "/getEnterpriseinfo", method = RequestMethod.POST)
     @ApiOperation(value = "企业获取数据", httpMethod = "POST")
     @ResponseBody
@@ -264,7 +243,6 @@ public class EnterpriseController {
         ActivityJian activityJian=enterpriseService.getActivityJian(id);
         return new ReturnMessage(ResponseCode.OK, activityJian);
     }
-
 
 
     @ApiOperation(value = "返回商户端用户的openid", notes = "获取商户端用户的openid，这里是通过服务器向微信的服务器发送请求获得的，需要传入js_code")
