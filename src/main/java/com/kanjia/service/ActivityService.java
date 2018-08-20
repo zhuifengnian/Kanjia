@@ -101,7 +101,7 @@ public interface ActivityService extends BaseService<Activity> {
      * @param page
      * @return
      */
-    PageInfo<PageActivityVo> getEnterpriseActivity(String name, Integer id, Page page);
+    PageInfo<PageActivityVo> getEnterpriseActivity( Integer id, Page page);
 
     /**
      * 获取活动详情

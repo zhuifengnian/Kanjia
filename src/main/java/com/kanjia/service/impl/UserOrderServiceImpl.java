@@ -115,16 +115,17 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
         PageInfo<EnterpriseOrderVo> pageInfo = new PageInfo<>();
         pageInfo.setPageNum(page.getPageNumber());
         pageInfo.setPageSize(page.getPageSize());
-        if ("今日订单".equals(name)) {
-            pageInfo.setRows(getEnterpriseNowOrder(id, d, t, page));
-            pageInfo.setTotal(getEnterpriseNowOrderCount(id, d, t));
-        } else if ("已取消".equals(name)) {
-            pageInfo.setRows(getEnterpriseDeleteOrder(id, page));
-            pageInfo.setTotal(getEnterpriseDeleteOrderCount(id));
-        } else if ("已过期".equals(name)) {
-            pageInfo.setRows(getEnterpriseOverOrder(id, page));
-            pageInfo.setTotal(getEnterpriseOverOrderCount(id));
-        } else if ("全部".equals(name)) {
+//        if ("今日订单".equals(name)) {
+//            pageInfo.setRows(getEnterpriseNowOrder(id, d, t, page));
+//            pageInfo.setTotal(getEnterpriseNowOrderCount(id, d, t));
+//        } else if ("已取消".equals(name)) {
+//            pageInfo.setRows(getEnterpriseDeleteOrder(id, page));
+//            pageInfo.setTotal(getEnterpriseDeleteOrderCount(id));
+//        } else if ("已过期".equals(name)) {
+//            pageInfo.setRows(getEnterpriseOverOrder(id, page));
+//            pageInfo.setTotal(getEnterpriseOverOrderCount(id));
+//        } else i
+       if ("全部".equals(name)) {
             pageInfo.setRows(getEnterpriseAllOrder(id, page));
             pageInfo.setTotal(getEnterpriseAllOrderCount(id));
 

@@ -31,6 +31,7 @@ public class EnterpriseOrderVo {
     private Date consumeTime;
 
     private Date createTime;
+
     public Integer getId() {
         return id;
     }

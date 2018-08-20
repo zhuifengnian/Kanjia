@@ -68,7 +68,7 @@ public class ServiceTest {
 
     @Test
     public void testEnterprise() {
-        System.out.println(activityService.getEnterpriseActivity("删除", 1, null));
+      //  System.out.println(activityService.getEnterpriseActivity("删除", 1, null));
     }
 
     @Test

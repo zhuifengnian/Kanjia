@@ -18,6 +18,7 @@ public class DetailActivityVo {
     private String address;
 
     private List<String> detailPicture;
+
     private Date activityTime;
 
     private Integer limitNumber;

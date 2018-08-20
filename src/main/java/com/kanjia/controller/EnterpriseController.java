@@ -130,7 +130,7 @@ public class EnterpriseController {
     @RequestMapping(value = "/checkActivity", method = RequestMethod.POST)
     public ReturnMessage checkActivity(@RequestParam("enterprise_id") Integer id, @RequestParam(required = false) Integer pageSize, @RequestParam(required = false) Integer pageNumber) {
 
-        PageInfo<PageActivityVo> pageInfo = activityService.getEnterpriseActivity("全部", id, PageUtil.setPage(pageSize, pageNumber));
+        PageInfo<PageActivityVo> pageInfo = activityService.getEnterpriseActivity( id, PageUtil.setPage(pageSize, pageNumber));
         return new ReturnMessage(ResponseCode.OK, pageInfo);
     }
 

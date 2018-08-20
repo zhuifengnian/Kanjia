@@ -18,13 +18,11 @@ public class ActivityJian {
 
     private Date activityTime;
 
-
     private Integer limitNumber;
 
+    private Date putawayTime;
 
-    private Date consumeTime;
-
-    private Date consumeEndTime;
+    private Date soldOutTime;
 
     private Date cutTime;
 
@@ -107,21 +105,6 @@ public class ActivityJian {
     }
 
 
-    public Date getConsumeTime() {
-        return consumeTime;
-    }
-
-    public void setConsumeTime(Date consumeTime) {
-        this.consumeTime = consumeTime;
-    }
-
-    public Date getConsumeEndTime() {
-        return consumeEndTime;
-    }
-
-    public void setConsumeEndTime(Date consumeEndTime) {
-        this.consumeEndTime = consumeEndTime;
-    }
 
     public Date getCutTime() {
         return cutTime;
@@ -147,5 +130,21 @@ public class ActivityJian {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public Date getPutawayTime() {
+        return putawayTime;
+    }
+
+    public void setPutawayTime(Date putawayTime) {
+        this.putawayTime = putawayTime;
+    }
+
+    public Date getSoldOutTime() {
+        return soldOutTime;
+    }
+
+    public void setSoldOutTime(Date soldOutTime) {
+        this.soldOutTime = soldOutTime;
     }
 }
