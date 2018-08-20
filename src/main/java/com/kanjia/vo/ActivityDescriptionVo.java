@@ -1,11 +1,5 @@
 package com.kanjia.vo;
 
-import com.kanjia.pojo.DescriptionPicture;
-
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-
 /**
  * Created by liyue on 2018/6/29
  */
@@ -16,8 +10,6 @@ public class ActivityDescriptionVo {
     private String title;
 
     private String content;
-
-    private List<String> picture;
 
     private Integer activityId;
 
@@ -46,13 +38,6 @@ public class ActivityDescriptionVo {
         this.id = id;
     }
 
-    public List<String> getPicture() {
-        return picture;
-    }
-
-    public void setPicture(List<String> picture) {
-        this.picture = picture;
-    }
 
     public Integer getActivityId() {
         return activityId;
@@ -62,3 +47,4 @@ public class ActivityDescriptionVo {
         this.activityId = activityId;
     }
 }
+
