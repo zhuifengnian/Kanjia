@@ -19,6 +19,8 @@ public class DetailActivityVo {
 
     private List<String> detailPicture;
 
+    private List<ActivityDescriptionVo> activityDescriptionVos;
+
     private Date activityTime;
 
     private Integer limitNumber;
@@ -214,6 +216,14 @@ public class DetailActivityVo {
 
     public void setDetailPicture(List<String> detailPicture) {
         this.detailPicture = detailPicture;
+    }
+
+    public List<ActivityDescriptionVo> getActivityDescriptionVos() {
+        return activityDescriptionVos;
+    }
+
+    public void setActivityDescriptionVos(List<ActivityDescriptionVo> activityDescriptionVos) {
+        this.activityDescriptionVos = activityDescriptionVos;
     }
 }
 

@@ -5,13 +5,11 @@ package com.kanjia.vo;
  */
 
 public class ActivityDescriptionVo {
-    private Integer id;
 
     private String title;
 
     private String content;
 
-    private Integer activityId;
 
     public String getTitle() {
         return title;
@@ -30,21 +28,6 @@ public class ActivityDescriptionVo {
     }
 
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-
-    public Integer getActivityId() {
-        return activityId;
-    }
-
-    public void setActivityId(Integer activityId) {
-        this.activityId = activityId;
-    }
 }
 

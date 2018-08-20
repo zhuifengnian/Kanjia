@@ -229,6 +229,7 @@ public class ActivityServiceImpl extends AbstractBaseServiceImpl<Activity> imple
         EnterpriseVo enterpriseVo=enterpriseMapper.getEnterpriseId(id);
         list.get(0).setEnterprise(enterpriseVo);
         List<ActivityDescriptionVo> activityDescriptionVos=activityDescriptionMapper.getActivityId(id);
+        list.get(0).setActivityDescription(activityDescriptionVos);
         list.get(0).setDetailPicture(descriptionPictureMapper.getDescriptionId(list.get(0).getId()));
         List<String> list1=userOrderMapper.getOrdersPicture(id);
         list.get(0).setHeadSculptureCount(list1.size());
