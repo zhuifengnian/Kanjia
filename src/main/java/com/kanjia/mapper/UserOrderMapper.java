@@ -3,6 +3,7 @@ package com.kanjia.mapper;
 import com.kanjia.basic.Page;
 import com.kanjia.pojo.UserOrder;
 import com.kanjia.vo.*;
+import com.kanjia.vo.ordervo.OrderDetailVO2;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -129,6 +130,8 @@ public interface UserOrderMapper extends BaseMapper<UserOrder> {
     void generateOrder(Integer uid, Integer aid);
 
     OrderDetailVO getOrderDetail(Integer oid);
+
+    OrderDetailVO2 getOrderDetail2(Integer oid);
 
     List<OrderListVO> listOrders(@Param("uid") Integer uid,@Param("state") Integer state,@Param("page") Page page);
 

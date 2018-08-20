@@ -616,6 +616,13 @@
     where uo.id = #{oid}
   </select>
 
+  <select id="getOrderDetail2" resultType="orderDetailVO2">
+    select u.id as uid, a.id as aid, uo.id as oid
+    from user_order uo inner join activity a on uo.activity_id = a.id
+    inner join user u on uo.user_id = u.id
+    where uo.id = #{oid}
+  </select>
+
   <select id="getCurrentPrice" resultType="com.kanjia.pojo.UserOrder">
     select *
     from user_order

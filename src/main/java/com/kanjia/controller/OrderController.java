@@ -9,10 +9,12 @@ import com.kanjia.service.HelperService;
 import com.kanjia.service.UserOrderService;
 import com.kanjia.utils.PageUtil;
 import com.kanjia.vo.*;
+import com.kanjia.vo.ordervo.OrderDetailVO2;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -56,9 +58,6 @@ public class OrderController {
         return new ReturnMessage(ResponseCode.OK, orderListVO);
     }
 
-    /**
-     * 生成订单
-     */
     @ApiOperation(value = "生成一份订单", notes = "根据用户id和活动id生成一份订单")
     @ResponseBody
     @RequestMapping(value = "/generateOrder", method = RequestMethod.POST)
@@ -66,10 +65,7 @@ public class OrderController {
         return userOrderService.generateOrder(uid, aid);
     }
 
-    /**
-     * 根据订单id获取订单详情
-     */
-    @ApiOperation(value = "根据订单id获取订单详情", notes = "根据订单id获取订单详情")
+    @ApiOperation(value = "根据订单id获取订单详情", notes = "根据订单id获取订单详情，会判断订单是否已过期并改变其状态")
     @ResponseBody
     @RequestMapping(value = "/getOrderDetail", method = RequestMethod.GET)
     @ApiResponses({@ApiResponse(code = 200, message = "Successful", response = OrderDetailVO.class)})
@@ -82,9 +78,19 @@ public class OrderController {
         return new ReturnMessage(ResponseCode.OK, orderDetail);
     }
 
-    /**
-     * 删除订单接口
-     */
+    @ApiOperation(value = "根据订单id获取订单详情2", notes = "根据订单id获取订单详情，会判断订单是否已过期并改变其状态")
+    @ResponseBody
+    @RequestMapping(value = "/getOrderDetail2", method = RequestMethod.GET)
+    @ApiResponses({@ApiResponse(code = 200, message = "Successful", response = OrderDetailVO2.class)})
+    public ReturnMessage getOrderDetail2(@RequestParam("oid") Integer oid) {
+        UserOrder userOrder = userOrderService.selectByPrimaryKey(oid);
+        if(userOrder == null){
+            return new ReturnMessage(ResponseCode.PARAM_ERROR, "所传订单id不存在");
+        }
+        OrderDetailVO2 orderDetail2 = userOrderService.getOrderDetail2(oid);
+        return new ReturnMessage(ResponseCode.OK, orderDetail2);
+    }
+
     @ApiOperation(value = "根据订单id删除订单", notes = "根据订单id删除订单")
     @ResponseBody
     @RequestMapping(value = "/deleteOrder", method = RequestMethod.POST)
@@ -96,9 +102,6 @@ public class OrderController {
         }
     }
 
-    /**
-     * 订单支付完成接口
-     */
     @ApiOperation(value = "订单支付完成接口", notes = "当支付成功后，调用此接口，将订单状态由待付款变成待消费（已付款）的状态，" +
             "若订单未处于待消费状态时，将提示前台不可调用此接口")
     @ResponseBody
@@ -106,6 +109,18 @@ public class OrderController {
     public ReturnMessage finishPay(@RequestParam("oid") Integer oid) {
         try {
             return userOrderService.finishPay(oid);
+        } catch (Exception e) {
+            return new ReturnMessage(ResponseCode.SERVER_ERROR, "服务器内部错误");
+        }
+    }
+
+    @ApiOperation(value = "砍价订单提前结束砍价接口", notes = "只有砍价类型的活动才能调用此接口，它会提前结束正在砍价的状态，" +
+            "进入待支付的状态。")
+    @ResponseBody
+    @RequestMapping(value = "/stopKanjia", method = RequestMethod.POST)
+    public ReturnMessage stopKanjia(@RequestParam("oid") Integer oid) {
+        try {
+            return userOrderService.stopKanjia(oid);
         } catch (Exception e) {
             return new ReturnMessage(ResponseCode.SERVER_ERROR, "服务器内部错误");
         }

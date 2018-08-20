@@ -7,11 +7,13 @@ import com.kanjia.mapper.HelpUserMapper;
 import com.kanjia.pojo.Activity;
 import com.kanjia.pojo.ActivityDescription;
 import com.kanjia.pojo.EnterpriseBill;
+import com.kanjia.pojo.UserOrder;
 import com.kanjia.service.*;
 import com.kanjia.utils.JsonUtil;
 import com.kanjia.utils.OverTimeUtil;
 import com.kanjia.utils.TimeUtil;
 import com.kanjia.vo.*;
+import com.kanjia.vo.ordervo.OrderDetailVO2;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import javax.annotation.Resource;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -118,6 +121,12 @@ public class ServiceTest {
        System.out.println(activityDescriptionList.size());
     //  List<PageActivityVo> pageActivityVos=  activityMapper.getAllActivity(1,null);
     //  System.out.println(pageActivityVos.size());
+    }
+
+    @Test
+    public void userOrderService2(){
+        OrderDetailVO2 orderDetail2 = userOrderService.getOrderDetail2(29);
+        System.out.println(orderDetail2);
     }
 
 }

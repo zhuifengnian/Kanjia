@@ -6,9 +6,14 @@ import com.kanjia.pojo.*;
 import com.kanjia.service.EnterpriseBillService;
 import com.kanjia.service.EnterprisePaymentService;
 import com.kanjia.service.UserOrderService;
+import com.kanjia.utils.OrderUtils;
 import com.kanjia.utils.ReflectUtil;
 import com.kanjia.utils.TimeUtil;
 import com.kanjia.vo.*;
+import com.kanjia.vo.ordervo.OrderActivityVO;
+import com.kanjia.vo.ordervo.OrderDataVO;
+import com.kanjia.vo.ordervo.OrderDetailVO2;
+import com.kanjia.vo.ordervo.OrderKanjiaActivityVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-@Service
+@Service("userOrderService")
 public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> implements UserOrderService {
     @Autowired
     private UserMapper userMapper;
@@ -223,9 +228,9 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
         userOrder.setUserId(uid);
         userOrder.setActivityId(aid);
         if(activity.getTypes() == null || Const.ACTIVITY_TYPE_BUY == activity.getTypes()){
-            userOrder.setState(Const.ORDER_STATUS_WAITING_PAY);
+            userOrder.setState(Const.ORDER_STATUS_WAITING_PAY);//直接购买先进入待付款状态
         }else{
-            userOrder.setState(Const.ORDER_STATUS_ENGAGING);    //状态为正在砍价
+            userOrder.setState(Const.ORDER_STATUS_ENGAGING);    //砍价类型活动状进入正在砍价
         }
         List<UserOrder> select = userOrderMapper.select(ReflectUtil.generalMap(userOrder));
         if(select.size() > 0){
@@ -276,6 +281,91 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
         orderDetailVO.setOrderHelperVOs(orderHelpers);
 
         return orderDetailVO;
+    }
+
+    @Override
+    public OrderDetailVO2 getOrderDetail2(Integer oid) {
+        OrderDetailVO2 orderDetailVO2 = userOrderMapper.getOrderDetail2(oid);
+        //根据用户id获取用户信息
+        User user = userMapper.selectByPrimaryKey(orderDetailVO2.getUid());
+        OrderDetailUserVO orderDetailUserVO = new OrderDetailUserVO();
+        orderDetailUserVO.setUid(user.getId());
+        orderDetailUserVO.setNickname(user.getNickname());
+        orderDetailUserVO.setAvatarurl(user.getAvatarurl());
+        orderDetailVO2.setOrderDetailUserVO(orderDetailUserVO);
+
+        Activity activity = activityMapper.selectByPrimaryKey(orderDetailVO2.getAid());
+        //获取订单对应的活动信息
+        OrderActivityVO orderActivityVO = null;
+        //判断活动的类型
+        switch (activity.getTypes()){
+            case Const.ACTIVITY_TYPE_BUY:
+                //目前直接购买的不需要做特殊处理，将来会涉及优惠券
+                orderActivityVO = commonActivityVO(activity);
+                break;
+            case Const.ACTIVITY_TYPE_KAN_JIA:
+                //砍价类型的活动
+                OrderKanjiaActivityVO orderKanjiaActivityVO = (OrderKanjiaActivityVO) commonActivityVO(activity);
+                //帮助者相关信息
+                List<OrderHelperVO> orderHelpers = helpUserMapper.getOrderHelpers(oid, 3);
+                orderKanjiaActivityVO.setOrderHelperVOs(orderHelpers);
+                orderActivityVO = orderKanjiaActivityVO;
+                break;
+            case Const.ACTIVITY_TYPE_PIN_TUAN:
+                orderActivityVO = commonActivityVO(activity);
+                break;
+            default:
+                orderActivityVO = commonActivityVO(activity);
+        }
+        orderDetailVO2.setOrderActivityVO(orderActivityVO);
+
+        //获取订单对应的商户信息
+        Enterprise enterprise = enterpriseMapper.selectByPrimaryKey(activity.getEnterpriseId());
+        OrderDetailEnterpriseVO orderDetailEnterpriseVO = new OrderDetailEnterpriseVO();
+        orderDetailEnterpriseVO.setEnterpriseName(enterprise.getEnterpriseName());
+        orderDetailEnterpriseVO.setAddress(enterprise.getAddress());
+        orderDetailEnterpriseVO.setAvatarurl(enterprise.getAvatarurl());
+        orderDetailEnterpriseVO.setPhone(enterprise.getPhone());
+        orderDetailVO2.setOrderDetailEnterpriseVO(orderDetailEnterpriseVO);
+
+        //获取订单信息
+        UserOrder userOrder = userOrderMapper.selectByPrimaryKey(oid);
+        OrderDataVO orderDataVO = new OrderDataVO();
+        orderDataVO.setCreateTime(userOrder.getCreateTime());
+        orderDataVO.setQrCode(userOrder.getQrCode());
+        orderDataVO.setCurrentPrice(userOrder.getCurrentPrice());
+        orderDataVO.setOrderNumber(userOrder.getOrderNumber());
+        orderDataVO.setState(userOrder.getState());
+        orderDataVO.setStateName(OrderUtils.getStateName(userOrder.getState()));
+
+        //判断订单是否已过期，如果已过期，会将订单状态改变
+        if(Calendar.getInstance().getTime().after(activity.getCutTime())){
+            UserOrder tmpUserOrder = new UserOrder();
+            tmpUserOrder.setId(oid);
+            tmpUserOrder.setState(Const.ORDER_STATUS_EXCEED_TIME);
+            userOrderMapper.updateByPrimaryKeySelective(tmpUserOrder);
+            //重新加载订单状态信息
+            orderDataVO.setState(Const.ORDER_STATUS_EXCEED_TIME);
+            orderDataVO.setStateName(OrderUtils.getStateName(Const.ORDER_STATUS_EXCEED_TIME));
+        }
+
+        orderDetailVO2.setOrderDataVO(orderDataVO);
+
+        return orderDetailVO2;
+    }
+
+    private OrderActivityVO commonActivityVO(Activity activity) {
+        OrderKanjiaActivityVO orderKanjiaActivityVO = new OrderKanjiaActivityVO();
+        orderKanjiaActivityVO.setActivityType(activity.getTypes());
+        orderKanjiaActivityVO.setPicture(activity.getPicture());
+        orderKanjiaActivityVO.setTitle(activity.getTitle());
+        orderKanjiaActivityVO.setOriginPrice(activity.getOriginPrice());
+        orderKanjiaActivityVO.setMinuPrice(activity.getMinuPrice());
+        orderKanjiaActivityVO.setLimitNumber(activity.getLimitNumber());
+        orderKanjiaActivityVO.setSoldNumber(activity.getSoldNumber());
+        orderKanjiaActivityVO.setActivityTime(activity.getActivityTime());
+        orderKanjiaActivityVO.setCutTime(activity.getCutTime());
+        return orderKanjiaActivityVO;
     }
 
     @Override
@@ -390,6 +480,24 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
         UserOrder tmpOrder = new UserOrder();
         tmpOrder.setId(oid);
         tmpOrder.setState(Const.ORDER_STATUS_WAITING_CONCUMUE);
+        int i = userOrderMapper.updateByPrimaryKeySelective(tmpOrder);
+        return new ReturnMessage(ResponseCode.OK, i);
+    }
+
+    @Override
+    public ReturnMessage stopKanjia(Integer oid) {
+        UserOrder userOrder = userOrderMapper.selectByPrimaryKey(oid);
+        if(userOrder == null){
+            return new ReturnMessage(ResponseCode.PARAM_ERROR, "订单不存在");
+        }
+        Integer activityId = userOrder.getActivityId();
+        Activity activity = activityMapper.selectByPrimaryKey(activityId);
+        if(activity.getTypes() != Const.ACTIVITY_TYPE_KAN_JIA || userOrder.getState() != Const.ORDER_STATUS_ENGAGING){
+            return new ReturnMessage(ResponseCode.SERVICE_NOT_ALLOWED, "不是砍价活动，或订单状态不为砍价，不能调用此接口");
+        }
+        UserOrder tmpOrder = new UserOrder();
+        tmpOrder.setId(oid);
+        tmpOrder.setState(Const.ORDER_STATUS_WAITING_PAY);//将状态由正在砍价改为等待支付
         int i = userOrderMapper.updateByPrimaryKeySelective(tmpOrder);
         return new ReturnMessage(ResponseCode.OK, i);
     }

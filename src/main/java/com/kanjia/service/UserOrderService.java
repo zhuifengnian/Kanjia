@@ -6,6 +6,7 @@ import com.kanjia.basic.PageInfo;
 import com.kanjia.basic.ReturnMessage;
 import com.kanjia.pojo.UserOrder;
 import com.kanjia.vo.*;
+import com.kanjia.vo.ordervo.OrderDetailVO2;
 import org.apache.ibatis.annotations.Param;
 
 import java.sql.Timestamp;
@@ -153,6 +154,8 @@ public interface UserOrderService extends BaseService<UserOrder> {
      */
     OrderDetailVO getOrderDetail(Integer oid);
 
+    OrderDetailVO2 getOrderDetail2(Integer oid);
+
     /**
      * 根据订单状态，列出订单
      * @param uid
@@ -183,4 +186,9 @@ public interface UserOrderService extends BaseService<UserOrder> {
      * 订单完成支付后调用
      */
     ReturnMessage finishPay(Integer oid);
+
+    /**
+     * 砍价活动订单提前结束砍价
+     */
+    ReturnMessage stopKanjia(Integer oid);
 }

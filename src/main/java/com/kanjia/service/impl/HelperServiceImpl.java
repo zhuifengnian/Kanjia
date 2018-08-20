@@ -58,6 +58,8 @@ public class HelperServiceImpl extends AbstractBaseServiceImpl<HelpUser> impleme
             }
         }
         //可以开始帮砍
+        UserOrder tmpUserOrder = new UserOrder();//记录改变的部分
+        tmpUserOrder.setId(order.getId());
         //TODO:随机生成砍价金额，暂定在5元之内
         BigDecimal currentPrice = order.getCurrentPrice();
         Activity activity = activityMapper.selectByPrimaryKey(order.getActivityId());
@@ -67,17 +69,17 @@ public class HelperServiceImpl extends AbstractBaseServiceImpl<HelpUser> impleme
         BigDecimal shouldSubVal = null;
         if (subtractRet > 5) {
             Random random = new Random();
-            double randomVal = (1 - random.nextDouble() * 0.9) * 5; //(0.1-1) * 5
+            double randomVal = (1 - random.nextDouble() * 0.8) * 5; //(0.2-1) * 5
             shouldSubVal = new BigDecimal(randomVal);
 
         }else{
             shouldSubVal = new BigDecimal(subtractRet);
-            order.setState(Const.ORDER_STATUS_WAITING_PAY);//订单进入预付款状态
+            tmpUserOrder.setState(Const.ORDER_STATUS_WAITING_PAY);//订单进入预付款状态
         }
         shouldSubVal = shouldSubVal.setScale(2, BigDecimal.ROUND_HALF_UP);//保留两位并4舍5入
         //改变订单的当前价格
-        order.setCurrentPrice(order.getCurrentPrice().subtract(shouldSubVal));
-        userOrderMapper.updateByPrimaryKeySelective(order);
+        tmpUserOrder.setCurrentPrice(order.getCurrentPrice().subtract(shouldSubVal));
+        userOrderMapper.updateByPrimaryKeySelective(tmpUserOrder);
         //订单的帮砍者中，记录当前帮砍者及金额
         HelpUser helpUser = new HelpUser();
         helpUser.setOrderId(order.getId());
