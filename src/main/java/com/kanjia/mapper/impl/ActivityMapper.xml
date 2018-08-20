@@ -385,7 +385,7 @@
     where 1=1
     and a.state=1
     and a.category_id=#{categoryId}
-    and a.activity_time >now()
+    and a.cut_time >now()
     and a.limit_number > a.sold_number
     <if test="page != null and page.start != null and page.pageSize!=null">
       limit #{page.start},#{page.pageSize}
@@ -398,7 +398,7 @@
     where 1=1
     and a.state=1
     and a.category_id=#{categoryId}
-    and a.activity_time >now()
+    and a.cut_time >now()
     and a.limit_number > a.sold_number
   </select>
 
