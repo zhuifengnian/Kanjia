@@ -44,10 +44,10 @@ public class OrderDetailVO {
 
     private Integer soldNumber;     //已售份数
 
-    @ApiModelProperty("消费（砍价）开始时间")
-    private Date consumeTime;
+    @ApiModelProperty("活动上架时间")
+    private Date putawayTime;
 
-    private Date consumeEndTime;    //消费（砍价）截止时间
+    private Date soldOutTime;    //活动下架时间
 
     private Date activityTime;      //活动开始时间
 

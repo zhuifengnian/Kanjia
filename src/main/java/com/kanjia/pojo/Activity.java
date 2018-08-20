@@ -6,6 +6,8 @@ import java.util.Date;
 public class Activity {
     private Integer id;
 
+    private Integer types;
+
     private String title;
 
     private String picture;
@@ -18,25 +20,19 @@ public class Activity {
 
     private BigDecimal minuPrice;
 
+    private Integer enterpriseId;
+
     private Date activityTime;
 
-    private Integer enterpriseId;
+    private Date cutTime;
+
+    private Date putawayTime;
+
+    private Date soldOutTime;
 
     private Integer limitNumber;
 
     private Integer soldNumber;
-
-    private Date consumeTime;
-
-    private Date consumeEndTime;
-
-    private Date cutTime;
-
-    private Integer state;
-
-    private Date createTime;
-
-    private Date updateTime;
 
     private Integer categoryId;
 
@@ -44,35 +40,42 @@ public class Activity {
 
     private String latitude;
 
+    private Long glance;
+
     private Integer pick;
 
-    private Integer types;
+    private Integer state;
+
+    private Date createTime;
+
+    private Date updateTime;
 
     private String description;
 
-    public Activity(Integer id, String title, String picture, String video, String address, BigDecimal originPrice, BigDecimal minuPrice, Date activityTime, Integer enterpriseId, Integer limitNumber, Integer soldNumber, Date consumeTime, Date consumeEndTime, Date cutTime, Integer state, Date createTime, Date updateTime, Integer categoryId, String longitude, String latitude, Integer pick, Integer types, String description) {
+    public Activity(Integer id, Integer types, String title, String picture, String video, String address, BigDecimal originPrice, BigDecimal minuPrice, Integer enterpriseId, Date activityTime, Date cutTime, Date putawayTime, Date soldOutTime, Integer limitNumber, Integer soldNumber, Integer categoryId, String longitude, String latitude, Long glance, Integer pick, Integer state, Date createTime, Date updateTime, String description) {
         this.id = id;
+        this.types = types;
         this.title = title;
         this.picture = picture;
         this.video = video;
         this.address = address;
         this.originPrice = originPrice;
         this.minuPrice = minuPrice;
-        this.activityTime = activityTime;
         this.enterpriseId = enterpriseId;
+        this.activityTime = activityTime;
+        this.cutTime = cutTime;
+        this.putawayTime = putawayTime;
+        this.soldOutTime = soldOutTime;
         this.limitNumber = limitNumber;
         this.soldNumber = soldNumber;
-        this.consumeTime = consumeTime;
-        this.consumeEndTime = consumeEndTime;
-        this.cutTime = cutTime;
-        this.state = state;
-        this.createTime = createTime;
-        this.updateTime = updateTime;
         this.categoryId = categoryId;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.glance = glance;
         this.pick = pick;
-        this.types = types;
+        this.state = state;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
         this.description = description;
     }
 
@@ -86,6 +89,14 @@ public class Activity {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getTypes() {
+        return types;
+    }
+
+    public void setTypes(Integer types) {
+        this.types = types;
     }
 
     public String getTitle() {
@@ -136,6 +147,14 @@ public class Activity {
         this.minuPrice = minuPrice;
     }
 
+    public Integer getEnterpriseId() {
+        return enterpriseId;
+    }
+
+    public void setEnterpriseId(Integer enterpriseId) {
+        this.enterpriseId = enterpriseId;
+    }
+
     public Date getActivityTime() {
         return activityTime;
     }
@@ -144,12 +163,28 @@ public class Activity {
         this.activityTime = activityTime;
     }
 
-    public Integer getEnterpriseId() {
-        return enterpriseId;
+    public Date getCutTime() {
+        return cutTime;
     }
 
-    public void setEnterpriseId(Integer enterpriseId) {
-        this.enterpriseId = enterpriseId;
+    public void setCutTime(Date cutTime) {
+        this.cutTime = cutTime;
+    }
+
+    public Date getPutawayTime() {
+        return putawayTime;
+    }
+
+    public void setPutawayTime(Date putawayTime) {
+        this.putawayTime = putawayTime;
+    }
+
+    public Date getSoldOutTime() {
+        return soldOutTime;
+    }
+
+    public void setSoldOutTime(Date soldOutTime) {
+        this.soldOutTime = soldOutTime;
     }
 
     public Integer getLimitNumber() {
@@ -166,54 +201,6 @@ public class Activity {
 
     public void setSoldNumber(Integer soldNumber) {
         this.soldNumber = soldNumber;
-    }
-
-    public Date getConsumeTime() {
-        return consumeTime;
-    }
-
-    public void setConsumeTime(Date consumeTime) {
-        this.consumeTime = consumeTime;
-    }
-
-    public Date getConsumeEndTime() {
-        return consumeEndTime;
-    }
-
-    public void setConsumeEndTime(Date consumeEndTime) {
-        this.consumeEndTime = consumeEndTime;
-    }
-
-    public Date getCutTime() {
-        return cutTime;
-    }
-
-    public void setCutTime(Date cutTime) {
-        this.cutTime = cutTime;
-    }
-
-    public Integer getState() {
-        return state;
-    }
-
-    public void setState(Integer state) {
-        this.state = state;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
     }
 
     public Integer getCategoryId() {
@@ -240,6 +227,14 @@ public class Activity {
         this.latitude = latitude == null ? null : latitude.trim();
     }
 
+    public Long getGlance() {
+        return glance;
+    }
+
+    public void setGlance(Long glance) {
+        this.glance = glance;
+    }
+
     public Integer getPick() {
         return pick;
     }
@@ -248,12 +243,28 @@ public class Activity {
         this.pick = pick;
     }
 
-    public Integer getTypes() {
-        return types;
+    public Integer getState() {
+        return state;
     }
 
-    public void setTypes(Integer types) {
-        this.types = types;
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     public String getDescription() {

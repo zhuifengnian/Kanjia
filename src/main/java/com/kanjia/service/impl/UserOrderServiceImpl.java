@@ -240,10 +240,12 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
         UserOrder tmpOrder = new UserOrder();
         tmpOrder.setUserId(uid);
         tmpOrder.setActivityId(aid);
-        tmpOrder.setCurrentPrice(activity.getOriginPrice());
+
         if(activity.getTypes() == null || Const.ACTIVITY_TYPE_BUY == activity.getTypes()){
+            tmpOrder.setCurrentPrice(activity.getMinuPrice());  //直接购买的当前价为现价
             tmpOrder.setState(Const.ORDER_STATUS_WAITING_PAY);
         }else{
+            tmpOrder.setCurrentPrice(activity.getOriginPrice());//砍价或拼团的当前价为原价
             tmpOrder.setState(Const.ORDER_STATUS_ENGAGING);    //初始化订单状态为正在砍价
         }
         tmpOrder.setQrCode(TimeUtil.random9Number());  //生成随机9位数二维码
