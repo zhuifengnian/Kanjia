@@ -3,6 +3,7 @@ package com.kanjia.controller;
 import com.kanjia.basic.PageInfo;
 import com.kanjia.basic.ResponseCode;
 import com.kanjia.basic.ReturnMessage;
+import com.kanjia.pojo.Activity;
 import com.kanjia.service.ActivityService;
 import com.kanjia.utils.PageUtil;
 import com.kanjia.vo.DetailActivityPriceVo;
@@ -12,6 +13,8 @@ import com.kanjia.vo.PageActivityVo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.math.BigInteger;
 
 /**
  * liyue 2018/6/29
@@ -50,6 +53,18 @@ public class ActivityController {
 
         DetailActivityVo detailActivityVo = activityService.getDetailsActivity(id);
         return new ReturnMessage(ResponseCode.OK, detailActivityVo);
+    }
+    @ApiOperation(value = "插入浏览数", notes = "插入浏览数")
+    @ResponseBody
+    @RequestMapping(value = "/insertActivityGlance", method = RequestMethod.POST)
+    public ReturnMessage insertActivityGlance(@RequestParam("activity_id") Integer id) {
+       Activity activity=    activityService.selectByPrimaryKey(id);
+       Long l=activity.getGlance();
+       l=l+1;
+       activity.setGlance(l);
+       int insert=activityService.updateByPrimaryKey(activity);
+
+        return new ReturnMessage(ResponseCode.OK, insert);
     }
 
 }
