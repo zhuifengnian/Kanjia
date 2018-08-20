@@ -27,5 +27,9 @@ public class Const {
     public static final int ACTIVITY_TYPE_BUY = 1;   //直接购买
     public static final int ACTIVITY_TYPE_PIN_TUAN = 2;   //拼团
     public static final int ACTIVITY_TYPE_KAN_JIA = 3;   //砍价
-
+    //活动状态
+    public static final int ACTIVITY_TYPE_GROUP=1; //上架
+    public static final int ACTIVITY_TYPE_down=3; //下架
+    public static final int ACTIVITY_TYPE_STOCK=2; //售空
+    public static final int ACTIVITY_TYPE_DELETE=0; //上架
 }
