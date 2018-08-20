@@ -418,36 +418,36 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
 
     @Override
     public int[] getCurrentPrice(String order_number) {
-        int []insert=new int[3];
+        int []insert={-1,-1,-1};
         UserOrder userOrder= userOrderMapper.getCurrentPrice(order_number);
         if(userOrder!=null) {
             userOrder.setState(Const.ORDER_STATUS_HAS_CONSUME);
             userOrder.setUpdateTime(Calendar.getInstance().getTime());
-           insert[0]= userOrderMapper.updateByPrimaryKey(userOrder);
+            insert[0] = userOrderMapper.updateByPrimaryKey(userOrder);
+
+            Activity activity = activityMapper.selectByPrimaryKey(userOrder.getActivityId());
+
+            EnterprisePayment enterprisePayment = enterprisePaymentService.getEnterprisePayment(activity.getEnterpriseId());
+            if (enterprisePayment.getTotalMoney() != null) {
+                enterprisePayment.setTotalMoney(enterprisePayment.getTotalMoney().add(userOrder.getCurrentPrice()));
+            } else {
+                enterprisePayment.setTotalMoney(userOrder.getCurrentPrice());
+
+            }
+            insert[1] = enterprisePaymentService.updateByPrimaryKeySelective(enterprisePayment);
+
+            EnterpriseBill enterpriseBill = new EnterpriseBill();
+            enterpriseBill.setCreateTime(Calendar.getInstance().getTime());
+            enterpriseBill.setUpdateTime(Calendar.getInstance().getTime());
+            enterpriseBill.setEnterpriseId(activity.getEnterpriseId());
+            enterpriseBill.setMoney(userOrder.getCurrentPrice());
+            enterpriseBill.setOrderId(userOrder.getId());
+            enterpriseBill.setTitle(activity.getTitle());
+            enterpriseBill.setType("收入");
+            String billnumber = String.valueOf(Calendar.getInstance().getTimeInMillis()) + userOrder.getId();
+            enterpriseBill.setBillNumber(billnumber);
+            insert[2] = enterpriseBillService.insertSelective(enterpriseBill);
         }
-        Activity activity= activityMapper.selectByPrimaryKey(userOrder.getActivityId());
-
-        EnterprisePayment enterprisePayment=enterprisePaymentService.getEnterprisePayment(activity.getEnterpriseId());
-       if(enterprisePayment.getTotalMoney()!=null) {
-           enterprisePayment.setTotalMoney(enterprisePayment.getTotalMoney().add(userOrder.getCurrentPrice()));
-       }
-       else{
-           enterprisePayment.setTotalMoney(userOrder.getCurrentPrice());
-
-       }
-     insert[1]=  enterprisePaymentService.updateByPrimaryKeySelective(enterprisePayment);
-
-      EnterpriseBill enterpriseBill=new EnterpriseBill();
-      enterpriseBill.setCreateTime(Calendar.getInstance().getTime());
-        enterpriseBill.setUpdateTime(Calendar.getInstance().getTime());
-        enterpriseBill.setEnterpriseId(activity.getEnterpriseId());
-        enterpriseBill.setMoney(userOrder.getCurrentPrice());
-        enterpriseBill.setOrderId(userOrder.getId());
-        enterpriseBill.setTitle(activity.getTitle());
-        enterpriseBill.setType("收入");
-        String billnumber=String.valueOf(Calendar.getInstance().getTimeInMillis())+ userOrder.getId();
-        enterpriseBill.setBillNumber(billnumber);
-       insert[2]= enterpriseBillService.insertSelective(enterpriseBill);
         return insert;
     }
 

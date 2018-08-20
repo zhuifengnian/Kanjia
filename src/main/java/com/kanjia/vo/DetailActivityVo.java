@@ -23,6 +23,8 @@ public class DetailActivityVo {
 
     private Date activityTime;
 
+    private Long glance;
+
     private Integer limitNumber;
 
     private Integer soldNumber;
@@ -224,6 +226,14 @@ public class DetailActivityVo {
 
     public void setActivityDescriptionVos(List<ActivityDescriptionVo> activityDescriptionVos) {
         this.activityDescriptionVos = activityDescriptionVos;
+    }
+
+    public Long getGlance() {
+        return glance;
+    }
+
+    public void setGlance(Long glance) {
+        this.glance = glance;
     }
 }
 

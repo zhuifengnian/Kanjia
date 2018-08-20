@@ -42,6 +42,8 @@ public class PageActivityVo {
     private Integer state;
     private Date activityTime;
 
+    private Long glance;
+
     public Integer getId() {
         return id;
     }
@@ -183,5 +185,13 @@ public class PageActivityVo {
 
     public void setActivityTime(Date activityTime) {
         this.activityTime = activityTime;
+    }
+
+    public Long getGlance() {
+        return glance;
+    }
+
+    public void setGlance(Long glance) {
+        this.glance = glance;
     }
 }
