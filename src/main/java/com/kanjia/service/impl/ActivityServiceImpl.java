@@ -226,17 +226,10 @@ public class ActivityServiceImpl extends AbstractBaseServiceImpl<Activity> imple
     public DetailActivityVo getDetailsActivity(Integer id) {
 
         List<DetailActivityVo> list = activityMapper.getDetailActivity(id);
-        list.get(0).setPicture(pictureMapper.getPicture(list.get(0).getId()));
         EnterpriseVo enterpriseVo=enterpriseMapper.getEnterpriseId(id);
         list.get(0).setEnterprise(enterpriseVo);
         List<ActivityDescriptionVo> activityDescriptionVos=activityDescriptionMapper.getActivityId(id);
-        for(int i=0;i<activityDescriptionVos.size();++i) {
-            List<String> picture = descriptionPictureMapper.getDescriptionId(activityDescriptionVos.get(i).getActivityId());
-
-            activityDescriptionVos.get(i).setPicture(picture);
-        }
-        list.get(0).setActivityDescription(activityDescriptionVos);
-
+        list.get(0).setDetailPicture(descriptionPictureMapper.getDescriptionId(list.get(0).getId()));
         List<String> list1=userOrderMapper.getOrdersPicture(id);
         list.get(0).setHeadSculptureCount(list1.size());
         if(list1.size()>5) {
@@ -246,6 +239,7 @@ public class ActivityServiceImpl extends AbstractBaseServiceImpl<Activity> imple
 
         return list.get(0);
     }
+
 
 
 }

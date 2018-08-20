@@ -1,10 +1,5 @@
 package com.kanjia.vo;
 
-import com.kanjia.pojo.Enterprise;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -18,11 +13,11 @@ public class DetailActivityVo {
 
     private String title;
 
-    private List<String> picture;
+    private String picture;
 
     private String address;
 
-
+    private List<String> detailPicture;
     private Date activityTime;
 
     private Integer limitNumber;
@@ -69,13 +64,6 @@ public class DetailActivityVo {
         this.title = title;
     }
 
-    public List<String> getPicture() {
-        return picture;
-    }
-
-    public void setPicture(List<String> picture) {
-        this.picture = picture;
-    }
 
 
 
@@ -210,4 +198,21 @@ public class DetailActivityVo {
     public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public List<String> getDetailPicture() {
+        return detailPicture;
+    }
+
+    public void setDetailPicture(List<String> detailPicture) {
+        this.detailPicture = detailPicture;
+    }
 }
+
