@@ -577,6 +577,7 @@
         and uo.state = 6
       </when>
     </choose>
+    order by oid desc
     <if test="page != null and page.start != null and page.pageSize!=null">
       limit #{page.start},#{page.pageSize}
     </if>

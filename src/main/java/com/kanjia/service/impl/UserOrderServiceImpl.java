@@ -10,10 +10,7 @@ import com.kanjia.utils.OrderUtils;
 import com.kanjia.utils.ReflectUtil;
 import com.kanjia.utils.TimeUtil;
 import com.kanjia.vo.*;
-import com.kanjia.vo.ordervo.OrderActivityVO;
-import com.kanjia.vo.ordervo.OrderDataVO;
-import com.kanjia.vo.ordervo.OrderDetailVO2;
-import com.kanjia.vo.ordervo.OrderKanjiaActivityVO;
+import com.kanjia.vo.ordervo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -235,18 +232,21 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
         }
         List<UserOrder> select = userOrderMapper.select(ReflectUtil.generalMap(userOrder));
         if(select.size() > 0){
-            return new ReturnMessage(ResponseCode.SERVICE_NOT_ALLOWED, "该商品您有一个订单尚未付款，请先去付款");
+            OrderNotAllowedPayVO orderNotAllowedPayVO = new OrderNotAllowedPayVO();
+            orderNotAllowedPayVO.setMsg("该商品您有一个订单尚未付款，请先去付款");
+            orderNotAllowedPayVO.setOid(select.get(0).getId());
+            return new ReturnMessage(ResponseCode.SERVICE_NOT_ALLOWED, orderNotAllowedPayVO);
         }
 
         UserOrder tmpOrder = new UserOrder();
         tmpOrder.setUserId(uid);
         tmpOrder.setActivityId(aid);
 
-        if(activity.getTypes() == null || Const.ACTIVITY_TYPE_BUY == activity.getTypes()){
-            tmpOrder.setCurrentPrice(activity.getMinuPrice());  //直接购买的当前价为现价
+        if(activity.getTypes() == null || Const.ACTIVITY_TYPE_BUY == activity.getTypes() || Const.ACTIVITY_TYPE_PIN_TUAN == activity.getTypes()){
+            tmpOrder.setCurrentPrice(activity.getMinuPrice());  //直接购买或拼团的当前价为现价
             tmpOrder.setState(Const.ORDER_STATUS_WAITING_PAY);
         }else{
-            tmpOrder.setCurrentPrice(activity.getOriginPrice());//砍价或拼团的当前价为原价
+            tmpOrder.setCurrentPrice(activity.getOriginPrice());//砍价的当前价为原价
             tmpOrder.setState(Const.ORDER_STATUS_ENGAGING);    //初始化订单状态为正在砍价
         }
         tmpOrder.setQrCode(TimeUtil.random9Number());  //生成随机9位数二维码
