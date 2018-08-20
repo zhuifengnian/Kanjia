@@ -418,11 +418,13 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
 
     @Override
     public int[] getCurrentPrice(String order_number) {
-        int []insert=new int[2];
+        int []insert=new int[3];
         UserOrder userOrder= userOrderMapper.getCurrentPrice(order_number);
-        userOrder.setState(Const.ORDER_STATUS_HAS_CONSUME);
-        userOrder.setUpdateTime(Calendar.getInstance().getTime());
-        userOrderMapper.updateByPrimaryKey(userOrder);
+        if(userOrder!=null) {
+            userOrder.setState(Const.ORDER_STATUS_HAS_CONSUME);
+            userOrder.setUpdateTime(Calendar.getInstance().getTime());
+           insert[0]= userOrderMapper.updateByPrimaryKey(userOrder);
+        }
         Activity activity= activityMapper.selectByPrimaryKey(userOrder.getActivityId());
 
         EnterprisePayment enterprisePayment=enterprisePaymentService.getEnterprisePayment(activity.getEnterpriseId());
@@ -433,7 +435,7 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
            enterprisePayment.setTotalMoney(userOrder.getCurrentPrice());
 
        }
-     insert[0]=  enterprisePaymentService.updateByPrimaryKeySelective(enterprisePayment);
+     insert[1]=  enterprisePaymentService.updateByPrimaryKeySelective(enterprisePayment);
 
       EnterpriseBill enterpriseBill=new EnterpriseBill();
       enterpriseBill.setCreateTime(Calendar.getInstance().getTime());
@@ -445,7 +447,7 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
         enterpriseBill.setType("收入");
         String billnumber=String.valueOf(Calendar.getInstance().getTimeInMillis())+ userOrder.getId();
         enterpriseBill.setBillNumber(billnumber);
-       insert[1]= enterpriseBillService.insertSelective(enterpriseBill);
+       insert[2]= enterpriseBillService.insertSelective(enterpriseBill);
         return insert;
     }
 
