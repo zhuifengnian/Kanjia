@@ -21,5 +21,5 @@ public interface DescriptionPictureMapper extends BaseMapper<DescriptionPicture>
      * @param activityId
      * @return
      */
-    List<DescriptionPicture> delete(Integer activityId);
+   Integer delete(Integer activityId);
 }

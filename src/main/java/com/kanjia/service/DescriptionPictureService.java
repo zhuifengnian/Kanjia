@@ -15,6 +15,6 @@ public interface DescriptionPictureService extends BaseService<DescriptionPictur
      * @param activityId
      * @return
      */
-    List<DescriptionPicture> delete(Integer activityId);
+    Integer delete(Integer activityId);
 
 }

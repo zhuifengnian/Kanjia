@@ -20,7 +20,7 @@ public class DescriptionPictureServiceImpl extends AbstractBaseServiceImpl<Descr
 
 
     @Override
-    public List<DescriptionPicture> delete(Integer activityId) {
+    public Integer delete(Integer activityId) {
         return descriptionPictureMapper.delete(activityId);
     }
 }
