@@ -22,12 +22,13 @@
       <arg column="longitude" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="latitude" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="province_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="gender" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
     id, nickname, open_id, enterprise_name, license, corporation, phone, card, avatarurl, 
     create_time, update_time, state, city_name, county_name, detail_Info, address, longitude, 
-    latitude, province_name
+    latitude, province_name, gender
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -46,14 +47,14 @@
       create_time, update_time, state, 
       city_name, county_name, detail_Info, 
       address, longitude, latitude, 
-      province_name)
+      province_name, gender)
     values (#{id,jdbcType=INTEGER}, #{nickname,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, 
       #{enterpriseName,jdbcType=VARCHAR}, #{license,jdbcType=VARCHAR}, #{corporation,jdbcType=VARCHAR}, 
       #{phone,jdbcType=VARCHAR}, #{card,jdbcType=VARCHAR}, #{avatarurl,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, 
       #{cityName,jdbcType=VARCHAR}, #{countyName,jdbcType=VARCHAR}, #{detailInfo,jdbcType=VARCHAR}, 
       #{address,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, 
-      #{provinceName,jdbcType=VARCHAR})
+      #{provinceName,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.kanjia.pojo.Enterprise" useGeneratedKeys="true" keyProperty="id">
     insert into enterprise
@@ -115,6 +116,9 @@
       <if test="provinceName != null" >
         province_name,
       </if>
+      <if test="gender != null" >
+        gender,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -173,6 +177,9 @@
       </if>
       <if test="provinceName != null" >
         #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -233,6 +240,9 @@
       <if test="provinceName != null" >
         province_name = #{provinceName,jdbcType=VARCHAR},
       </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -255,7 +265,8 @@
       address = #{address,jdbcType=VARCHAR},
       longitude = #{longitude,jdbcType=VARCHAR},
       latitude = #{latitude,jdbcType=VARCHAR},
-      province_name = #{provinceName,jdbcType=VARCHAR}
+      province_name = #{provinceName,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <!--根据open_id获取eid-->

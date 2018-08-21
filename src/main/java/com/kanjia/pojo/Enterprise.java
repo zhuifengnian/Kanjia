@@ -41,7 +41,9 @@ public class Enterprise {
 
     private String provinceName;
 
-    public Enterprise(Integer id, String nickname, String openId, String enterpriseName, String license, String corporation, String phone, String card, String avatarurl, Date createTime, Date updateTime, Integer state, String cityName, String countyName, String detailInfo, String address, String longitude, String latitude, String provinceName) {
+    private String gender;
+
+    public Enterprise(Integer id, String nickname, String openId, String enterpriseName, String license, String corporation, String phone, String card, String avatarurl, Date createTime, Date updateTime, Integer state, String cityName, String countyName, String detailInfo, String address, String longitude, String latitude, String provinceName, String gender) {
         this.id = id;
         this.nickname = nickname;
         this.openId = openId;
@@ -61,6 +63,7 @@ public class Enterprise {
         this.longitude = longitude;
         this.latitude = latitude;
         this.provinceName = provinceName;
+        this.gender = gender;
     }
 
     public Enterprise() {
@@ -217,5 +220,13 @@ public class Enterprise {
 
     public void setProvinceName(String provinceName) {
         this.provinceName = provinceName == null ? null : provinceName.trim();
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender == null ? null : gender.trim();
     }
 }

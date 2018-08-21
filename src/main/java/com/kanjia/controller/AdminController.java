@@ -60,6 +60,7 @@ public class AdminController {
                 enterprise.setOpenId(adminEnterpriseInfo.getOpenId());
                 enterprise.setCityName(adminEnterpriseInfo.getCity());
                 enterprise.setProvinceName(adminEnterpriseInfo.getProvince());
+                enterprise.setGender(adminEnterpriseInfo.getGender());
                 return insertAndLogin(enterprise);
             } else if (id == 2) {
                 Admin admin = new Admin();
