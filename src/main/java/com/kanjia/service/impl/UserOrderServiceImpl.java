@@ -13,6 +13,7 @@ import com.kanjia.vo.*;
 import com.kanjia.vo.ordervo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -35,6 +36,10 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
     private EnterprisePaymentService enterprisePaymentService;
     @Autowired
     private EnterpriseBillService enterpriseBillService;
+    @Autowired
+    private PintuanMapper pintuanMapper;
+    @Autowired
+    private PintuanUserOrderMapper pintuanUserOrderMapper;
 
     @Override
     public BaseMapper<UserOrder> getDao() {
@@ -222,15 +227,17 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
         }
 
         //首先判断用户是否有正在砍价的该商品
-        UserOrder userOrder = new UserOrder();
-        userOrder.setUserId(uid);
-        userOrder.setActivityId(aid);
+        UserOrder tmpOrder = new UserOrder();
+        tmpOrder.setUserId(uid);
+        tmpOrder.setActivityId(aid);
         if(activity.getTypes() == null || Const.ACTIVITY_TYPE_BUY == activity.getTypes()){
-            userOrder.setState(Const.ORDER_STATUS_WAITING_PAY);//直接购买先进入待付款状态
+            tmpOrder.setState(Const.ORDER_STATUS_WAITING_PAY);//直接购买先进入待付款状态
+        }else if(activity.getTypes() == Const.ACTIVITY_TYPE_KAN_JIA){
+            tmpOrder.setState(Const.ORDER_STATUS_ENGAGING);    //砍价类型活动状进入正在砍价
         }else{
-            userOrder.setState(Const.ORDER_STATUS_ENGAGING);    //砍价类型活动状进入正在砍价
+            tmpOrder.setState(Const.ORDER_STATUS_WAITING_PAY);  //拼团的活动默认也是进入这个状态
         }
-        List<UserOrder> select = userOrderMapper.select(ReflectUtil.generalMap(userOrder));
+        List<UserOrder> select = userOrderMapper.select(ReflectUtil.generalMap(tmpOrder));
         if(select.size() > 0){
             OrderNotAllowedPayVO orderNotAllowedPayVO = new OrderNotAllowedPayVO();
             orderNotAllowedPayVO.setMsg("该商品您有一个订单尚未付款，请先去付款");
@@ -238,24 +245,41 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
             return new ReturnMessage(ResponseCode.SERVICE_NOT_ALLOWED, orderNotAllowedPayVO);
         }
 
-        UserOrder tmpOrder = new UserOrder();
-        tmpOrder.setUserId(uid);
-        tmpOrder.setActivityId(aid);
+        UserOrder userOrder = new UserOrder();
+        userOrder.setUserId(uid);
+        userOrder.setActivityId(aid);
 
-        if(activity.getTypes() == null || Const.ACTIVITY_TYPE_BUY == activity.getTypes() || Const.ACTIVITY_TYPE_PIN_TUAN == activity.getTypes()){
-            tmpOrder.setCurrentPrice(activity.getMinuPrice());  //直接购买或拼团的当前价为现价
-            tmpOrder.setState(Const.ORDER_STATUS_WAITING_PAY);
-        }else{
-            tmpOrder.setCurrentPrice(activity.getOriginPrice());//砍价的当前价为原价
-            tmpOrder.setState(Const.ORDER_STATUS_ENGAGING);    //初始化订单状态为正在砍价
-        }
-        tmpOrder.setQrCode(TimeUtil.random9Number());  //生成随机9位数二维码
+        userOrder.setQrCode(TimeUtil.random9Number());  //生成随机9位数二维码
         //生成订单编号,规则为aid加时间戳，加uid
         String orderNumber = "" + aid + TimeUtil.currentTimeStamp() + uid;
-        tmpOrder.setOrderNumber(orderNumber);
-        userOrderMapper.insert(tmpOrder);
+        userOrder.setOrderNumber(orderNumber);
 
-        return new ReturnMessage(ResponseCode.OK, tmpOrder.getId());
+        if(activity.getTypes() == null || Const.ACTIVITY_TYPE_BUY == activity.getTypes()){
+            userOrder.setCurrentPrice(activity.getMinuPrice());  //直接购买或拼团的当前价为现价
+            userOrder.setState(Const.ORDER_STATUS_WAITING_PAY);
+            userOrderMapper.insert(userOrder);
+        }else if(Const.ACTIVITY_TYPE_KAN_JIA == activity.getTypes()){
+            userOrder.setCurrentPrice(activity.getOriginPrice());//砍价的当前价为原价
+            userOrder.setState(Const.ORDER_STATUS_ENGAGING);    //初始化订单状态为正在砍价
+            userOrderMapper.insert(userOrder);
+        }else if(Const.ACTIVITY_TYPE_PIN_TUAN == activity.getTypes()){
+            userOrder.setCurrentPrice(activity.getMinuPrice());
+            userOrder.setState(Const.ORDER_STATUS_WAITING_PAY);
+            userOrderMapper.insert(userOrder);
+            Integer oid = userOrder.getId();
+
+            //如果为拼团类型的活动，则其为团长，并且需要在团表中插入数据，并在团与订单的关系表中插入数据
+            Pintuan pintuan = new Pintuan();
+            pintuan.setPintuanLeaderId(uid);
+            pintuanMapper.insertSelective(pintuan);
+
+            Integer gid = pintuan.getId();
+            PintuanUserOrder groupUserOrder = new PintuanUserOrder();
+            groupUserOrder.setPintuanId(gid);
+            groupUserOrder.setOrderId(oid);
+            pintuanUserOrderMapper.insertSelective(groupUserOrder);
+        }
+        return new ReturnMessage(ResponseCode.OK, userOrder.getId());
     }
 
     @Override
@@ -484,7 +508,12 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
         //开始修改状态
         UserOrder tmpOrder = new UserOrder();
         tmpOrder.setId(oid);
-        tmpOrder.setState(Const.ORDER_STATUS_WAITING_CONCUMUE);
+        //如果是拼团的订单，支付完后进入正在拼团的状态，否则为待消费状态
+        if(Const.ACTIVITY_TYPE_KAN_JIA == userOrder.getState()){
+            tmpOrder.setState(Const.ORDER_STATUS_ENGAGING);
+        }else{
+            tmpOrder.setState(Const.ORDER_STATUS_WAITING_CONCUMUE);
+        }
         int i = userOrderMapper.updateByPrimaryKeySelective(tmpOrder);
         return new ReturnMessage(ResponseCode.OK, i);
     }

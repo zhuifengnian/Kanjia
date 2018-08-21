@@ -2,8 +2,10 @@ package com.hust.party.test.servicetest;
 
 import com.kanjia.basic.Const;
 import com.kanjia.basic.PageInfo;
+import com.kanjia.basic.ReturnMessage;
 import com.kanjia.mapper.ActivityMapper;
 import com.kanjia.mapper.HelpUserMapper;
+import com.kanjia.mapper.PintuanMapper;
 import com.kanjia.pojo.Activity;
 import com.kanjia.pojo.ActivityDescription;
 import com.kanjia.pojo.EnterpriseBill;
@@ -51,6 +53,8 @@ public class ServiceTest {
     private ActivityMapper activityMapper;
     @Autowired
     private EnterpriseBillService enterpriseBillService;
+    @Autowired
+    private PintuanService pintuanService;
 
     @Test
     public void testUserService() {
@@ -127,6 +131,18 @@ public class ServiceTest {
     public void userOrderService2(){
         OrderDetailVO2 orderDetail2 = userOrderService.getOrderDetail2(29);
         System.out.println(orderDetail2);
+    }
+
+    @Test
+    public void testGenerateGroupOrder(){
+        ReturnMessage returnMessage = userOrderService.generateOrder(3, 2);
+        System.out.println(returnMessage);
+    }
+
+    @Test
+    public void testGetPintunId(){
+        Integer pintuanId = pintuanService.getPintuanId(67);
+        System.out.println(pintuanId);
     }
 
 }

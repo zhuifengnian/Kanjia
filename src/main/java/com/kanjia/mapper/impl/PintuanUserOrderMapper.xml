@@ -1,52 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.kanjia.mapper.GroupMapper" >
-  <resultMap id="BaseResultMap" type="com.kanjia.pojo.Group" >
+<mapper namespace="com.kanjia.mapper.PintuanUserOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.kanjia.pojo.PintuanUserOrder" >
     <constructor >
       <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="activity_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="current_price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
-      <arg column="group_leader_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="pintuan_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="order_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="state" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    id, activity_id, current_price, group_leader_id, state, create_time, update_time
+    id, pintuan_id, order_id, state, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from group
+    from pintuan_user_order
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from group
+    delete from pintuan_user_order
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.kanjia.pojo.Group" >
-    insert into group (id, activity_id, current_price, 
-      group_leader_id, state, create_time, 
-      update_time)
-    values (#{id,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{currentPrice,jdbcType=DECIMAL}, 
-      #{groupLeaderId,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+  <insert id="insert" parameterType="com.kanjia.pojo.PintuanUserOrder" useGeneratedKeys="true" keyProperty="id">
+    insert into pintuan_user_order (id, pintuan_id, order_id, 
+      state, create_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{pintuanId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, 
+      #{state,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.kanjia.pojo.Group" >
-    insert into group
+  <insert id="insertSelective" parameterType="com.kanjia.pojo.PintuanUserOrder" useGeneratedKeys="true" keyProperty="id">
+    insert into pintuan_user_order
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
       </if>
-      <if test="activityId != null" >
-        activity_id,
+      <if test="pintuanId != null" >
+        pintuan_id,
       </if>
-      <if test="currentPrice != null" >
-        current_price,
-      </if>
-      <if test="groupLeaderId != null" >
-        group_leader_id,
+      <if test="orderId != null" >
+        order_id,
       </if>
       <if test="state != null" >
         state,
@@ -62,14 +58,11 @@
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="activityId != null" >
-        #{activityId,jdbcType=INTEGER},
+      <if test="pintuanId != null" >
+        #{pintuanId,jdbcType=INTEGER},
       </if>
-      <if test="currentPrice != null" >
-        #{currentPrice,jdbcType=DECIMAL},
-      </if>
-      <if test="groupLeaderId != null" >
-        #{groupLeaderId,jdbcType=INTEGER},
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
       </if>
       <if test="state != null" >
         #{state,jdbcType=INTEGER},
@@ -82,17 +75,14 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.kanjia.pojo.Group" >
-    update group
+  <update id="updateByPrimaryKeySelective" parameterType="com.kanjia.pojo.PintuanUserOrder" >
+    update pintuan_user_order
     <set >
-      <if test="activityId != null" >
-        activity_id = #{activityId,jdbcType=INTEGER},
+      <if test="pintuanId != null" >
+        pintuan_id = #{pintuanId,jdbcType=INTEGER},
       </if>
-      <if test="currentPrice != null" >
-        current_price = #{currentPrice,jdbcType=DECIMAL},
-      </if>
-      <if test="groupLeaderId != null" >
-        group_leader_id = #{groupLeaderId,jdbcType=INTEGER},
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
       </if>
       <if test="state != null" >
         state = #{state,jdbcType=INTEGER},
@@ -106,11 +96,10 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.kanjia.pojo.Group" >
-    update group
-    set activity_id = #{activityId,jdbcType=INTEGER},
-      current_price = #{currentPrice,jdbcType=DECIMAL},
-      group_leader_id = #{groupLeaderId,jdbcType=INTEGER},
+  <update id="updateByPrimaryKey" parameterType="com.kanjia.pojo.PintuanUserOrder" >
+    update pintuan_user_order
+    set pintuan_id = #{pintuanId,jdbcType=INTEGER},
+      order_id = #{orderId,jdbcType=INTEGER},
       state = #{state,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}

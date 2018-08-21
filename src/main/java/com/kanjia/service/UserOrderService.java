@@ -8,6 +8,7 @@ import com.kanjia.pojo.UserOrder;
 import com.kanjia.vo.*;
 import com.kanjia.vo.ordervo.OrderDetailVO2;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.List;
