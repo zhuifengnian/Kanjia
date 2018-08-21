@@ -46,9 +46,13 @@ public class EnterpriseController {
     @ResponseBody
     @RequestMapping(value = "/insertActivity", method = RequestMethod.POST)
     public ReturnMessage insertActivity(Activity activity, @RequestParam("enterpriseId") Integer enterpriseId) {
-        activity.setEnterpriseId(enterpriseId);
-        activity.setState(1);
-        Integer insert = activityService.insert(activity);
+
+            activity.setEnterpriseId(enterpriseId);
+            activity.setState(1);
+          Integer  insert = activityService.insert(activity);
+
+
+
         return new ReturnMessage(ResponseCode.OK, insert);
     }
     @ApiOperation(value = "活动下架", notes = "活动下架")
@@ -216,7 +220,6 @@ public class EnterpriseController {
     @ApiOperation(value = "修改企业信息", httpMethod = "POST")
     @ResponseBody
     public ReturnMessage modifyEnterpriseinfo(Enterprise enterprise) {
-
         int insert=enterpriseService.updateByPrimaryKeySelective(enterprise);
 
         return new ReturnMessage(ResponseCode.OK, insert);

@@ -141,8 +141,8 @@ public class ServiceTest {
 
     @Test
     public void testGetPintunId(){
-        Integer pintuanId = pintuanService.getPintuanId(67);
-        System.out.println(pintuanId);
+      //  Integer pintuanId = pintuanService.getPintuanId(67);
+      //  System.out.println(pintuanId);
     }
 
 }

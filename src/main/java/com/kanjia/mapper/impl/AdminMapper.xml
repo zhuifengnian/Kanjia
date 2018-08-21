@@ -26,7 +26,7 @@
     delete from admin
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.kanjia.pojo.Admin" >
+  <insert id="insert" parameterType="com.kanjia.pojo.Admin" useGeneratedKeys="true" keyProperty="id">
     insert into admin (id, nickname, avatarurl, 
       open_id, state, identity, 
       create_time, update_time)
@@ -34,7 +34,7 @@
       #{openId,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{identity,jdbcType=INTEGER}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.kanjia.pojo.Admin" >
+  <insert id="insertSelective" parameterType="com.kanjia.pojo.Admin" useGeneratedKeys="true" keyProperty="id">
     insert into admin
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -127,4 +127,23 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <!--根据open_id获取eid-->
+  <select id="getId" resultType="Integer">
+    select id from admin where  1=1 and open_id = #{openId}
+  </select>
+  <select id="getListEnterprise" resultType="com.kanjia.vo.adminvo.AdminVo">
+    select  id,nickname,avatarurl
+    from enterprise
+    where 1=1
+    order by id desc
+    <if test="start != null and pageSize!=null">
+      limit #{start},#{pageSize}
+    </if>
+  </select>
+  <select id="getListEnterpriseCount" resultType="Integer">
+    select  count(1)
+    from enterprise
+
+
+  </select>
 </mapper>
