@@ -51,8 +51,6 @@ public class EnterpriseController {
             activity.setState(1);
           Integer  insert = activityService.insert(activity);
 
-
-
         return new ReturnMessage(ResponseCode.OK, insert);
     }
     @ApiOperation(value = "活动下架", notes = "活动下架")
