@@ -45,9 +45,10 @@ public class DescriptionController {
 
         List<ActivityDescription>  activityDescriptionList= JsonUtil.checkUserIdJson(json);
         int[] insert = new int[activityDescriptionList.size()];
+
         if(activityDescriptionList!=null) {
             activityDescriptionService.delete(activityDescriptionList.get(0).getActivityId());
-
+            descriptionPictureService.delete(activityDescriptionList.get(0).getActivityId());
             for (int i = 0; i < activityDescriptionList.size(); ++i) {
                 insert[i] = activityDescriptionService.insert(activityDescriptionList.get(i));
             }
@@ -59,7 +60,7 @@ public class DescriptionController {
     @ApiOperation(value = "存储活动详情图片信息")
     @ResponseBody
     public ReturnMessage insertDescriptionPicture(@RequestParam("activityId") Integer activityId, @RequestParam(value = "picture", required = false) MultipartFile flfile) {
-     descriptionPictureService.delete(activityId);
+
         String picture = "";
         DescriptionPicture descriptionPicture = new DescriptionPicture();
         descriptionPicture.setActivityId(activityId);
