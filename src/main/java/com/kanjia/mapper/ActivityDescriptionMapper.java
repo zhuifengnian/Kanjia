@@ -15,4 +15,11 @@ public interface ActivityDescriptionMapper  extends BaseMapper<ActivityDescripti
      * @return
      */
     List<ActivityDescriptionVo> getActivityId(int aid);
+
+    /**
+     * 删除数据库中数据
+     * @param activityId
+     * @return
+     */
+    Integer delete(Integer activityId);
 }

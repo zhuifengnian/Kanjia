@@ -7,6 +7,8 @@ import com.kanjia.service.DescriptionPictureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DescriptionPictureServiceImpl extends AbstractBaseServiceImpl<DescriptionPicture> implements DescriptionPictureService  {
    @Autowired
@@ -14,5 +16,11 @@ public class DescriptionPictureServiceImpl extends AbstractBaseServiceImpl<Descr
     @Override
     public BaseMapper<DescriptionPicture> getDao() {
         return descriptionPictureMapper;
+    }
+
+
+    @Override
+    public List<DescriptionPicture> delete(Integer activityId) {
+        return descriptionPictureMapper.delete(activityId);
     }
 }

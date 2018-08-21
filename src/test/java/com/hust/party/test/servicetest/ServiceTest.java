@@ -55,6 +55,8 @@ public class ServiceTest {
     private EnterpriseBillService enterpriseBillService;
     @Autowired
     private PintuanService pintuanService;
+    @Autowired
+    private ActivityDescriptionService activityDescriptionService;
 
     @Test
     public void testUserService() {
@@ -143,6 +145,7 @@ public class ServiceTest {
     public void testGetPintunId(){
       //  Integer pintuanId = pintuanService.getPintuanId(67);
       //  System.out.println(pintuanId);
+        activityDescriptionService.delete(1);
     }
 
 }

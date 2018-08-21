@@ -16,4 +16,9 @@ public class ActivityDescriptionServiceImpl extends AbstractBaseServiceImpl<Acti
     public BaseMapper<ActivityDescription> getDao() {
         return activityDescriptionMapper;
     }
+
+    @Override
+    public Integer delete(Integer activityId) {
+        return activityDescriptionMapper.delete(activityId);
+    }
 }

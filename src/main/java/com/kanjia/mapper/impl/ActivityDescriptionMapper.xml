@@ -113,4 +113,8 @@
     where 1=1
     and ad.activity_id=#{aid}
   </select>
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from activity_decription
+    where  activity_id =#{activityId}
+  </delete>
 </mapper>

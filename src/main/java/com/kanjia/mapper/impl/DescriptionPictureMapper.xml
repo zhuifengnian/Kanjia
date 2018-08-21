@@ -98,4 +98,14 @@
     from description_picture
     where activity_id=#{did}
   </select>
+  <!--获得列表-->
+  <select id="getDescriptionPicture" resultType="com.kanjia.pojo.DescriptionPicture">
+    select *
+    from description_picture
+    where activity_id=#{activityId}
+  </select>
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from description_picture
+    where  activity_id =#{activityId}
+  </delete>
 </mapper>

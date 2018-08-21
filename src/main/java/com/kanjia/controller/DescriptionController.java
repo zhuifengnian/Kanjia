@@ -41,8 +41,17 @@ public class DescriptionController {
     @RequestMapping(value = "/modifyDscription", method = RequestMethod.POST)
     @ApiOperation(value = "修改活动详情", httpMethod = "POST")
     @ResponseBody
-    public ReturnMessage modifyDscription(ActivityDescription activityDescription) {
-       int insert= activityDescriptionService.updateByPrimaryKeySelective(activityDescription);
+    public ReturnMessage modifyDscription(@RequestBody String json) {
+
+        List<ActivityDescription>  activityDescriptionList= JsonUtil.checkUserIdJson(json);
+        int[] insert = new int[activityDescriptionList.size()];
+        if(activityDescriptionList!=null) {
+            activityDescriptionService.delete(activityDescriptionList.get(0).getActivityId());
+
+            for (int i = 0; i < activityDescriptionList.size(); ++i) {
+                insert[i] = activityDescriptionService.insert(activityDescriptionList.get(i));
+            }
+        }
         return new ReturnMessage(ResponseCode.OK, insert);
     }
 
@@ -50,6 +59,7 @@ public class DescriptionController {
     @ApiOperation(value = "存储活动详情图片信息")
     @ResponseBody
     public ReturnMessage insertDescriptionPicture(@RequestParam("activityId") Integer activityId, @RequestParam(value = "picture", required = false) MultipartFile flfile) {
+     descriptionPictureService.delete(activityId);
         String picture = "";
         DescriptionPicture descriptionPicture = new DescriptionPicture();
         descriptionPicture.setActivityId(activityId);

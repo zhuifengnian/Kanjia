@@ -15,4 +15,11 @@ public interface DescriptionPictureMapper extends BaseMapper<DescriptionPicture>
      * @return
      */
     List<String>  getDescriptionId(int did);
+
+    /**
+     * 删除图片
+     * @param activityId
+     * @return
+     */
+    List<DescriptionPicture> delete(Integer activityId);
 }

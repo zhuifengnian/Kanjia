@@ -258,7 +258,16 @@ public class EnterpriseController {
         try {
             httpClient.httpGetMethod(tmpUrl);
             String resContent = httpClient.getResContent();
-            return new ReturnMessage(ResponseCode.OK, resContent);
+            String []ret=new String[2];
+            ret[0]=resContent;
+          Integer insert= enterpriseService.getId(resContent);
+          if(insert!=null){
+              ret[1]="2";
+          }
+          else{
+              ret[2]="1";
+          }
+            return new ReturnMessage(ResponseCode.OK, ret);
         } catch (IOException e) {
             throw new ApiException(ResponseCode.NETWORK_ERROR, "网络请求出现错误");
         }
