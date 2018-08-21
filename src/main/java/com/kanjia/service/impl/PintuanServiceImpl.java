@@ -1,5 +1,7 @@
 package com.kanjia.service.impl;
 
+import com.kanjia.basic.ResponseCode;
+import com.kanjia.basic.ReturnMessage;
 import com.kanjia.mapper.BaseMapper;
 import com.kanjia.mapper.PintuanMapper;
 import com.kanjia.pojo.Pintuan;
@@ -24,8 +26,8 @@ public class PintuanServiceImpl extends AbstractBaseServiceImpl<Pintuan> impleme
 
 
     @Override
-    public Integer getPintuanId(Integer oid) {
-
-        return pintuanMapper.getPintuanId(oid);
+    public ReturnMessage getPintuanId(Integer oid) {
+        Integer pintuanId = pintuanMapper.getPintuanId(oid);
+        return new ReturnMessage(ResponseCode.OK, pintuanId);
     }
 }

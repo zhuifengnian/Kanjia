@@ -1,5 +1,6 @@
 package com.kanjia.service;
 
+import com.kanjia.basic.ReturnMessage;
 import com.kanjia.pojo.Pintuan;
 
 /**
@@ -15,6 +16,6 @@ public interface PintuanService extends BaseService<Pintuan>{
     /**
      * 根据订单号查询所在的团号
      */
-    Integer getPintuanId(Integer oid);
+    ReturnMessage getPintuanId(Integer oid);
 
 }
