@@ -48,11 +48,19 @@ public class DescriptionController {
 
         if(activityDescriptionList!=null) {
             activityDescriptionService.delete(activityDescriptionList.get(0).getActivityId());
-            descriptionPictureService.delete(activityDescriptionList.get(0).getActivityId());
             for (int i = 0; i < activityDescriptionList.size(); ++i) {
                 insert[i] = activityDescriptionService.insert(activityDescriptionList.get(i));
             }
         }
+        return new ReturnMessage(ResponseCode.OK, insert);
+    }
+    @RequestMapping(value = "/deleteDescriptionPicture", method = RequestMethod.POST)
+    @ApiOperation(value = "删除活动详情图片信息")
+    @ResponseBody
+    public ReturnMessage deleteDescriptionPicture(@RequestParam("activityId") Integer activityId) {
+
+      Integer insert=  descriptionPictureService.delete(activityId);
+
         return new ReturnMessage(ResponseCode.OK, insert);
     }
 
