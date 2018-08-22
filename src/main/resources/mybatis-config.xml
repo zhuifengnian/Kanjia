@@ -10,6 +10,7 @@
     <typeAliases>
         <package name="com.kanjia.pojo"/>
         <package name="com.kanjia.vo"/>
+        <package name="com.kanjia.dto"/>
     </typeAliases>
 
 </configuration>

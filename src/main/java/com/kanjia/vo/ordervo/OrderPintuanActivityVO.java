@@ -8,5 +8,13 @@ import lombok.Data;
  */
 @Data
 public class OrderPintuanActivityVO extends OrderActivityVO{
+    private Integer pintuanSize;    //团的大小
 
+    private String address; //活动地址
+
+    private Float latitude;//纬度
+
+    private Float longitude;    //经度
+
+    private String phone;   //电话
 }

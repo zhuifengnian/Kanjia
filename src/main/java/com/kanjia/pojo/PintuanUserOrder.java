@@ -1,8 +1,14 @@
 package com.kanjia.pojo;
 
-import java.util.Date;
+import com.kanjia.basic.Const;
+import com.kanjia.basic.Observer;
+import com.kanjia.mapper.PintuanUserOrderMapper;
+import com.kanjia.mapper.UserOrderMapper;
 
-public class PintuanUserOrder {
+import java.util.Date;
+import java.util.Observable;
+
+public class PintuanUserOrder implements Observer {
     private Integer id;
 
     private Integer pintuanId;
@@ -74,5 +80,13 @@ public class PintuanUserOrder {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    @Override
+    public void update(Object obj, Object obj2) {
+        UserOrder userOrder = new UserOrder();
+        userOrder.setId((Integer) obj2);
+        userOrder.setState(Const.ORDER_STATUS_WAITING_CONCUMUE);
+        ((UserOrderMapper)obj).updateByPrimaryKeySelective(userOrder);
     }
 }

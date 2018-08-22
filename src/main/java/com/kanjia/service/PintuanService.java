@@ -18,4 +18,13 @@ public interface PintuanService extends BaseService<Pintuan>{
      */
     ReturnMessage getPintuanId(Integer oid);
 
+    /**
+     * 将拼团订单插入到团中
+     */
+    ReturnMessage insertOrderToPintuan(Integer tuanid, Integer oid);
+
+    /**
+     * 获取拼团信息
+     */
+    ReturnMessage getPintuanInfo(Integer tuanid);
 }

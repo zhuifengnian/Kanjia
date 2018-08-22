@@ -20,7 +20,7 @@ public class OrderDetailVO {
 
     private Integer aid;    //活动id
 
-    private OrderDetailUserVO orderDetailUserVO;    //用户数据
+    private OrderUserVO orderUserVO;    //用户数据
 
     private OrderDetailEnterpriseVO orderDetailEnterpriseVO;    //商户数据
 

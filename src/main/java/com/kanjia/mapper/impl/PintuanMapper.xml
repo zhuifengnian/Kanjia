@@ -93,7 +93,58 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
+  <!-- 分页查詢 -->
+  <select id="select" parameterType="Map" resultMap="BaseResultMap">
+    SELECT *
+    FROM pintuan
+    WHERE 1=1
+    <if test="pintuanLeaderId != null" >
+      and pintuan_leader_id = #{pintuanLeaderId,jdbcType=INTEGER}
+    </if>
+    <if test="state != null" >
+      and state = #{state,jdbcType=INTEGER}
+    </if>
+    <if test="createTime != null" >
+      and create_time = #{createTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="updateTime != null" >
+      and update_time = #{updateTime,jdbcType=TIMESTAMP}
+    </if>
+  </select>
+  <!-- 查詢数量 -->
+  <select id="selectCount" parameterType="com.kanjia.pojo.User"
+          resultType="Integer">
+    SELECT count(*)
+    FROM pintuan
+    WHERE 1=1
+    <if test="pintuanLeaderId != null" >
+      and pintuan_leader_id = #{pintuanLeaderId,jdbcType=INTEGER}
+    </if>
+    <if test="state != null" >
+      and state = #{state,jdbcType=INTEGER}
+    </if>
+    <if test="createTime != null" >
+      and create_time = #{createTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="updateTime != null" >
+      and update_time = #{updateTime,jdbcType=TIMESTAMP}
+    </if>
+  </select>
+
   <select id="getPintuanId" parameterType="int" resultType="int">
     select pintuan_id from pintuan_user_order where order_id = #{oid} limit 1
+  </select>
+
+  <select id="getOrderCount" parameterType="int" resultType="int">
+    select count(1) from pintuan_user_order where pintuan_id = #{tuanid} and state = 1
+  </select>
+
+  <select id="getPintuanUser" parameterType="int" resultType="orderUserVO">
+    select u.uid, u.nickname, u.avatarurl from pintuan_user_order puo inner join user_order uo on puo.order_id = uo.id
+        left join user u on uo.user_id = u.id limit 3
+  </select>
+
+  <select id="getPintuanInfo" parameterType="int" resultType="pintuanInfoDto">
+    select
   </select>
 </mapper>

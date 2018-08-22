@@ -1,4 +1,4 @@
-package com.hust.party.test.servicetest;
+package com.hust.party.test.othertest;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;

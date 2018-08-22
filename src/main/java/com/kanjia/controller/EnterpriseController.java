@@ -1,5 +1,8 @@
 package com.kanjia.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.kanjia.basic.Const;
 import com.kanjia.basic.PageInfo;
 import com.kanjia.basic.ResponseCode;
@@ -17,6 +20,8 @@ import com.kanjia.vo.*;
 import com.kanjia.wxpay.ConstantUtil;
 import com.kanjia.wxpay.TenpayHttpClient;
 import io.swagger.annotations.ApiOperation;
+import net.sf.json.JSONObject;
+import net.sf.json.util.JSONBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -256,9 +261,8 @@ public class EnterpriseController {
         try {
             httpClient.httpGetMethod(tmpUrl);
             String resContent = httpClient.getResContent();
-            String [] split=resContent.split(" ");
-            String [] split1=split[1].trim().split(" ");
-            Integer integer=enterpriseService.getId(split1[1]);
+            String openid = JSONObject.fromObject(resContent).getString("openid");
+            Integer integer=enterpriseService.getId(openid);
             String []ret=new String[2];
             ret[0]=resContent;
             if(integer>0){

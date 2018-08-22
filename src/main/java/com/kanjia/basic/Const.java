@@ -32,4 +32,11 @@ public class Const {
     public static final int ACTIVITY_TYPE_down=3; //下架
     public static final int ACTIVITY_TYPE_STOCK=2; //售空
     public static final int ACTIVITY_TYPE_DELETE=0; //上架
+
+    //pintuan表状态
+    public static final int PIN_TUAN_STATUS_CANCEL = 0; //已撤销
+    public static final int PIN_TUAN_STATUS_ENGAGING = 1; //拼团中
+    public static final int PIN_TUAN_STATUS_FINISH = 2; //已完成
+    public static final int PIN_TUAN_STATUS_EXCEED_TIME = 0; //已过期
+
 }

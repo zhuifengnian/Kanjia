@@ -32,6 +32,16 @@ public class PintuanController {
         }
     }
 
+    @ApiOperation(value = "获取拼团id", notes = "根据订单获取拼团的id")
+    @ResponseBody
+    @RequestMapping(value = "/getPintuanInfo", method = RequestMethod.POST)
+    public ReturnMessage getPintuanInfo(@RequestParam("tuanid") Integer tuanid) {
+        try {
+            return pintuanService.getPintuanInfo(tuanid);
+        } catch (Exception e) {
+            return new ReturnMessage(ResponseCode.SERVER_ERROR, "服务器内部错误");
+        }
+    }
 
 
 }

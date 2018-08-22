@@ -13,7 +13,6 @@ import com.kanjia.vo.*;
 import com.kanjia.vo.ordervo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -240,7 +239,11 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
         List<UserOrder> select = userOrderMapper.select(ReflectUtil.generalMap(tmpOrder));
         if(select.size() > 0){
             OrderNotAllowedPayVO orderNotAllowedPayVO = new OrderNotAllowedPayVO();
-            orderNotAllowedPayVO.setMsg("该商品您有一个订单尚未付款，请先去付款");
+            if(tmpOrder.getState() == Const.ORDER_STATUS_ENGAGING){
+                orderNotAllowedPayVO.setMsg("您有一个同样的订单正在进行");
+            }else{
+                orderNotAllowedPayVO.setMsg("您有一个同样的订单尚未支付");
+            }
             orderNotAllowedPayVO.setOid(select.get(0).getId());
             return new ReturnMessage(ResponseCode.SERVICE_NOT_ALLOWED, orderNotAllowedPayVO);
         }
@@ -287,11 +290,11 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
         OrderDetailVO orderDetailVO = userOrderMapper.getOrderDetail(oid);
         //根据用户id获取用户信息
         User user = userMapper.selectByPrimaryKey(orderDetailVO.getUid());
-        OrderDetailUserVO orderDetailUserVO = new OrderDetailUserVO();
+        OrderUserVO orderDetailUserVO = new OrderUserVO();
         orderDetailUserVO.setUid(user.getId());
         orderDetailUserVO.setNickname(user.getNickname());
         orderDetailUserVO.setAvatarurl(user.getAvatarurl());
-        orderDetailVO.setOrderDetailUserVO(orderDetailUserVO);
+        orderDetailVO.setOrderUserVO(orderDetailUserVO);
 
         //获取订单对应的商户信息
         Activity activity = activityMapper.selectByPrimaryKey(orderDetailVO.getAid());
@@ -315,7 +318,7 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
         OrderDetailVO2 orderDetailVO2 = userOrderMapper.getOrderDetail2(oid);
         //根据用户id获取用户信息
         User user = userMapper.selectByPrimaryKey(orderDetailVO2.getUid());
-        OrderDetailUserVO orderDetailUserVO = new OrderDetailUserVO();
+        OrderUserVO orderDetailUserVO = new OrderUserVO();
         orderDetailUserVO.setUid(user.getId());
         orderDetailUserVO.setNickname(user.getNickname());
         orderDetailUserVO.setAvatarurl(user.getAvatarurl());
@@ -509,7 +512,8 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
         UserOrder tmpOrder = new UserOrder();
         tmpOrder.setId(oid);
         //如果是拼团的订单，支付完后进入正在拼团的状态，否则为待消费状态
-        if(Const.ACTIVITY_TYPE_KAN_JIA == userOrder.getState()){
+        Activity activity = activityMapper.selectByPrimaryKey(userOrder.getActivityId());
+        if(Const.ACTIVITY_TYPE_PIN_TUAN == activity.getTypes()){
             tmpOrder.setState(Const.ORDER_STATUS_ENGAGING);
         }else{
             tmpOrder.setState(Const.ORDER_STATUS_WAITING_CONCUMUE);

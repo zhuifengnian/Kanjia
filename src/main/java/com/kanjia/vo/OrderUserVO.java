@@ -7,7 +7,7 @@ import lombok.Data;
  * fan 2018/8/1 19:29
  */
 @Data
-public class OrderDetailUserVO {
+public class OrderUserVO {
 
     private Integer uid;
 

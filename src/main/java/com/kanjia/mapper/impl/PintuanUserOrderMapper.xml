@@ -105,4 +105,48 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!-- 分页查詢 -->
+  <select id="select" parameterType="Map" resultMap="BaseResultMap">
+    SELECT *
+    FROM pintuan_user_order
+    WHERE 1=1
+    <if test="pintuanId != null" >
+      and pintuan_id = #{pintuanId,jdbcType=INTEGER}
+    </if>
+    <if test="orderId != null" >
+      and order_id = #{orderId,jdbcType=INTEGER}
+    </if>
+    <if test="state != null" >
+      and state = #{state,jdbcType=INTEGER}
+    </if>
+    <if test="createTime != null" >
+      and create_time = #{createTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="updateTime != null" >
+      and update_time = #{updateTime,jdbcType=TIMESTAMP}
+    </if>
+  </select>
+  <!-- 查詢数量 -->
+  <select id="selectCount" parameterType="com.kanjia.pojo.User"
+          resultType="Integer">
+    SELECT count(*)
+    FROM pintuan_user_order
+    WHERE 1=1
+    <if test="pintuanId != null" >
+      and pintuan_id = #{pintuanId,jdbcType=INTEGER}
+    </if>
+    <if test="orderId != null" >
+      and order_id = #{orderId,jdbcType=INTEGER}
+    </if>
+    <if test="state != null" >
+      and state = #{state,jdbcType=INTEGER}
+    </if>
+    <if test="createTime != null" >
+      and create_time = #{createTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="updateTime != null" >
+      and update_time = #{updateTime,jdbcType=TIMESTAMP}
+    </if>
+  </select>
 </mapper>
