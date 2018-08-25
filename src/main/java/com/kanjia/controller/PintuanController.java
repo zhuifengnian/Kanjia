@@ -43,5 +43,25 @@ public class PintuanController {
         }
     }
 
+    @ApiOperation(value = "参团接口", notes = "根据团id和用户id来参团")
+    @ResponseBody
+    @RequestMapping(value = "/engageTuan", method = RequestMethod.POST)
+    public ReturnMessage engageTuan(@RequestParam("tuanid") Integer tuanid, @RequestParam("uid") Integer uid) {
+        try {
+            return pintuanService.insertTuan(tuanid, uid);
+        } catch (Exception e) {
+            return new ReturnMessage(ResponseCode.SERVER_ERROR, "服务器内部错误");
+        }
+    }
 
+    @ApiOperation(value = "参团人支付接口", notes = "参团人员参团后，进行支付的接口，需要先调用参团接口")
+    @ResponseBody
+    @RequestMapping(value = "/engageTuanFinishPay", method = RequestMethod.POST)
+    public ReturnMessage engageTuanFinishPay(@RequestParam("tuanid") Integer tuanid, @RequestParam("oid") Integer oid) {
+        try {
+            return pintuanService.insertTuanFinishPay(tuanid, oid);
+        } catch (Exception e) {
+            return new ReturnMessage(ResponseCode.SERVER_ERROR, "服务器内部错误");
+        }
+    }
 }

@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.kanjia.pojo.Pintuan" >
     <constructor >
       <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="activity_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="pintuan_leader_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="state" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
@@ -11,7 +12,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    id, pintuan_leader_id, state, create_time, update_time
+    id, activity_id, pintuan_leader_id, state, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -24,16 +25,21 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.kanjia.pojo.Pintuan" useGeneratedKeys="true" keyProperty="id">
-    insert into pintuan (id, pintuan_leader_id, state, 
-      create_time, update_time)
-    values (#{id,jdbcType=INTEGER}, #{pintuanLeaderId,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    insert into pintuan (id, activity_id, pintuan_leader_id, 
+      state, create_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{pintuanLeaderId,jdbcType=INTEGER}, 
+      #{state,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.kanjia.pojo.Pintuan" useGeneratedKeys="true" keyProperty="id">
     insert into pintuan
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="activityId != null" >
+        activity_id,
       </if>
       <if test="pintuanLeaderId != null" >
         pintuan_leader_id,
@@ -52,6 +58,9 @@
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
+      <if test="activityId != null" >
+        #{activityId,jdbcType=INTEGER},
+      </if>
       <if test="pintuanLeaderId != null" >
         #{pintuanLeaderId,jdbcType=INTEGER},
       </if>
@@ -69,6 +78,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.kanjia.pojo.Pintuan" >
     update pintuan
     <set >
+      <if test="activityId != null" >
+        activity_id = #{activityId,jdbcType=INTEGER},
+      </if>
       <if test="pintuanLeaderId != null" >
         pintuan_leader_id = #{pintuanLeaderId,jdbcType=INTEGER},
       </if>
@@ -86,7 +98,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.kanjia.pojo.Pintuan" >
     update pintuan
-    set pintuan_leader_id = #{pintuanLeaderId,jdbcType=INTEGER},
+    set activity_id = #{activityId,jdbcType=INTEGER},
+      pintuan_leader_id = #{pintuanLeaderId,jdbcType=INTEGER},
       state = #{state,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
@@ -140,11 +153,26 @@
   </select>
 
   <select id="getPintuanUser" parameterType="int" resultType="orderUserVO">
-    select u.uid, u.nickname, u.avatarurl from pintuan_user_order puo inner join user_order uo on puo.order_id = uo.id
-        left join user u on uo.user_id = u.id limit 3
+    select u.id as uid, u.nickname as nickname, u.avatarurl from pintuan_user_order puo
+    inner join user_order uo on puo.order_id = uo.id
+    inner join user u on uo.user_id = u.id
+    where puo.pintuan_id = #{tuanid}
+    limit 3
   </select>
 
   <select id="getPintuanInfo" parameterType="int" resultType="pintuanInfoDto">
-    select
+    select types, picture, title, origin_price as originPrice, minu_price as minuPrice,
+    limit_number as limitNumber, sold_number as soldNumber, activity_time as activityTime, cut_time as cutTime,
+    e.address, e.latitude, e.longitude, e.phone, enterprise_name as enterpriseName,
+    e.avatarurl
+    from pintuan_user_order puo
+    inner join user_order uo on puo.order_id = uo.id
+    inner join user u on uo.user_id = u.id
+    inner join activity a on a.id = uo.activity_id
+    inner join enterprise e on e.id = a.enterprise_id
+    where 1 = 1
+    and puo.pintuan_id = #{tuanid}
+    and puo.state = 1
+    limit 1
   </select>
 </mapper>

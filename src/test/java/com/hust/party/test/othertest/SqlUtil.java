@@ -102,7 +102,7 @@ public class SqlUtil {
     /**
      * 根据指定bean生成对应的field串，为集合或者数组的会被排除
      * @param flag 为0时，只生成bean串，如activityType；为1时，只生成sql field串，如activity_type；为2时，两者都生成，并用as连接
-     *             如activity_type as activityType
+     *             如activity_type as types
      */
     private static String getBeanFilesList(Class clazz, int flag){
         Field[] strs = clazz.getDeclaredFields();

@@ -148,4 +148,10 @@ public class ServiceTest {
         activityDescriptionService.delete(1);
     }
 
+    @Test
+    public void testPintuanInfo(){
+        ReturnMessage pintuanInfo = pintuanService.getPintuanInfo(5);
+        System.out.println(pintuanInfo);
+    }
+
 }

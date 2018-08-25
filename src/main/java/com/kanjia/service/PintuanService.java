@@ -11,7 +11,7 @@ public interface PintuanService extends BaseService<Pintuan>{
     /**
      * 用户参团接口
      */
-//    void engageGroup(Integer gid, Integer )
+    ReturnMessage insertTuan(Integer tuanid, Integer uid);
 
     /**
      * 根据订单号查询所在的团号
@@ -19,12 +19,15 @@ public interface PintuanService extends BaseService<Pintuan>{
     ReturnMessage getPintuanId(Integer oid);
 
     /**
-     * 将拼团订单插入到团中
-     */
-    ReturnMessage insertOrderToPintuan(Integer tuanid, Integer oid);
-
-    /**
      * 获取拼团信息
      */
     ReturnMessage getPintuanInfo(Integer tuanid);
+
+    /**
+     * 参团支付接口
+     * @param tuanid
+     * @param oid
+     * @return
+     */
+    ReturnMessage insertTuanFinishPay(Integer tuanid, Integer oid);
 }

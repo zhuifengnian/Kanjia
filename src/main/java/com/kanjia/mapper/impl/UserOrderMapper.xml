@@ -589,6 +589,10 @@
     where 1 = 1
     and uo.user_id = #{uid}
     <choose>
+      <!--全部订单，除去已删除订单-->
+      <when test="state == 100">
+        and uo.state != 0
+      </when>
       <!--正在砍价,包括砍价中和待付款的订单-->
       <when test="state == 101">
         and uo.state = 1 or uo.state = 5

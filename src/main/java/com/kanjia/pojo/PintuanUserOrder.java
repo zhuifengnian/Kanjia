@@ -8,7 +8,7 @@ import com.kanjia.mapper.UserOrderMapper;
 import java.util.Date;
 import java.util.Observable;
 
-public class PintuanUserOrder implements Observer {
+public class PintuanUserOrder {
     private Integer id;
 
     private Integer pintuanId;
@@ -82,11 +82,4 @@ public class PintuanUserOrder implements Observer {
         this.updateTime = updateTime;
     }
 
-    @Override
-    public void update(Object obj, Object obj2) {
-        UserOrder userOrder = new UserOrder();
-        userOrder.setId((Integer) obj2);
-        userOrder.setState(Const.ORDER_STATUS_WAITING_CONCUMUE);
-        ((UserOrderMapper)obj).updateByPrimaryKeySelective(userOrder);
-    }
 }

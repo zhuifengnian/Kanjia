@@ -269,18 +269,6 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
             userOrder.setCurrentPrice(activity.getMinuPrice());
             userOrder.setState(Const.ORDER_STATUS_WAITING_PAY);
             userOrderMapper.insert(userOrder);
-            Integer oid = userOrder.getId();
-
-            //如果为拼团类型的活动，则其为团长，并且需要在团表中插入数据，并在团与订单的关系表中插入数据
-            Pintuan pintuan = new Pintuan();
-            pintuan.setPintuanLeaderId(uid);
-            pintuanMapper.insertSelective(pintuan);
-
-            Integer gid = pintuan.getId();
-            PintuanUserOrder groupUserOrder = new PintuanUserOrder();
-            groupUserOrder.setPintuanId(gid);
-            groupUserOrder.setOrderId(oid);
-            pintuanUserOrderMapper.insertSelective(groupUserOrder);
         }
         return new ReturnMessage(ResponseCode.OK, userOrder.getId());
     }
@@ -386,7 +374,7 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
 
     private OrderActivityVO commonActivityVO(Activity activity) {
         OrderKanjiaActivityVO orderKanjiaActivityVO = new OrderKanjiaActivityVO();
-        orderKanjiaActivityVO.setActivityType(activity.getTypes());
+        orderKanjiaActivityVO.setTypes(activity.getTypes());
         orderKanjiaActivityVO.setPicture(activity.getPicture());
         orderKanjiaActivityVO.setTitle(activity.getTitle());
         orderKanjiaActivityVO.setOriginPrice(activity.getOriginPrice());
@@ -515,6 +503,18 @@ public class UserOrderServiceImpl extends AbstractBaseServiceImpl<UserOrder> imp
         Activity activity = activityMapper.selectByPrimaryKey(userOrder.getActivityId());
         if(Const.ACTIVITY_TYPE_PIN_TUAN == activity.getTypes()){
             tmpOrder.setState(Const.ORDER_STATUS_ENGAGING);
+
+            //如果为拼团类型的活动，支付完成后生成团，其为团长，并且需要在团表中插入数据，并在团与订单的关系表中插入数据
+            Pintuan pintuan = new Pintuan();
+            pintuan.setPintuanLeaderId(userOrder.getUserId());
+            pintuan.setActivityId(userOrder.getActivityId());
+            pintuanMapper.insertSelective(pintuan);
+
+            Integer tuanid = pintuan.getId();
+            PintuanUserOrder groupUserOrder = new PintuanUserOrder();
+            groupUserOrder.setPintuanId(tuanid);
+            groupUserOrder.setOrderId(oid);
+            pintuanUserOrderMapper.insertSelective(groupUserOrder);
         }else{
             tmpOrder.setState(Const.ORDER_STATUS_WAITING_CONCUMUE);
         }

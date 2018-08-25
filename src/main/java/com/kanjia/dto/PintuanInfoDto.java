@@ -1,5 +1,7 @@
 package com.kanjia.dto;
 
+import lombok.Data;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -7,8 +9,9 @@ import java.util.Date;
  * 拼团信息，采用dto的好处是可以减少数据库的查询次数<br/>
  * fan 2018/8/22 11:08
  */
+@Data
 public class PintuanInfoDto {
-    private Integer activityTypeCount;   //活动类型
+    private Integer types;   //活动类型
 
     private String picture; //活动图片
 

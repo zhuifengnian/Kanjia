@@ -5,6 +5,8 @@ import java.util.Date;
 public class Pintuan {
     private Integer id;
 
+    private Integer activityId;
+
     private Integer pintuanLeaderId;
 
     private Integer state;
@@ -13,8 +15,9 @@ public class Pintuan {
 
     private Date updateTime;
 
-    public Pintuan(Integer id, Integer pintuanLeaderId, Integer state, Date createTime, Date updateTime) {
+    public Pintuan(Integer id, Integer activityId, Integer pintuanLeaderId, Integer state, Date createTime, Date updateTime) {
         this.id = id;
+        this.activityId = activityId;
         this.pintuanLeaderId = pintuanLeaderId;
         this.state = state;
         this.createTime = createTime;
@@ -31,6 +34,14 @@ public class Pintuan {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getActivityId() {
+        return activityId;
+    }
+
+    public void setActivityId(Integer activityId) {
+        this.activityId = activityId;
     }
 
     public Integer getPintuanLeaderId() {

@@ -11,7 +11,7 @@ import java.util.Date;
  */
 @Data
 public abstract class OrderActivityVO {
-    private Integer activityType;   //活动类型
+    private Integer types;   //活动类型
 
     private String picture; //活动图片
 
